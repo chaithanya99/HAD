@@ -27,16 +27,17 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @GetMapping("/admin")
-    @PreAuthorize("hadAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String Admin(){
         return "hello admin";
     }
     @PostMapping("/addNewUser") 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public String addNewUser(@RequestBody User userInfo) { 
 		return service.addUser(userInfo); 
 	} 
     @GetMapping("/user")
-    @PreAuthorize("hadAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public String user(){
         return "hello user";
     }

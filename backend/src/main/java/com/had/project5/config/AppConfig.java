@@ -34,7 +34,7 @@ public class AppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.csrf().disable() 
 				.authorizeHttpRequests() 
-				.requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken","/auth/testing").permitAll() //need to add endpoints which doesnot require authentication
+				.requestMatchers("/auth/generateToken").permitAll() //need to add endpoints which doesnot require authentication
 				.and() 
 				.authorizeHttpRequests().requestMatchers("/**").authenticated() 
 				.and()  

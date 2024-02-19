@@ -6,7 +6,7 @@ const Login = ({ userType }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin =async () => {
     // Add your authentication logic here
     console.log(`Logging in as ${userType} with username: ${username} and password: ${password}`);
   };

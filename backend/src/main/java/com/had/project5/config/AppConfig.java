@@ -16,6 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.had.project5.filters.JwtFilter;
 import com.had.project5.services.UserService;
@@ -32,7 +35,8 @@ public class AppConfig {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        return http.csrf().disable() 
+        return http.cors().and()
+                .csrf().disable() 
 				.authorizeHttpRequests() 
 				.requestMatchers("/auth/generateToken").permitAll() //need to add endpoints which doesnot require authentication
 				.and() 
@@ -60,6 +64,15 @@ public class AppConfig {
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception { 
 		return config.getAuthenticationManager(); 
 	} 
-
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:3000"); // Allow requests from this origin
+        configuration.addAllowedMethod("*"); // Allow all HTTP methods
+        configuration.addAllowedHeader("*"); // Allow all headers
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
 }

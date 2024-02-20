@@ -2,7 +2,10 @@ package com.had.project5.services;
 
 import java.util.Optional;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -43,6 +46,24 @@ public class UserService implements UserDetailsService{
         }
         else{
             return "user exists";
+        }
+    }
+
+    public void changePassword(String currentPassword,String newPassword,String newConfirmPassword){
+        String name=SecurityContextHolder.getContext().getAuthentication().getName();
+        User u=userRepo.findByUsername(name);
+        if(encoder.matches(currentPassword, u.getPassword())){
+            if(newPassword.equals(newConfirmPassword)){
+
+                u.setPassword(encoder.encode(newPassword));
+                userRepo.save(u);
+            }
+            else{
+                throw new RuntimeException("new password and confirm password not matched");
+            }
+        }
+        else{
+            throw new RuntimeException("password not matched");
         }
     }
     

@@ -1,0 +1,61 @@
+/* src/components/NavbarSidebar.css */
+body {
+    margin: 0;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .main-container {
+    display: flex;
+    height: calc(100vh - 60px); /* Adjusted for the navbar height */
+  }
+  
+  .content-container {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .main-content {
+    display: flex;
+  }
+  
+  .left-column {
+    width: 40%;
+    padding-right: 20px;
+  }
+  
+  .right-column {
+    width: 60%;
+    padding-left: 20px;
+  }
+  
+  .hospital-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar {
+    background-color: #f0f0f0;
+    padding: 20px;
+    height: 100vh;
+  }
+  
+  .sidebar-icons {
+    margin-top: 20px;
+  }
+  
+  .icon {
+    margin-bottom: 10px;
+  }
+  

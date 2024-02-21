@@ -30,6 +30,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DoctorLogin from './components/DoctorLogin';
 import NurseLogin from './components/NurseLogin';
 import Login1 from './components/Login1';
+import Dashboard from './components/Dashboard';
 
 const App = () => {
   return (
@@ -37,7 +38,8 @@ const App = () => {
       <Routes>
         <Route path="/doctor-login" element={<DoctorLogin />} />
         <Route path="/nurse-login" element={<NurseLogin />} />
-        <Route path="/login" element={<Login1/>}/>
+        <Route path="/" element={<Login1/>}/>
+        <Route path="/dashboard" element={<Dashboard/>}/>
       </Routes>
     </Router>
   );

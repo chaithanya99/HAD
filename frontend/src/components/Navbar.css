@@ -1,0 +1,30 @@
+/* src/components/Navbar.css */
+header {
+    height: 10vh; /* 10% of the viewport height */
+    background-color: #2196f3; /* Set your desired background color */
+    color: #fff; /* Set your desired text color */
+    display: flex;
+    align-items: center;
+    padding: 0 20px; /* Adjust padding as needed */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.logo {
+    font-size: 1.5rem; /* Adjust font size as needed */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Adjust the space between links */
+}
+
+.nav-links li {
+    cursor: pointer;
+}

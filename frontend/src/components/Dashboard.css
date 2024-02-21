@@ -1,0 +1,49 @@
+/* src/components/Dashboard.css */
+.dashboard {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    height: 100vh; /* 100% of the viewport height */
+}
+
+.main-container {
+    display: flex;
+    flex: 1; /* Expand and fill remaining space */
+}
+
+.content-container {
+    flex: 1; /* Expand and fill remaining space */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+}
+
+.main-content {
+    display: flex;
+}
+
+.left-column {
+    width: 40%;
+    padding-right: 20px;
+}
+
+.right-column {
+    width: 60%;
+    padding-left: 20px;
+}
+  
+.action-buttons {
+display: flex;
+justify-content: space-between;
+}
+
+.action-button {
+cursor: pointer;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+background-color: #fff;
+transition: background-color 0.3s;
+}
+
+.action-button:hover {
+background-color: #f0f0f0;
+}

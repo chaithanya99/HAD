@@ -31,6 +31,7 @@ import DoctorLogin from './components/DoctorLogin';
 import NurseLogin from './components/NurseLogin';
 import Login1 from './components/Login1';
 import Dashboard from './components/Dashboard';
+import PatientRegistration from './components/PatientRegistration';
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
         <Route path="/nurse-login" element={<NurseLogin />} />
         <Route path="/login" element={<Login1/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/register-patient" element={<PatientRegistration/>}/>
       </Routes>
     </Router>
   );

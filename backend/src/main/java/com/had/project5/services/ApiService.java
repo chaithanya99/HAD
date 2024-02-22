@@ -53,7 +53,7 @@ public class ApiService {
         // if(currentToken!=null && jwtService.isTokenExpired(currentToken)){
         //     return currentToken;
         // }
-        if(currentToken!=null && !isTokenExpired(currentToken)){
+        if(currentToken!=null && !isTokenExpired(currentToken, tokenService.getExpiry())){
             return currentToken;
         }
         else{
@@ -77,6 +77,8 @@ public class ApiService {
             System.out.println("Response Body: " + authResponse.getBody());
             JSONObject jsonResponse= new JSONObject(authResponse.getBody());
             String jwtToken=jsonResponse.getString("accessToken");
+            long expiry = System.currentTimeMillis() / 1000 + 1200;
+            tokenService.setExpiry(expiry);
             // System.out.println("Headers: " + authResponse.getHeaders());
             // String jwtToken = authResponse.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
             // System.out.println(jsonResponse);
@@ -109,20 +111,19 @@ public class ApiService {
             HttpHeaders authHeader=new HttpHeaders();
             authHeader.setContentType(MediaType.APPLICATION_JSON);
             authHeader.setBearerAuth(getToken());
-            // Map<String,String> payload=new HashMap<>();
-            // payload.put("aadhaar",aadhaar);
+             Map<String,String> payload=new HashMap<>();
+//             payload.put("aadhaar",aadhaar);
             // String jsonPayload=new ObjectMapper().writeValueAsString(payload);
             HttpEntity<String> entity=new HttpEntity<>(jsonPayload,authHeader);
             ResponseEntity<String> authResponse = restTemplate.exchange(endpoint, HttpMethod.POST, entity, String.class);
             // System.out.println("Status Code: " + authResponse.getStatusCodeValue());
 
-            System.out.println("Response Body: " + authResponse.getBody());
-            JSONObject jsonResponse= new JSONObject(authResponse.getBody());
+            System.out.println(authResponse.getBody());
+            return authResponse.getBody();
             // String jwtToken=jsonResponse.getString("accessToken");
             // System.out.println("Headers: " + authResponse.getHeaders());
             // String jwtToken = authResponse.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
             // System.out.println(jsonResponse);
-            return "jwtToken";
         // }
         // RestTemplate restTemplate = new RestTemplate();
 
@@ -141,6 +142,14 @@ public class ApiService {
 
         // return responseEntity.getBody();
     }
+
+    public String catfact(String endpoint) {
+        ResponseEntity<String> authResponse = restTemplate.getForEntity(endpoint, String.class);
+        System.out.println(authResponse.getBody());
+        return authResponse.getBody();
+    }
+
+
     public String makeGetRequest(String endpoint){
         return webClient.get().uri(endpoint).retrieve().bodyToMono(String.class).block();
     }
@@ -156,14 +165,10 @@ public class ApiService {
     //         return Mono.just(clientResponse);
     //     }));
     // }
-    public static boolean isTokenExpired(String token) {
-        Claims claims = Jwts.parser().parseClaimsJws(token).getBody();
-        // Extract expiration time from the claims
-        System.out.println(claims);
-        long expirationTimeInSeconds = claims.getExpiration().getTime();
-        // Get the current time in seconds
+    public static boolean isTokenExpired(String token,long expiry) {
+        System.out.println("in expiry check function");
         long currentTimeInSeconds = System.currentTimeMillis() / 1000;
-        // Check if the token is expired
-        return expirationTimeInSeconds < currentTimeInSeconds;
+        System.out.println(expiry < currentTimeInSeconds);
+        return expiry < currentTimeInSeconds;
     }
 }

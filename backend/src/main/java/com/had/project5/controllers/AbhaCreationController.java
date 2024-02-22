@@ -49,7 +49,7 @@ public class AbhaCreationController {
             payload.put("aadhaar",encryptedAadhaar);
             String jsonPayload=new ObjectMapper().writeValueAsString(payload);
 
-          String res=apiService.makePostRequest("https://healthidsbx.abdm.gov.in/api/v2/registration/aadhaar/generateOtp",jsonPayload);
+          String res=apiService.makePostRequest("/v2/registration/aadhaar/generateOtp",jsonPayload);
 
 //            String res=apiService.catfact("https://catfact.ninja/fact");
 //            JSONObject jsonResponse= new JSONObject(res);
@@ -70,8 +70,67 @@ public class AbhaCreationController {
         }
     }
     @PostMapping("/verifyAadhaarOTP")
-    public void verifyAadhaarOTP(@RequestBody Map<String,String> req){
-        
+    public ResponseEntity<Map<String, String>> verifyAadhaarOTP(@RequestBody Map<String,String> req) throws Exception{
+        try {
+            String otp=req.get("otp");
+            String txnId=req.get("txnId");
+            String encryptedOtp=encryption.encryptWithPublicKey(otp);
+            Map<String,String> payload=new HashMap<>();
+            payload.put("txnId", txnId);
+            payload.put("otp", encryptedOtp);
+            String jsonPayload=new ObjectMapper().writeValueAsString(payload);
+            String res=apiService.makePostRequest("/v2/registration/aadhaar/verifyOTP",jsonPayload);
+            JSONObject jsonResponse= new JSONObject(res);
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("txnId", jsonResponse.getString("txnId"));
+            responseMap.put("gender", jsonResponse.getString("gender"));
+            responseMap.put("birthdate",jsonResponse.getString("birthdate"));
+            responseMap.put("name", jsonResponse.getString("name"));
+            // System.out.println(jsonResponse);
+            return ResponseEntity.ok(responseMap);
+        } catch (Exception e) {
+            // TODO: handle exception
+            throw e;
+        }
+    }
+
+    @PostMapping("/checkAndGenerateMobileOTP")
+    public ResponseEntity<Map<String, String>> checkAndGenerateMobileOTP(@RequestBody Map<String,String> req) throws Exception{
+        try {
+            String txnId=req.get("txnId");
+            String mobile=req.get("mobile");
+            Map<String,String> payload=new HashMap<>();
+            payload.put("txnId", txnId);
+            payload.put("mobile", mobile);
+            String jsonPayload=new ObjectMapper().writeValueAsString(payload);
+            String res=apiService.makePostRequest("/v2/registration/aadhaar/checkAndGenerateMobileOTP",jsonPayload);
+            JSONObject jsonResponse= new JSONObject(res);
+            // System.out.println(jsonResponse);
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("txnId", jsonResponse.getString("txnId"));
+            responseMap.put("mobileLinked",jsonResponse.getString("mobileLinked"));
+            return ResponseEntity.ok(responseMap);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            throw e;
+        }
+    }
+
+    @PostMapping("/generateHealthID")
+    public void generateHealthID(@RequestBody Map<String,String> req) throws Exception{
+        try {
+            String txnId=req.get("txnId");
+            Map<String,String> payload=new HashMap<>();
+            payload.put("txnId", txnId);
+            String jsonPayload=new ObjectMapper().writeValueAsString(payload);
+            String res=apiService.makePostRequest("/v1/registration/aadhaar/createHealthIdWithPreVerified",jsonPayload);
+            JSONObject jsonResponse= new JSONObject(res);
+            System.out.println(jsonResponse);
+        } catch (Exception e) {
+            // TODO: handle exception
+            throw e;
+        }
     }
 
     @PostMapping("/verifyToken")

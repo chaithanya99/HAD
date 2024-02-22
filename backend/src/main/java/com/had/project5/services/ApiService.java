@@ -32,6 +32,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class ApiService {
+    private final String BASE_URL="https://healthidsbx.abdm.gov.in/api";
     private final String url="https://dev.abdm.gov.in/gateway/v0.5/sessions";
     private final String cliendId="SBX_002039";
     private final String clientSecret="216f7db8-6695-46d9-92b1-44f050dcd212";
@@ -115,7 +116,7 @@ public class ApiService {
 //             payload.put("aadhaar",aadhaar);
             // String jsonPayload=new ObjectMapper().writeValueAsString(payload);
             HttpEntity<String> entity=new HttpEntity<>(jsonPayload,authHeader);
-            ResponseEntity<String> authResponse = restTemplate.exchange(endpoint, HttpMethod.POST, entity, String.class);
+            ResponseEntity<String> authResponse = restTemplate.exchange(BASE_URL+endpoint, HttpMethod.POST, entity, String.class);
             // System.out.println("Status Code: " + authResponse.getStatusCodeValue());
 
             System.out.println(authResponse.getBody());

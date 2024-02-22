@@ -1,0 +1,14 @@
+.centered-box {
+    width: 50%; /* Adjust the width as per your requirement */
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #1b2dd3;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(34, 28, 28, 0.1);
+    background-color: #7777c9;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 400px;
+}

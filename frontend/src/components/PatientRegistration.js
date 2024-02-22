@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
+import './PatientRegistration.css';
 
 const PatientRegistration = () => {
   const [step, setStep] = useState(1);
@@ -90,77 +91,93 @@ const PatientRegistration = () => {
 
   return (
     <div>
-    <Navbar/>
-      {/* Render form based on the current step */}
-      {step === 1 && (
-        <div>
-          <h2>Step 1: Aadhar Information</h2>
-          <form onSubmit={handleSubmit}>
-            <label>
-              Aadhar Number:
+      <Navbar/>
+      <div className="centered-box" style={{textAlign:'center'}}>
+        {/* Render form based on the current step */}
+        {step === 1 && (
+          <div>
+            <h2>Step 1: Aadhar Information</h2>
+            <form onSubmit={handleSubmit}>
+              <label>
+                Aadhar Number:
+                <input
+                  type="text"
+                  value={aadharNumber}
+                  onChange={(e) => setAadharNumber(e.target.value)}
+                />
+              </label>
+              {/* Add other form fields */}
+              <label>
               <input
-                type="text"
-                value={aadharNumber}
-                onChange={(e) => setAadharNumber(e.target.value)}
-              />
-            </label>
-            {/* Add other form fields */}
-            <label>
-            <input
-                type="checkbox"
-                checked={iAgree}
-                onChange={() => setIAgree(!iAgree)}
-              />
-              I agree
-            </label>
-            <button type="submit">Next</button>
-          </form>
-        </div>
-      )}
+                  type="checkbox"
+                  checked={iAgree}
+                  onChange={() => setIAgree(!iAgree)}
+                />
+                I agree
+              </label>
+              <button type="submit">Next</button>
+            </form>
+          </div>
+        )}
 
-        {step === 2 && (
-        <div>
-          <h2>Step 2: OTP Verification</h2>
-          <p>Enter the OTP sent to your mobile number.</p>
-          <form onSubmit={handleSubmit}>
-            {/* Render OTP input fields */}
+          {step === 2 && (
+          <div>
+            <h2>Step 2: OTP Verification</h2>
+            <p>Enter the OTP sent to your mobile number.</p>
+            <form onSubmit={handleSubmit}>
+              {/* Render OTP input fields */}
+              <div>
+                <input
+                  type="text"
+                  maxLength="1"
+                  value={otp[0] || ''}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+                <input
+                  type="text"
+                  maxLength="1"
+                  value={otp[1] || ''}
+                  onChange={(e) => setOtp((prevOtp) => [prevOtp[0], e.target.value])}
+                />
+                <input
+                  type="text"
+                  maxLength="1"
+                  value={otp[2] || ''}
+                  onChange={(e) => setOtp((prevOtp) => [prevOtp[0], prevOtp[1], e.target.value])}
+                />
+                <input
+                  type="text"
+                  maxLength="1"
+                  value={otp[3] || ''}
+                  onChange={(e) => setOtp((prevOtp) => [prevOtp[0], prevOtp[1], prevOtp[2], e.target.value])}
+                />
+              </div>
+              {/* Render timer and resend button */}
+              <p>Time remaining: {timer} seconds</p>
+              <button type="button" onClick={handleResend} disabled={timer > 0}>
+                Resend OTP
+              </button>
+              {/* Add other form fields */}
+              <button type="submit">Verify OTP</button>
+            </form>
+            <button onClick={() => setStep(step - 1)}>Previous</button>
+          </div>
+        )}
+
+          {step === 3 && (
+          <div>
+            <h2>Step 3: Profile Information</h2>
             <div>
-              <input
-                type="text"
-                maxLength="1"
-                value={otp[0] || ''}
-                onChange={(e) => setOtp(e.target.value)}
-              />
-              <input
-                type="text"
-                maxLength="1"
-                value={otp[1] || ''}
-                onChange={(e) => setOtp((prevOtp) => [prevOtp[0], e.target.value])}
-              />
-              <input
-                type="text"
-                maxLength="1"
-                value={otp[2] || ''}
-                onChange={(e) => setOtp((prevOtp) => [prevOtp[0], prevOtp[1], e.target.value])}
-              />
-              <input
-                type="text"
-                maxLength="1"
-                value={otp[3] || ''}
-                onChange={(e) => setOtp((prevOtp) => [prevOtp[0], prevOtp[1], prevOtp[2], e.target.value])}
-              />
+              <p>Name: {`${profileData.firstName} ${profileData.middleName} ${profileData.lastName}`}</p>
+              <p>Date of Birth: {profileData.dateOfBirth}</p>
+              <img src={profileData.profileImage} alt="Profile" />
             </div>
-            {/* Render timer and resend button */}
-            <p>Time remaining: {timer} seconds</p>
-            <button type="button" onClick={handleResend} disabled={timer > 0}>
-              Resend OTP
+            <button type="button" onClick={() => setStep(step + 1)}>
+              Next
             </button>
-            {/* Add other form fields */}
-            <button type="submit">Verify OTP</button>
-          </form>
-          <button onClick={() => setStep(step - 1)}>Previous</button>
-        </div>
-      )}
+            <button onClick={() => setStep(step - 1)}>Previous</button>
+          </div>
+        )}
 
       {step === 3 && (
               <div>
@@ -233,6 +250,7 @@ const PatientRegistration = () => {
           ) : null}
         </div>
       )}
+      </div>
     </div>
   );
 };

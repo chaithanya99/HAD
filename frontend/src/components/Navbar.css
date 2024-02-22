@@ -1,6 +1,6 @@
 /* src/components/Navbar.css */
 header {
-    height: 10vh; /* 10% of the viewport height */
+    height: 6vh; /* 10% of the viewport height */
     background-color: #2196f3; /* Set your desired background color */
     color: #fff; /* Set your desired text color */
     display: flex;

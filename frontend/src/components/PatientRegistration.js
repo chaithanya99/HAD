@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
+import axios from 'axios';
+import { BACKEND_URL } from '../constants';
 
 const PatientRegistration = () => {
   const [step, setStep] = useState(1);
@@ -17,14 +19,18 @@ const PatientRegistration = () => {
   // Add more state variables for other form data
 
   // Function to handle form submission for each step
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check conditions based on the current step
     if (step === 1) {
       // Check Aadhar number and "I agree" checkbox
-      if (aadharNumber.length === 16 && iAgree) {
+      if (aadharNumber.length === 12 && iAgree) {
         // Conditions met, proceed to the next step
+        const res=await axios.post(BACKEND_URL+"/generateOtp",{
+          aadhaar:aadharNumber
+        })
+        console.log(res);
         setStep(step + 1);
       } else {
         // Display an error message or handle invalid input

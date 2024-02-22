@@ -159,7 +159,8 @@ public class ApiService {
     public static boolean isTokenExpired(String token) {
         Claims claims = Jwts.parser().parseClaimsJws(token).getBody();
         // Extract expiration time from the claims
-        long expirationTimeInSeconds = claims.getExpiration().getTime() / 1000;
+        System.out.println(claims);
+        long expirationTimeInSeconds = claims.getExpiration().getTime();
         // Get the current time in seconds
         long currentTimeInSeconds = System.currentTimeMillis() / 1000;
         // Check if the token is expired

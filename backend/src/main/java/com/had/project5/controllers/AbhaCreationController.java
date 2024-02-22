@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.had.project5.services.ApiService;
 import com.had.project5.services.Encryption;
+import com.had.project5.services.JwtService;
 
 @RestController
 
@@ -25,6 +26,8 @@ public class AbhaCreationController {
     private ApiService apiService;
     @Autowired
     private Encryption encryption;
+    @Autowired
+    private JwtService jwtService;
 
     @GetMapping("/getABHAtoken")
     public String getToken(){
@@ -58,9 +61,17 @@ public class AbhaCreationController {
         
         
     }
-    @PostMapping("/encrypt")
-    public String encrypt(@RequestBody Map<String,String> req) throws Exception{
-        return encryption.encryptWithPublicKey(req.get("aadhaar"));
+    @PostMapping("/verifyAadhaarOTP")
+    public void verifyAadhaarOTP(@RequestBody Map<String,String> req){
+        
+    }
+
+    @PostMapping("/verifyToken")
+    public void verifyToken(@RequestBody Map<String,String> req){
+        String token = req.get("token");
+        
+        // apiService.isTokenExpired(token);
+        jwtService.isTokenExpired(token);
     }
     
 }

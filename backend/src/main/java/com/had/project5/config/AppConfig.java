@@ -39,7 +39,7 @@ public class AppConfig {
         return http.cors().and()
                 .csrf().disable() 
 				.authorizeHttpRequests() 
-				.requestMatchers("/auth/generateToken","/generateOtp").permitAll() //need to add endpoints which doesnot require authentication
+				.requestMatchers("/auth/generateToken","/generateOtp","/verifyToken").permitAll() //need to add endpoints which doesnot require authentication
 				.and() 
 				.authorizeHttpRequests().requestMatchers("/**").authenticated() 
 				.and()  

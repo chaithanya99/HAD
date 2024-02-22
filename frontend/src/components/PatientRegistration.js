@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
+import axios from 'axios';
 
 const PatientRegistration = () => {
   const [step, setStep] = useState(1);
@@ -7,17 +8,20 @@ const PatientRegistration = () => {
   const [otp, setOtp] = useState('');
   const [iAgree, setIAgree] = useState(false);
   const [timer, setTimer] = useState(60);
-  const [profileData, setProfileData] = useState({
-    firstName: 'John',
-    middleName: 'Doe',
-    lastName: 'Smith',
-    dateOfBirth: '01/01/1990',
-    profileImage: 'url_to_sample_image', // Replace with an actual URL or image source
-  });
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [mobileOtp, setMobileOtp] = useState('');
+  const [txn, setTxn] = useState('B'); // A or B
+  // const [profileData, setProfileData] = useState({
+  //   firstName: 'John',
+  //   middleName: 'Doe',
+  //   lastName: 'Smith',
+  //   dateOfBirth: '01/01/1990',
+  //   profileImage: 'url_to_sample_image', // Replace with an actual URL or image source
+  // });
   // Add more state variables for other form data
 
   // Function to handle form submission for each step
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check conditions based on the current step
@@ -37,7 +41,33 @@ const PatientRegistration = () => {
 
       // Proceed to the next step
       setStep(step + 1);
+    } else if (step === 3) {
+      try {
+        const response = await axios.post('your_backend_api', { mobileNumber });
+
+        // Handle the response with the 'txn' variable
+        setTxn(response.data.txn);
+
+        // Proceed to the next step
+        setStep(step + 1);
+      } catch (error) {
+        // Handle errors from the backend
+        console.error('Error:', error.message);
+      }
+    } else if (step === 4) {
+      // Step 4: Display content based on the 'txn' value
+      if (txn === 'A') {
+        // Mobile number already verified, display completion message
+        // ...
+      } else if (txn === 'B') {
+        // Mobile number needs OTP verification again, similar to Step 2
+        // ...
+
+        // Proceed to the next step
+        setStep(step + 1);
+      }
     }
+
   };
 
   // Function to handle OTP resend
@@ -132,30 +162,75 @@ const PatientRegistration = () => {
         </div>
       )}
 
-        {step === 3 && (
-        <div>
-          <h2>Step 3: Profile Information</h2>
-          <div>
-            <p>Name: {`${profileData.firstName} ${profileData.middleName} ${profileData.lastName}`}</p>
-            <p>Date of Birth: {profileData.dateOfBirth}</p>
-            <img src={profileData.profileImage} alt="Profile" />
-          </div>
-          <button type="button" onClick={() => setStep(step + 1)}>
-            Next
-          </button>
-          <button onClick={() => setStep(step - 1)}>Previous</button>
-        </div>
-      )}
+      {step === 3 && (
+              <div>
+                <h2>Step 3: Enter Mobile Number</h2>
+                <form onSubmit={handleSubmit}>
+                  <label>
+                    Mobile Number:
+                    <input
+                      type="text"
+                      value={mobileNumber}
+                      onChange={(e) => setMobileNumber(e.target.value)}
+                    />
+                  </label>
+                  <button type="button" onClick={() => setStep(step + 1)}>
+                    Next
+                  </button>
+                </form>
+                <button onClick={() => setStep(step - 1)}>Previous</button>
+              </div>
+            )}
 
-        {step === 4 && (
+      {step === 4 && (
         <div>
           <h2>Step 4: Final Step</h2>
-          {/* Render final step content */}
-          <p>Final step content goes here.</p>
-          <button type="submit" onClick={handleSubmit}>
-            Submit
-          </button>
+          {/* Render content based on 'txn' value */}
+          {txn === 'A' ? (
+            <p>Verification process completed. Display completion message here.</p>
+          ) : txn === 'B' ? (
+            <div>
+              <h3>Step 4: OTP Verification</h3>
+              <p>Enter the OTP sent to your mobile number.</p>
+          <form onSubmit={handleSubmit}>
+            {/* Render OTP input fields */}
+            <div>
+              <input
+                type="text"
+                maxLength="1"
+                value={mobileOtp[0] || ''}
+                onChange={(e) => setMobileOtp(e.target.value)}
+              />
+              <input
+                type="text"
+                maxLength="1"
+                value={mobileOtp[1] || ''}
+                onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], e.target.value])}
+              />
+              <input
+                type="text"
+                maxLength="1"
+                value={mobileOtp[2] || ''}
+                onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], prevOtp[1], e.target.value])}
+              />
+              <input
+                type="text"
+                maxLength="1"
+                value={mobileOtp[3] || ''}
+                onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], prevOtp[1], prevOtp[2], e.target.value])}
+              />
+            </div>
+            {/* Render timer and resend button */}
+            <p>Time remaining: {timer} seconds</p>
+            <button type="button" onClick={handleResend} disabled={timer > 0}>
+              Resend OTP
+            </button>
+            {/* Add other form fields */}
+            <button type="submit">Verify OTP</button>
+          </form>
           <button onClick={() => setStep(step - 1)}>Previous</button>
+          </div>
+          ) : null}
         </div>
       )}
     </div>

@@ -14,4 +14,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TokenStorageService {
     private String token;
+    private long expiry;
 }

@@ -60,8 +60,9 @@ public class AbhaCreationController {
 //            return ResponseEntity.ok(responseMap);
 
             JSONObject jsonResponse= new JSONObject(res);
+            System.out.println(jsonResponse);
             Map<String, String> responseMap = new HashMap<>();
-            responseMap.put("txtId", jsonResponse.getString("txtId"));
+            responseMap.put("txnId", jsonResponse.getString("txnId"));
             return ResponseEntity.ok(responseMap);
         } catch (Exception e) {
             // TODO: handle exception

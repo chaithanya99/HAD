@@ -49,11 +49,13 @@ public class AuthController {
     @PostMapping("/generateToken")
     public String generateToken(@RequestBody AuthenticationRequest auth){
         System.out.println(auth);
+        System.out.println(auth.getUsername());
+        System.out.println(auth.getPassword());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(auth.getUsername(), auth.getPassword())); 
-		if (authentication.isAuthenticated()) { 
-			return jwtService.generateToken(auth.getUsername()); 
-		} else { 
-			throw new UsernameNotFoundException("invalid user"); 
+		if (authentication.isAuthenticated()) {
+			return jwtService.generateToken(auth.getUsername());
+        } else {
+            throw new UsernameNotFoundException("invalid user");
 		} 
     }
     @GetMapping("/role")

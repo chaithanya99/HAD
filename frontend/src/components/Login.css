@@ -1,49 +1,48 @@
 /* src/components/Login.css */
 .login-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #e0f7fa; /* Light blue shade for the background */
-  }
-  
-  .login-card {
-    background-color: #bbdefb; /* Light blue shade for the card */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  .login-card form {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center the form items horizontally */
-  }
-  
-  .login-card label {
-    display: block;
-    margin-bottom: 8px;
-  }
-  
-  .login-card input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
-    border: 1px solid #042c40;
-    border-radius: 4px;
-  }
-  
-  .login-card button {
-    background-color: #2196f3; /* Button color */
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .login-card button:hover {
-    background-color: #1565c0; /* Button color on hover */
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #e0f7fa; /* Light blue shade for the background */
+}
+
+.login-card {
+  background-color: #bbdefb; /* Light blue shade for the card */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the form items horizontally */
+}
+
+.login-card label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #042c40;
+  border-radius: 4px;
+}
+
+.login-card button {
+  background-color: #2196f3; /* Button color */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-card button:hover {
+  background-color: #1565c0; /* Button color on hover */
+}

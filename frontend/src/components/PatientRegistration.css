@@ -1,0 +1,33 @@
+.centered-box {
+    width: 50%; /* Adjust the width as per your requirement */
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #7ed48f;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(34, 28, 28, 0.1);
+    background-color: #7ed48f;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 400px;
+}
+
+.Stage-1 input {
+    width: 50%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #042c40;
+    border-radius: 4px;
+    font-size: 20px;
+}
+
+.Stage-Components {
+    border: 2px solid #ccc; /* Border style */
+    border-radius: 5px; /* Rounded corners */
+    padding: 20px; /* Padding inside the box */
+    margin: 20px 0; /* Margin around the box */
+    margin-top: 70px;
+    height: 250px;
+    background-color: #d7dee4;
+}  

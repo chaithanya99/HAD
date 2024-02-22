@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
 import './PatientRegistration.css';
+import ProgressBar from './ProgressBar';
 
 const PatientRegistration = () => {
   const [step, setStep] = useState(1);
@@ -93,32 +94,41 @@ const PatientRegistration = () => {
     <div>
       <Navbar/>
       <div className="centered-box" style={{textAlign:'center'}}>
+        <ProgressBar currentStage={step}/>
         {/* Render form based on the current step */}
-        {step === 1 && (
-          <div>
-            <h2>Step 1: Aadhar Information</h2>
+        <div className='Stage-Components'>
+          {step === 1 && (
+          <div className='Stage-1'>
+            {/* <h2>Step 1: Aadhar Information</h2> */}
             <form onSubmit={handleSubmit}>
-              <label>
-                Aadhar Number:
+              <label style={{ display: 'block', marginTop: '30px', fontSize: '20px' }}>
+                Enter Aadhar Number:
                 <input
                   type="text"
                   value={aadharNumber}
                   onChange={(e) => setAadharNumber(e.target.value)}
+                  style={{ marginLeft: '10px' }}
                 />
               </label>
               {/* Add other form fields */}
+              <br />
               <label>
-              <input
+                Terms & Conditions
+              </label>
+              <br />
+              <label>
+                <input
                   type="checkbox"
                   checked={iAgree}
                   onChange={() => setIAgree(!iAgree)}
                 />
                 I agree
               </label>
+              <br />
               <button type="submit">Next</button>
             </form>
           </div>
-        )}
+          )}
 
           {step === 2 && (
           <div>
@@ -162,9 +172,9 @@ const PatientRegistration = () => {
             </form>
             <button onClick={() => setStep(step - 1)}>Previous</button>
           </div>
-        )}
+          )}
 
-          {step === 3 && (
+          {/* {step === 3 && (
           <div>
             <h2>Step 3: Profile Information</h2>
             <div>
@@ -177,30 +187,30 @@ const PatientRegistration = () => {
             </button>
             <button onClick={() => setStep(step - 1)}>Previous</button>
           </div>
-        )}
+          )} */}
 
-      {step === 3 && (
-              <div>
+          {step === 3 && (
+            <div>
                 <h2>Step 3: Enter Mobile Number</h2>
                 <form onSubmit={handleSubmit}>
-                  <label>
-                    Mobile Number:
-                    <input
-                      type="text"
-                      value={mobileNumber}
-                      onChange={(e) => setMobileNumber(e.target.value)}
-                    />
-                  </label>
-                  <button type="button" onClick={() => setStep(step + 1)}>
-                    Next
-                  </button>
+                <label>
+                  Mobile Number:
+                  <input
+                  type="text"
+                  value={mobileNumber}
+                  onChange={(e) => setMobileNumber(e.target.value)}
+                  />
+                </label>
+                <button type="button" onClick={() => setStep(step + 1)}>
+                  Next
+                </button>
                 </form>
-                <button onClick={() => setStep(step - 1)}>Previous</button>
-              </div>
-            )}
+                  <button onClick={() => setStep(step - 1)}>Previous</button>
+            </div>
+          )}
 
-      {step === 4 && (
-        <div>
+        {step === 4 && (
+          <div>
           <h2>Step 4: Final Step</h2>
           {/* Render content based on 'txn' value */}
           {txn === 'A' ? (
@@ -247,9 +257,10 @@ const PatientRegistration = () => {
           </form>
           <button onClick={() => setStep(step - 1)}>Previous</button>
           </div>
-          ) : null}
+            ) : null}
+          </div>
+        )}
         </div>
-      )}
       </div>
     </div>
   );

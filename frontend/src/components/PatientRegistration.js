@@ -29,8 +29,10 @@ const PatientRegistration = () => {
     // Check conditions based on the current step
     if (step === 1) {
       // Check Aadhar number and "I agree" checkbox
-      if (aadharNumber.length === 16 && iAgree) {
+      if (aadharNumber.length === 14 && iAgree) {
         // Conditions met, proceed to the next step
+        const actualAadharNumber = aadharNumber.split(' ').join('')
+        console.log(actualAadharNumber);
         setStep(step + 1);
       } else {
         // Display an error message or handle invalid input
@@ -90,6 +92,16 @@ const PatientRegistration = () => {
     return () => clearInterval(countdown);
   }, []);
 
+  const changeAadharNumber = (e) => {
+    const inputValue = e.target.value;
+    // Remove any non-numeric characters
+    const numericValue = inputValue.replace(/\D/g, '');
+    // Format the input by adding spaces after every 4 characters
+    const formattedValue = numericValue.replace(/(\d{4})/g, '$1 ').trim();
+    // Set the formatted value to state
+    setAadharNumber(formattedValue.substring(0, 14)); // Restrict to 12 characters
+  };
+
   return (
     <div>
       <Navbar/>
@@ -101,22 +113,33 @@ const PatientRegistration = () => {
           <div className='Stage-1'>
             {/* <h2>Step 1: Aadhar Information</h2> */}
             <form onSubmit={handleSubmit}>
-              <label style={{ display: 'block', marginTop: '30px', fontSize: '20px' }}>
+              <label style={{ display: 'block', marginTop: '-10px', fontSize: '20px' }}>
                 Enter Aadhar Number:
+                {/* <br></br> */}
                 <input
                   type="text"
                   value={aadharNumber}
-                  onChange={(e) => setAadharNumber(e.target.value)}
+                  onChange={changeAadharNumber}
                   style={{ marginLeft: '10px' }}
+                  placeholder="XXXX XXXX XXXX"
+                  maxLength={14}
                 />
               </label>
               {/* Add other form fields */}
               <br />
-              <label>
-                Terms & Conditions
+              <label style={{
+                marginTop: '0px',
+                width: '100%', // Set a fixed width for the label
+                textAlign: 'justify',
+                fontSize: '15px',
+                display: 'block', // Ensure it behaves like a block element
+                overflow: 'hidden', // Hide any overflow content
+                textOverflow: 'ellipsis', // Add ellipsis for overflow text
+              }}>
+              I hereby declare that I am utuntarily sharing my Aadhaar humber and demographic information issued by UIDAL, with National Health Authority (NHA) for The sole purpose of cration of ABHA number. understand I that my ABHA number can te usand and shared for purposes as may be notified by ABDM Rom time to tome including provision of healthcare services. Further, tam aware that my personal identifiable information Name, Address, Age, Date of Beth, Gender and Photographs may be made avslate to the edities working in the National Digital Health Ecosystem (NDH) which inter als includes stalkenclders and entities such as healthcare professionas je docton), facilities in g hospitan, laboratorienst and data fiduciaries in g heath programmes, which are registered with or linked to the Ayushman Bharat Digital MABOM and various processes there under authorize NHA to
               </label>
               <br />
-              <label>
+              <label style={{ marginTop: '0px', display: 'flex', width: '100px' }}>
                 <input
                   type="checkbox"
                   checked={iAgree}
@@ -125,7 +148,7 @@ const PatientRegistration = () => {
                 I agree
               </label>
               <br />
-              <button type="submit">Next</button>
+              <button type="submit" style={{width: '50px'}}>Next</button>
             </form>
           </div>
           )}

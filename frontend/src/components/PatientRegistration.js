@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
 import './PatientRegistration.css';
 import ProgressBar from './ProgressBar';
 
 const PatientRegistration = () => {
+  const optSize = 6;
   const [step, setStep] = useState(1);
   const [aadharNumber, setAadharNumber] = useState('');
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState([]);
+  const inputRefs = useRef([]);
   const [iAgree, setIAgree] = useState(false);
   const [timer, setTimer] = useState(60);
   const [mobileNumber, setMobileNumber] = useState('');
@@ -42,9 +44,21 @@ const PatientRegistration = () => {
       // Add logic for other steps if needed
       // For example, OTP verification logic
       // ...
-
+      if (otp.length === optSize && otp.every((digit) => Boolean(digit))) {
+        // res = axios.post()
+        // if(res == "OTP Verified") {
+        //   setStep(step + 1);
+        // }
+        // else {
+        //   alert('Wrong OTP');
+        // }
+        setStep(step + 1);
+      }
+      else {
+        alert('Please enter complete OTP');
+      }
       // Proceed to the next step
-      setStep(step + 1);
+      console.log(otp)
     } else if (step === 3) {
       try {
         const response = await axios.post('your_backend_api', { mobileNumber });
@@ -155,35 +169,36 @@ const PatientRegistration = () => {
 
           {step === 2 && (
           <div>
-            <h2>Step 2: OTP Verification</h2>
-            <p>Enter the OTP sent to your mobile number.</p>
-            <form onSubmit={handleSubmit}>
-              {/* Render OTP input fields */}
+            {/* <h2>Step 2: OTP Verification</h2> */}
+            <p style={{fontSize:'20px'}}>Enter the OTP sent to your mobile number.</p>
+            <form onSubmit={handleSubmit} style={{marginBottom:'20px'}}>
               <div>
-                <input
-                  type="text"
-                  maxLength="1"
-                  value={otp[0] || ''}
-                  onChange={(e) => setOtp(e.target.value)}
-                />
-                <input
-                  type="text"
-                  maxLength="1"
-                  value={otp[1] || ''}
-                  onChange={(e) => setOtp((prevOtp) => [prevOtp[0], e.target.value])}
-                />
-                <input
-                  type="text"
-                  maxLength="1"
-                  value={otp[2] || ''}
-                  onChange={(e) => setOtp((prevOtp) => [prevOtp[0], prevOtp[1], e.target.value])}
-                />
-                <input
-                  type="text"
-                  maxLength="1"
-                  value={otp[3] || ''}
-                  onChange={(e) => setOtp((prevOtp) => [prevOtp[0], prevOtp[1], prevOtp[2], e.target.value])}
-                />
+                {Array.from({ length: optSize }, (_, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    maxLength="1"
+                    ref={(ref) => inputRefs.current[index] = ref}
+                    value={otp[index] || ''}
+                    onChange={(e) => {
+                      const newOtp = [...otp];
+                      newOtp[index] = e.target.value;
+                      setOtp(newOtp);
+
+                      // Move cursor to the next input field if available
+                      if (e.target.value && index < inputRefs.current.length - 1) {
+                        inputRefs.current[index + 1].focus();
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        // Move cursor to the previous input field
+                        inputRefs.current[index - 1].focus();
+                      }
+                    }}
+                    style={{width: '10%'}}
+                  />
+                ))}
               </div>
               {/* Render timer and resend button */}
               <p>Time remaining: {timer} seconds</p>
@@ -193,7 +208,10 @@ const PatientRegistration = () => {
               {/* Add other form fields */}
               <button type="submit">Verify OTP</button>
             </form>
-            <button onClick={() => setStep(step - 1)}>Previous</button>
+            <div style={{fontSize:'12px', marginTop:'10px'}}>
+              Wrong Aadhar Number?
+              <button onClick={() => setStep(step - 1)}>Go Back</button>
+            </div>
           </div>
           )}
 

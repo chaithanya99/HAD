@@ -119,6 +119,7 @@ const PatientRegistration = () => {
   return (
     <div>
       <Navbar/>
+      <p style={{textAlign: 'center', fontSize: '30px'}}> Create ABHA Number</p>
       <div className="centered-box" style={{textAlign:'center'}}>
         <ProgressBar currentStage={step}/>
         {/* Render form based on the current step */}
@@ -150,7 +151,7 @@ const PatientRegistration = () => {
                 overflow: 'hidden', // Hide any overflow content
                 textOverflow: 'ellipsis', // Add ellipsis for overflow text
               }}>
-              I hereby declare that I am utuntarily sharing my Aadhaar humber and demographic information issued by UIDAL, with National Health Authority (NHA) for The sole purpose of cration of ABHA number. understand I that my ABHA number can te usand and shared for purposes as may be notified by ABDM Rom time to tome including provision of healthcare services. Further, tam aware that my personal identifiable information Name, Address, Age, Date of Beth, Gender and Photographs may be made avslate to the edities working in the National Digital Health Ecosystem (NDH) which inter als includes stalkenclders and entities such as healthcare professionas je docton), facilities in g hospitan, laboratorienst and data fiduciaries in g heath programmes, which are registered with or linked to the Ayushman Bharat Digital MABOM and various processes there under authorize NHA to
+              I hereby declare that I am volutuntarily sharing my Aadhaar number and demographic information issued by UIDAL, with National Health Authority (NHA) for The sole purpose of creation of ABHA number. I understand that my ABHA number can te used and shared for purposes as may be notified by ABDM from time to time including provision of healthcare services. Further, I am aware that my personal identifiable information Name, Address, Age, Date of Birth, Gender and Photographs may be made available to the entities working in the National Digital Health Ecosystem (NDHE) which inter also includes stakeholders and entities such as healthcare professionas (e.g. doctors), facilities (e.g. hospitals, laboratories) and data fiduciaries (e.g. health programmes), which are registered with or linked to the Ayushman Bharat Digital Mission (ABDM) and various processes there under. I authorize NHA to
               </label>
               <br />
               <label style={{ marginTop: '0px', display: 'flex', width: '100px' }}>
@@ -170,7 +171,7 @@ const PatientRegistration = () => {
           {step === 2 && (
           <div>
             {/* <h2>Step 2: OTP Verification</h2> */}
-            <p style={{fontSize:'20px'}}>Enter the OTP sent to your mobile number.</p>
+            <p style={{fontSize:'20px'}}>Enter the OTP sent to your mobile number linked to your Aadhar: {aadharNumber}.</p>
             <form onSubmit={handleSubmit} style={{marginBottom:'20px'}}>
               <div>
                 {Array.from({ length: optSize }, (_, index) => (

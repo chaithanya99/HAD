@@ -33,8 +33,7 @@ const PatientRegistration = () => {
       // Check Aadhar number and "I agree" checkbox
       if (aadharNumber.length === 14 && iAgree) {
         // Conditions met, proceed to the next step
-        const actualAadharNumber = aadharNumber.split(' ').join('')
-        console.log(actualAadharNumber);
+        console.log(aadharNumber.split(' ').join(''));
         setStep(step + 1);
       } else {
         // Display an error message or handle invalid input
@@ -61,13 +60,18 @@ const PatientRegistration = () => {
       console.log(otp)
     } else if (step === 3) {
       try {
-        const response = await axios.post('your_backend_api', { mobileNumber });
+        if (mobileNumber.length === 10) {
+          // const response = await axios.post('your_backend_api', { mobileNumber });
 
-        // Handle the response with the 'txn' variable
-        setTxn(response.data.txn);
+          // Handle the response with the 'txn' variable
+          // setTxn(response.data.txn);
 
-        // Proceed to the next step
-        setStep(step + 1);
+          // Proceed to the next step
+          setStep(step + 1);
+        }
+        else {
+          alert('Enter Valid Mobile Number');
+        }
       } catch (error) {
         // Handle errors from the backend
         console.error('Error:', error.message);
@@ -118,104 +122,104 @@ const PatientRegistration = () => {
 
   return (
     <div>
-      <Navbar/>
-      <p style={{textAlign: 'center', fontSize: '30px'}}> Create ABHA Number</p>
-      <div className="centered-box" style={{textAlign:'center'}}>
-        <ProgressBar currentStage={step}/>
+      <Navbar />
+      <h1 style={{ textAlign: 'center' }}> Create ABHA Number</h1>
+      <div className="centered-box" style={{ textAlign: 'center' }}>
+        <ProgressBar currentStage={step} />
         {/* Render form based on the current step */}
         <div className='Stage-Components'>
           {step === 1 && (
-          <div className='Stage-1'>
-            {/* <h2>Step 1: Aadhar Information</h2> */}
-            <form onSubmit={handleSubmit}>
-              <label style={{ display: 'block', marginTop: '-10px', fontSize: '20px' }}>
-                Enter Aadhar Number:
-                {/* <br></br> */}
-                <input
-                  type="text"
-                  value={aadharNumber}
-                  onChange={changeAadharNumber}
-                  style={{ marginLeft: '10px' }}
-                  placeholder="XXXX XXXX XXXX"
-                  maxLength={14}
-                />
-              </label>
-              {/* Add other form fields */}
-              <br />
-              <label style={{
-                marginTop: '0px',
-                width: '100%', // Set a fixed width for the label
-                textAlign: 'justify',
-                fontSize: '15px',
-                display: 'block', // Ensure it behaves like a block element
-                overflow: 'hidden', // Hide any overflow content
-                textOverflow: 'ellipsis', // Add ellipsis for overflow text
-              }}>
-              <div className='TermsAndConditions'>
-                I hereby declare that I am volutuntarily sharing my Aadhaar number and demographic information issued by UIDAL, with National Health Authority (NHA) for The sole purpose of creation of ABHA number. I understand that my ABHA number can be used and shared for purposes as may be notified by ABDM from time to time including provision of healthcare services. Further, I am aware that my personal identifiable information Name, Address, Age, Date of Birth, Gender and Photographs may be made available to the entities working in the National Digital Health Ecosystem (NDHE) which inter also includes stakeholders and entities such as healthcare professionas (e.g. doctors), facilities (e.g. hospitals, laboratories) and data fiduciaries (e.g. health programmes), which are registered with or linked to the Ayushman Bharat Digital Mission (ABDM) and various processes there under. I authorize NHA to
-              </div>
-              </label>
-              <br />
-              <label style={{ marginTop: '0px', display: 'flex', width: '100px' }}>
-                <input
-                  type="checkbox"
-                  checked={iAgree}
-                  onChange={() => setIAgree(!iAgree)}
-                />
-                I agree
-              </label>
-              <br />
-              <button type="submit" style={{width: '50px'}}>Next</button>
-            </form>
-          </div>
+            <div className='Stage-1'>
+              {/* <h2>Step 1: Aadhar Information</h2> */}
+              <form onSubmit={handleSubmit}>
+                <label style={{ display: 'block', marginTop: '-10px', fontSize: '20px' }}>
+                  Enter Aadhar Number:
+                  {/* <br></br> */}
+                  <input
+                    type="text"
+                    value={aadharNumber}
+                    onChange={changeAadharNumber}
+                    style={{ marginLeft: '10px' }}
+                    placeholder="XXXX XXXX XXXX"
+                    maxLength={14}
+                  />
+                </label>
+                {/* Add other form fields */}
+                <br />
+                <label style={{
+                  marginTop: '0px',
+                  width: '100%', // Set a fixed width for the label
+                  textAlign: 'justify',
+                  fontSize: '15px',
+                  display: 'block', // Ensure it behaves like a block element
+                  overflow: 'hidden', // Hide any overflow content
+                  textOverflow: 'ellipsis', // Add ellipsis for overflow text
+                }}>
+                  <div className='TermsAndConditions'>
+                    I hereby declare that I am volutuntarily sharing my Aadhaar number and demographic information issued by UIDAL, with National Health Authority (NHA) for The sole purpose of creation of ABHA number. I understand that my ABHA number can be used and shared for purposes as may be notified by ABDM from time to time including provision of healthcare services. Further, I am aware that my personal identifiable information Name, Address, Age, Date of Birth, Gender and Photographs may be made available to the entities working in the National Digital Health Ecosystem (NDHE) which inter also includes stakeholders and entities such as healthcare professionas (e.g. doctors), facilities (e.g. hospitals, laboratories) and data fiduciaries (e.g. health programmes), which are registered with or linked to the Ayushman Bharat Digital Mission (ABDM) and various processes there under. I authorize NHA to
+                  </div>
+                </label>
+                <br />
+                <label style={{ marginTop: '0px', display: 'flex', width: '100px' }}>
+                  <input
+                    type="checkbox"
+                    checked={iAgree}
+                    onChange={() => setIAgree(!iAgree)}
+                  />
+                  I agree
+                </label>
+                <br />
+                <button type="submit" style={{ width: '50px' }}>Next</button>
+              </form>
+            </div>
           )}
 
           {step === 2 && (
-          <div>
-            {/* <h2>Step 2: OTP Verification</h2> */}
-            <p style={{fontSize:'20px'}}>Enter the OTP sent to your mobile number linked to your Aadhar: {aadharNumber}.</p>
-            <form onSubmit={handleSubmit} style={{marginBottom:'20px'}}>
-              <div>
-                {Array.from({ length: optSize }, (_, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    maxLength="1"
-                    ref={(ref) => inputRefs.current[index] = ref}
-                    value={otp[index] || ''}
-                    onChange={(e) => {
-                      const newOtp = [...otp];
-                      newOtp[index] = e.target.value;
-                      setOtp(newOtp);
+            <div>
+              {/* <h2>Step 2: OTP Verification</h2> */}
+              <p style={{ fontSize: '20px' }}>Enter the OTP sent to your mobile number linked to your Aadhar: {aadharNumber}.</p>
+              <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
+                <div>
+                  {Array.from({ length: optSize }, (_, index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      maxLength="1"
+                      ref={(ref) => inputRefs.current[index] = ref}
+                      value={otp[index] || ''}
+                      onChange={(e) => {
+                        const newOtp = [...otp];
+                        newOtp[index] = e.target.value;
+                        setOtp(newOtp);
 
-                      // Move cursor to the next input field if available
-                      if (e.target.value && index < inputRefs.current.length - 1) {
-                        inputRefs.current[index + 1].focus();
-                      }
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                        // Move cursor to the previous input field
-                        inputRefs.current[index - 1].focus();
-                      }
-                    }}
-                    style={{width: '10%'}}
-                  />
-                ))}
+                        // Move cursor to the next input field if available
+                        if (e.target.value && index < inputRefs.current.length - 1) {
+                          inputRefs.current[index + 1].focus();
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                          // Move cursor to the previous input field
+                          inputRefs.current[index - 1].focus();
+                        }
+                      }}
+                      style={{ width: '10%' }}
+                    />
+                  ))}
+                </div>
+                {/* Render timer and resend button */}
+                <p>Time remaining: {timer} seconds</p>
+                <button type="button" onClick={handleResend} disabled={timer > 0}>
+                  Resend OTP
+                </button>
+                {/* Add other form fields */}
+                <button type="submit">Verify OTP</button>
+              </form>
+              <div style={{ fontSize: '12px', marginTop: '10px' }}>
+                Wrong Aadhar Number?
+                <button onClick={() => setStep(step - 1)}>Go Back</button>
               </div>
-              {/* Render timer and resend button */}
-              <p>Time remaining: {timer} seconds</p>
-              <button type="button" onClick={handleResend} disabled={timer > 0}>
-                Resend OTP
-              </button>
-              {/* Add other form fields */}
-              <button type="submit">Verify OTP</button>
-            </form>
-            <div style={{fontSize:'12px', marginTop:'10px'}}>
-              Wrong Aadhar Number?
-              <button onClick={() => setStep(step - 1)}>Go Back</button>
             </div>
-          </div>
           )}
 
           {/* {step === 3 && (
@@ -235,75 +239,78 @@ const PatientRegistration = () => {
 
           {step === 3 && (
             <div>
-                <h2>Step 3: Enter Mobile Number</h2>
-                <form onSubmit={handleSubmit}>
-                <label>
+              <p style={{ fontSize: '20px' }}>Enter the mobile number you want to link your ABHA Number to</p>
+              <form onSubmit={handleSubmit}>
+                <label style={{ display: 'block', marginTop: '-10px', fontSize: '20px' }}>
                   Mobile Number:
                   <input
-                  type="text"
-                  value={mobileNumber}
-                  onChange={(e) => setMobileNumber(e.target.value)}
+                    type="text"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
+                    maxLength={10}
+                    style={{ textAlign: 'center', fontSize: '20px', marginLeft: '10px'}}
+                    placeholder="Mobile Number"
                   />
                 </label>
-                <button type="button" onClick={() => setStep(step + 1)}>
+                <button type="button" onClick={handleSubmit}>
                   Next
                 </button>
-                </form>
-                  <button onClick={() => setStep(step - 1)}>Previous</button>
+              </form>
+              <button onClick={() => setStep(step - 1)}>Previous</button>
             </div>
           )}
 
-        {step === 4 && (
-          <div>
-          <h2>Step 4: Final Step</h2>
-          {/* Render content based on 'txn' value */}
-          {txn === 'A' ? (
-            <p>Verification process completed. Display completion message here.</p>
-          ) : txn === 'B' ? (
+          {step === 4 && (
             <div>
-              <h3>Step 4: OTP Verification</h3>
-              <p>Enter the OTP sent to your mobile number.</p>
-          <form onSubmit={handleSubmit}>
-            {/* Render OTP input fields */}
-            <div>
-              <input
-                type="text"
-                maxLength="1"
-                value={mobileOtp[0] || ''}
-                onChange={(e) => setMobileOtp(e.target.value)}
-              />
-              <input
-                type="text"
-                maxLength="1"
-                value={mobileOtp[1] || ''}
-                onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], e.target.value])}
-              />
-              <input
-                type="text"
-                maxLength="1"
-                value={mobileOtp[2] || ''}
-                onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], prevOtp[1], e.target.value])}
-              />
-              <input
-                type="text"
-                maxLength="1"
-                value={mobileOtp[3] || ''}
-                onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], prevOtp[1], prevOtp[2], e.target.value])}
-              />
+              <h2>Step 4: Final Step</h2>
+              {/* Render content based on 'txn' value */}
+              {txn === 'A' ? (
+                <p>Verification process completed. Display completion message here.</p>
+              ) : txn === 'B' ? (
+                <div>
+                  <h3>Step 4: OTP Verification</h3>
+                  <p>Enter the OTP sent to your mobile number.</p>
+                  <form onSubmit={handleSubmit}>
+                    {/* Render OTP input fields */}
+                    <div>
+                      <input
+                        type="text"
+                        maxLength="1"
+                        value={mobileOtp[0] || ''}
+                        onChange={(e) => setMobileOtp(e.target.value)}
+                      />
+                      <input
+                        type="text"
+                        maxLength="1"
+                        value={mobileOtp[1] || ''}
+                        onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], e.target.value])}
+                      />
+                      <input
+                        type="text"
+                        maxLength="1"
+                        value={mobileOtp[2] || ''}
+                        onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], prevOtp[1], e.target.value])}
+                      />
+                      <input
+                        type="text"
+                        maxLength="1"
+                        value={mobileOtp[3] || ''}
+                        onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], prevOtp[1], prevOtp[2], e.target.value])}
+                      />
+                    </div>
+                    {/* Render timer and resend button */}
+                    <p>Time remaining: {timer} seconds</p>
+                    <button type="button" onClick={handleResend} disabled={timer > 0}>
+                      Resend OTP
+                    </button>
+                    {/* Add other form fields */}
+                    <button type="submit">Verify OTP</button>
+                  </form>
+                  <button onClick={() => setStep(step - 1)}>Previous</button>
+                </div>
+              ) : null}
             </div>
-            {/* Render timer and resend button */}
-            <p>Time remaining: {timer} seconds</p>
-            <button type="button" onClick={handleResend} disabled={timer > 0}>
-              Resend OTP
-            </button>
-            {/* Add other form fields */}
-            <button type="submit">Verify OTP</button>
-          </form>
-          <button onClick={() => setStep(step - 1)}>Previous</button>
-          </div>
-            ) : null}
-          </div>
-        )}
+          )}
         </div>
       </div>
     </div>

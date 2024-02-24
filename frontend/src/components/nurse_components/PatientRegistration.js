@@ -15,14 +15,6 @@ const PatientRegistration = () => {
   const [mobileNumber, setMobileNumber] = useState('');
   const [mobileOtp, setMobileOtp] = useState('');
   const [txn, setTxn] = useState('B'); // A or B
-  // const [profileData, setProfileData] = useState({
-  //   firstName: 'John',
-  //   middleName: 'Doe',
-  //   lastName: 'Smith',
-  //   dateOfBirth: '01/01/1990',
-  //   profileImage: 'url_to_sample_image', // Replace with an actual URL or image source
-  // });
-  // Add more state variables for other form data
 
   // Function to handle form submission for each step
   const handleSubmit = async (e) => {
@@ -35,6 +27,7 @@ const PatientRegistration = () => {
         // Conditions met, proceed to the next step
         console.log(aadharNumber.split(' ').join(''));
         setTimer(60);
+        setOtp([])
         setStep(step + 1);
       } else {
         // Display an error message or handle invalid input
@@ -69,6 +62,7 @@ const PatientRegistration = () => {
 
           // Proceed to the next step
           setTimer(60);
+          setMobileOtp([]);
           setStep(step + 1);
         }
         else {
@@ -179,7 +173,7 @@ const PatientRegistration = () => {
           {step === 2 && (
             <div>
               {/* <h2>Step 2: OTP Verification</h2> */}
-              <p style={{ fontSize: '20px' }}>Enter the OTP sent to your mobile number linked to your Aadhar: {aadharNumber}.</p>
+              <p style={{ fontSize: '18px' }}>Enter the OTP sent to your mobile number linked to your Aadhar: {aadharNumber}.</p>
               <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
                 <div>
                   {Array.from({ length: otpSize }, (_, index) => (
@@ -191,13 +185,19 @@ const PatientRegistration = () => {
                       value={otp[index] || ''}
                       onChange={(e) => {
                         const newOtp = [...otp];
-                        newOtp[index] = e.target.value;
+                        const char = e.target.value
+                        if (!isNaN(char) && char % 1 === 0) {
+                          newOtp[index] = char
+                          if (e.target.value && index < inputRefs.current.length - 1) {
+                            inputRefs.current[index + 1].focus();
+                          }
+                        }
+                        else {
+
+                        }
                         setOtp(newOtp);
 
                         // Move cursor to the next input field if available
-                        if (e.target.value && index < inputRefs.current.length - 1) {
-                          inputRefs.current[index + 1].focus();
-                        }
                       }}
                       onKeyDown={(e) => {
                         if (e.key === 'Backspace' && !e.target.value && index > 0) {
@@ -205,7 +205,13 @@ const PatientRegistration = () => {
                           inputRefs.current[index - 1].focus();
                         }
                       }}
-                      style={{ width: '10%' }}
+                      style={{
+                        width: '40px', // Adjust width to make them squares
+                        height: '40px', // Adjust height to make them squares
+                        marginRight: '10px', // Add space between the boxes
+                        textAlign: 'center', // Center the text horizontally
+                        fontSize: '20px', // Adjust font size for better visibility
+                      }}
                     />
                   ))}
                 </div>
@@ -248,9 +254,12 @@ const PatientRegistration = () => {
                   <input
                     type="text"
                     value={mobileNumber}
-                    onChange={(e) => setMobileNumber(e.target.value)}
+                    onChange={(e) => {
+                      const number = e.target.value;
+                      setMobileNumber(number.replace(/\D/g, ''));
+                    }}
                     maxLength={10}
-                    style={{ textAlign: 'center', fontSize: '20px', marginLeft: '10px'}}
+                    style={{ textAlign: 'center', fontSize: '20px', marginLeft: '10px' }}
                     placeholder="Mobile Number"
                   />
                 </label>
@@ -258,6 +267,7 @@ const PatientRegistration = () => {
                   Next
                 </button>
               </form>
+              {/* Remove the below button for final */}
               <button onClick={() => setStep(step - 1)}>Previous</button>
             </div>
           )}
@@ -297,7 +307,13 @@ const PatientRegistration = () => {
                             inputRefs.current[index - 1].focus();
                           }
                         }}
-                        style={{ width: '10%' }}
+                        style={{
+                          width: '40px', // Adjust width to make them squares
+                          height: '40px', // Adjust height to make them squares
+                          marginRight: '10px', // Add space between the boxes
+                          textAlign: 'center', // Center the text horizontally
+                          fontSize: '20px', // Adjust font size for better visibility
+                        }}
                       />
                     ))}
                     {/* Render timer and resend button */}

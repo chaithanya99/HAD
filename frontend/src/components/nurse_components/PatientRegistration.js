@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Navbar from './Navbar';
+import Navbar from '../misc/Navbar';
 import axios from 'axios';
 import './PatientRegistration.css';
 import ProgressBar from './ProgressBar';

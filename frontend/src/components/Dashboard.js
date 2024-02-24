@@ -1,9 +1,9 @@
 // src/components/Dashboard.js
 import React from 'react';
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
-import CalendarCard from './CalendarCard';
-import DoctorsListCard from './DoctorsListCard';
+import Navbar from './misc/Navbar';
+import Sidebar from './misc/Sidebar';
+import CalendarCard from './misc/CalendarCard';
+import DoctorsListCard from './misc/DoctorsListCard';
 import ActionCard from './ActionCard';
 // import './NavbarSidebar.css'; // Import the CSS file for navbar and sidebar styling
 import './Dashboard.css';

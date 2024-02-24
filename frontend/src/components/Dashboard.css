@@ -1,19 +1,24 @@
 /* src/components/Dashboard.css */
 .dashboard {
     display: flex;
-    flex-direction: column; /* Stack children vertically */
-    height: 100vh; /* 100% of the viewport height */
+    flex-direction: column;
+    /* Stack children vertically */
+    height: 100vh;
+    /* 100% of the viewport height */
 }
 
 .main-container {
     display: flex;
-    flex: 1; /* Expand and fill remaining space */
+    flex: 1;
+    /* Expand and fill remaining space */
 }
 
 .content-container {
-    flex: 1; /* Expand and fill remaining space */
+    flex: 1;
+    /* Expand and fill remaining space */
     display: flex;
-    flex-direction: column; /* Stack children vertically */
+    flex-direction: column;
+    /* Stack children vertically */
 }
 
 .main-content {
@@ -29,21 +34,63 @@
     width: 60%;
     padding-left: 20px;
 }
-  
+
 .action-buttons {
-display: flex;
-justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
 }
 
 .action-button {
-cursor: pointer;
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 4px;
-background-color: #fff;
-transition: background-color 0.3s;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: background-color 0.3s;
 }
 
 .action-button:hover {
-background-color: #f0f0f0;
+    background-color: #f0f0f0;
+}
+
+/* Styles for custom dropdown */
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
+
+.dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 120px;
+    /* Adjust as needed */
+    overflow-y: auto;
+}
+
+.dropdown-option {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s;
+}
+
+.dropdown-option:last-child {
+    border-bottom: none;
+}
+
+.dropdown-option:hover {
+    background-color: #f0f0f0;
 }

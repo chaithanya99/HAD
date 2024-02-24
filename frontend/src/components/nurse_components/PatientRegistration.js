@@ -5,13 +5,13 @@ import './PatientRegistration.css';
 import ProgressBar from './ProgressBar';
 
 const PatientRegistration = () => {
-  const optSize = 6;
+  const otpSize = 6;
   const [step, setStep] = useState(1);
   const [aadharNumber, setAadharNumber] = useState('');
   const [otp, setOtp] = useState([]);
   const inputRefs = useRef([]);
   const [iAgree, setIAgree] = useState(false);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(0);
   const [mobileNumber, setMobileNumber] = useState('');
   const [mobileOtp, setMobileOtp] = useState('');
   const [txn, setTxn] = useState('B'); // A or B
@@ -34,6 +34,7 @@ const PatientRegistration = () => {
       if (aadharNumber.length === 14 && iAgree) {
         // Conditions met, proceed to the next step
         console.log(aadharNumber.split(' ').join(''));
+        setTimer(60);
         setStep(step + 1);
       } else {
         // Display an error message or handle invalid input
@@ -43,7 +44,7 @@ const PatientRegistration = () => {
       // Add logic for other steps if needed
       // For example, OTP verification logic
       // ...
-      if (otp.length === optSize && otp.every((digit) => Boolean(digit))) {
+      if (otp.length === otpSize && otp.every((digit) => Boolean(digit))) {
         // res = axios.post()
         // if(res == "OTP Verified") {
         //   setStep(step + 1);
@@ -67,6 +68,7 @@ const PatientRegistration = () => {
           // setTxn(response.data.txn);
 
           // Proceed to the next step
+          setTimer(60);
           setStep(step + 1);
         }
         else {
@@ -180,7 +182,7 @@ const PatientRegistration = () => {
               <p style={{ fontSize: '20px' }}>Enter the OTP sent to your mobile number linked to your Aadhar: {aadharNumber}.</p>
               <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
                 <div>
-                  {Array.from({ length: optSize }, (_, index) => (
+                  {Array.from({ length: otpSize }, (_, index) => (
                     <input
                       key={index}
                       type="text"
@@ -272,32 +274,32 @@ const PatientRegistration = () => {
                   <p>Enter the OTP sent to your mobile number.</p>
                   <form onSubmit={handleSubmit}>
                     {/* Render OTP input fields */}
-                    <div>
+                    {Array.from({ length: otpSize }, (_, index) => (
                       <input
+                        key={index}
                         type="text"
                         maxLength="1"
-                        value={mobileOtp[0] || ''}
-                        onChange={(e) => setMobileOtp(e.target.value)}
+                        ref={(ref) => inputRefs.current[index] = ref}
+                        value={mobileOtp[index] || ''}
+                        onChange={(e) => {
+                          const newOtp = [...mobileOtp];
+                          newOtp[index] = e.target.value;
+                          setMobileOtp(newOtp);
+
+                          // Move cursor to the next input field if available
+                          if (e.target.value && index < inputRefs.current.length - 1) {
+                            inputRefs.current[index + 1].focus();
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                            // Move cursor to the previous input field
+                            inputRefs.current[index - 1].focus();
+                          }
+                        }}
+                        style={{ width: '10%' }}
                       />
-                      <input
-                        type="text"
-                        maxLength="1"
-                        value={mobileOtp[1] || ''}
-                        onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], e.target.value])}
-                      />
-                      <input
-                        type="text"
-                        maxLength="1"
-                        value={mobileOtp[2] || ''}
-                        onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], prevOtp[1], e.target.value])}
-                      />
-                      <input
-                        type="text"
-                        maxLength="1"
-                        value={mobileOtp[3] || ''}
-                        onChange={(e) => setMobileOtp((prevOtp) => [prevOtp[0], prevOtp[1], prevOtp[2], e.target.value])}
-                      />
-                    </div>
+                    ))}
                     {/* Render timer and resend button */}
                     <p>Time remaining: {timer} seconds</p>
                     <button type="button" onClick={handleResend} disabled={timer > 0}>

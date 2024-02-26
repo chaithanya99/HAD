@@ -108,7 +108,7 @@ public class AbhaCreationController {
             // System.out.println(jsonResponse);
             Map<String, String> responseMap = new HashMap<>();
             responseMap.put("txnId", jsonResponse.getString("txnId"));
-            responseMap.put("mobileLinked",jsonResponse.getString("mobileLinked"));
+            responseMap.put("mobileLinked",(String.valueOf(jsonResponse.getBoolean("mobileLinked"))));
             return ResponseEntity.ok(responseMap);
 
         } catch (Exception e) {
@@ -118,7 +118,7 @@ public class AbhaCreationController {
     }
 
     @PostMapping("/generateHealthID")
-    public void generateHealthID(@RequestBody Map<String,String> req) throws Exception{
+    public ResponseEntity<Map<String, String>> generateHealthID(@RequestBody Map<String,String> req) throws Exception{
         try {
             String txnId=req.get("txnId");
             Map<String,String> payload=new HashMap<>();
@@ -126,7 +126,12 @@ public class AbhaCreationController {
             String jsonPayload=new ObjectMapper().writeValueAsString(payload);
             String res=apiService.makePostRequest("/v1/registration/aadhaar/createHealthIdWithPreVerified",jsonPayload);
             JSONObject jsonResponse= new JSONObject(res);
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("healthIdNumber", jsonResponse.getString("healthIdNumber"));
+            responseMap.put("mobile",jsonResponse.getString("mobile"));
+
             System.out.println(jsonResponse);
+            return ResponseEntity.ok(responseMap);
         } catch (Exception e) {
             // TODO: handle exception
             throw e;

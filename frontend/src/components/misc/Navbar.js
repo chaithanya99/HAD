@@ -7,7 +7,7 @@ const Navbar = () => {
         <header>
             <nav className="navbar">
                 {/* Add your navbar content here */}
-                <div className="logo">Your Logo</div>
+                <div className="logo"></div>
                 <ul className="nav-links">
                     <li>Home</li>
                     <li>About</li>

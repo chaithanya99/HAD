@@ -15,8 +15,7 @@ const ActionCard = () => {
   };
 
   return (
-    <div className="dashboard-card">
-      <h3>Actions</h3>
+    <div className="action-card dashboard-card">
       <div className="action-buttons">
         <div className="action-button" onClick={() => handleCardClick('/appointments')}>
           Appointments

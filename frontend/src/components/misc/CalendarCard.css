@@ -1,0 +1,13 @@
+/* CalendarCard.css */
+.react-calendar,
+.react-calendar *,
+.react-calendar *:before,
+.react-calendar *:after {
+    box-sizing: border-box;
+    color: black; /* Add this line to set the text color to black */
+}
+  
+  .react-calendar__tile--active {
+    background: #2196f3; /* Set the background color for the active date */
+    color: #fff; /* Set the text color for the active date */
+  }

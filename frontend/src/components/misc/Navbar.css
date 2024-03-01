@@ -1,12 +1,12 @@
 /* src/components/Navbar.css */
 header {
-    height: 10vh; /* 10% of the viewport height */
-    background-color: #2196f3; /* Set your desired background color */
-    color: #fff; /* Set your desired text color */
+    height: 6vh;
+    background: linear-gradient(to right, #ffffff, #000000);
+    color: #fff;
     display: flex;
     align-items: center;
-    padding: 0 20px; /* Adjust padding as needed */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow */
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .navbar {

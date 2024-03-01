@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.had.project5.filters.JwtFilter;
 import com.had.project5.services.UserService;
@@ -27,6 +28,7 @@ import com.had.project5.services.UserService;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableWebMvc
 public class AppConfig {
     @Autowired
     private JwtFilter jwtFilter;
@@ -39,7 +41,7 @@ public class AppConfig {
         return http.cors().and()
                 .csrf().disable() 
 				.authorizeHttpRequests() 
-				.requestMatchers("/auth/generateToken","/generateOtp","/verifyToken").permitAll() //need to add endpoints which doesnot require authentication
+				.requestMatchers("/auth/generateToken","/generateOtp","/verifyToken","/v3/api-docs/**", "/swagger-ui/**").permitAll() //need to add endpoints which doesnot require authentication
 				.and() 
 				.authorizeHttpRequests().requestMatchers("/**").authenticated() 
 				.and()  

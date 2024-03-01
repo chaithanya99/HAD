@@ -16,6 +16,7 @@ const PatientRegistration = () => {
   const [mobileOtp, setMobileOtp] = useState('');
   const [txn, setTxn] = useState('B'); // A or B
   const [txnId,setTxnId] = useState('');
+  const [abhaId,setAbhaId] = useState('');
   const token = localStorage.getItem('token');
   // Function to handle form submission for each step
   const handleSubmit = async (e) => {
@@ -79,6 +80,14 @@ const PatientRegistration = () => {
           console.log(response.data.mobileLinked);
           if(response.data.mobileLinked === "true")
           {
+            const response = await axios.post("http://localhost:8080/generateHealthID", {
+              txnId,
+            }, {
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
+            setAbhaId(response.data.healthIdNumber);
             setTxn('A');
           }
           else
@@ -101,7 +110,6 @@ const PatientRegistration = () => {
       if (txn === 'A') {
         // Mobile number already verified, display completion message
         // ...
-        setStep(step + 2);
       } else if (txn === 'B') {
         // Mobile number needs OTP verification again, similar to Step 2
         // ...
@@ -302,7 +310,7 @@ const PatientRegistration = () => {
               <h2>Step 4: Final Step</h2>
               {/* Render content based on 'txn' value */}
               {txn === 'A' ? (
-                <p>Verification process completed. Display completion message here.</p>
+                <><p>Verification process completed. Display completion message here.</p><p>ABHA ID: {abhaId}</p></>
               ) : txn === 'B' ? (
                 <div>
                   <h3>Step 4: OTP Verification</h3>

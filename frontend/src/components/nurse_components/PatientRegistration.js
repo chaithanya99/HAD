@@ -15,7 +15,8 @@ const PatientRegistration = () => {
   const [mobileNumber, setMobileNumber] = useState('');
   const [mobileOtp, setMobileOtp] = useState('');
   const [txn, setTxn] = useState('B'); // A or B
-
+  const [txnId,setTxnId] = useState('');
+  const token = localStorage.getItem('token');
   // Function to handle form submission for each step
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +27,15 @@ const PatientRegistration = () => {
       if (aadharNumber.length === 14 && iAgree) {
         // Conditions met, proceed to the next step
         console.log(aadharNumber.split(' ').join(''));
+        const response = await axios.post("http://localhost:8080/generateOtp", {
+          "aadhaar": aadharNumber.split(' ').join('')
+        }, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setTxnId(response.data.txnId);
+        console.log(response.data.txnId);
         setTimer(60);
         setOtp([])
         setStep(step + 1);
@@ -38,29 +48,43 @@ const PatientRegistration = () => {
       // For example, OTP verification logic
       // ...
       if (otp.length === otpSize && otp.every((digit) => Boolean(digit))) {
-        // res = axios.post()
-        // if(res == "OTP Verified") {
-        //   setStep(step + 1);
-        // }
-        // else {
-        //   alert('Wrong OTP');
-        // }
+        const otpstring = otp.join('');
+        console.log(otpstring);
+        const response = await axios.post("http://localhost:8080/verifyAadhaarOTP", {
+          txnId,
+          "otp": otpstring
+        }, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         setStep(step + 1);
+        console.log(response);
       }
       else {
         alert('Please enter complete OTP');
       }
-      // Proceed to the next step
-      console.log(otp)
     } else if (step === 3) {
       try {
         if (mobileNumber.length === 10) {
-          // const response = await axios.post('your_backend_api', { mobileNumber });
-
-          // Handle the response with the 'txn' variable
-          // setTxn(response.data.txn);
-
-          // Proceed to the next step
+          console.log(mobileNumber);
+          const response = await axios.post("http://localhost:8080/checkAndGenerateMobileOTP", {
+            txnId,
+            "mobile" : mobileNumber
+          }, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          console.log(response.data.mobileLinked);
+          if(response.data.mobileLinked === "true")
+          {
+            setTxn('A');
+          }
+          else
+          {
+            setTxn('B');
+          }
           setTimer(60);
           setMobileOtp([]);
           setStep(step + 1);
@@ -77,6 +101,7 @@ const PatientRegistration = () => {
       if (txn === 'A') {
         // Mobile number already verified, display completion message
         // ...
+        setStep(step + 2);
       } else if (txn === 'B') {
         // Mobile number needs OTP verification again, similar to Step 2
         // ...

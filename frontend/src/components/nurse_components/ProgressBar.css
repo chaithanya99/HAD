@@ -1,0 +1,51 @@
+.progress-bar-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+  
+.progress-bar {
+    width: 95%;
+    height: 20px;
+    transform: translateX(3%);
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #4caf50; /* Green color for progress */
+}
+
+.stage-indicators {
+    position: absolute;
+    top: -10%;
+    transform: translateX(2%);
+    width: 95%;
+}
+
+.stage-indicator {
+    position: absolute;
+    top: 0;
+    transform: translateX(-30%);
+    background-color: #ddd;
+    border-radius: 50%;
+    color: #666;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stage-indicator.completed {
+    background-color: #4caf50; /* Green color for completed stages */
+    color: #fff;
+}  
+.stage-name {
+    position: absolute;
+    top: 100%;
+    font-size: 15px;
+    text-align: center;
+}

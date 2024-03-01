@@ -1,0 +1,30 @@
+/* src/components/Navbar.css */
+header {
+    height: 6vh;
+    background: linear-gradient(to right, #ffffff, #000000);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.logo {
+    font-size: 1.5rem; /* Adjust font size as needed */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Adjust the space between links */
+}
+
+.nav-links li {
+    cursor: pointer;
+}

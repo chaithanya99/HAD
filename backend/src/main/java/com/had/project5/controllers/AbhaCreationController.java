@@ -48,17 +48,7 @@ public class AbhaCreationController {
             Map<String,String> payload=new HashMap<>();
             payload.put("aadhaar",encryptedAadhaar);
             String jsonPayload=new ObjectMapper().writeValueAsString(payload);
-
-          String res=apiService.makePostRequest("/v2/registration/aadhaar/generateOtp",jsonPayload);
-
-//            String res=apiService.catfact("https://catfact.ninja/fact");
-//            JSONObject jsonResponse= new JSONObject(res);
-//            System.out.println(jsonResponse.getString("fact"));
-//            Map<String, String> responseMap = new HashMap<>();
-//            responseMap.put("message", "Cat fact retrieved successfully");
-//            responseMap.put("catFact", jsonResponse.getString("fact"));
-//            return ResponseEntity.ok(responseMap);
-
+            String res=apiService.makePostRequest("/v2/registration/aadhaar/generateOtp",jsonPayload);
             JSONObject jsonResponse= new JSONObject(res);
             System.out.println(jsonResponse);
             Map<String, String> responseMap = new HashMap<>();
@@ -86,7 +76,6 @@ public class AbhaCreationController {
             responseMap.put("gender", jsonResponse.getString("gender"));
             responseMap.put("birthdate",jsonResponse.getString("birthdate"));
             responseMap.put("name", jsonResponse.getString("name"));
-            // System.out.println(jsonResponse);
             return ResponseEntity.ok(responseMap);
         } catch (Exception e) {
             // TODO: handle exception
@@ -105,7 +94,6 @@ public class AbhaCreationController {
             String jsonPayload=new ObjectMapper().writeValueAsString(payload);
             String res=apiService.makePostRequest("/v2/registration/aadhaar/checkAndGenerateMobileOTP",jsonPayload);
             JSONObject jsonResponse= new JSONObject(res);
-            // System.out.println(jsonResponse);
             Map<String, String> responseMap = new HashMap<>();
             responseMap.put("txnId", jsonResponse.getString("txnId"));
             responseMap.put("mobileLinked",(String.valueOf(jsonResponse.getBoolean("mobileLinked"))));
@@ -140,9 +128,7 @@ public class AbhaCreationController {
 
     @PostMapping("/verifyToken")
     public void verifyToken(@RequestBody Map<String,String> req){
-        String token = req.get("token");
-        
-        // apiService.isTokenExpired(token);
+        String token = req.get("token");        
         jwtService.isTokenExpired(token);
     }
     

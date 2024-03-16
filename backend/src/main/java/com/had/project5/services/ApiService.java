@@ -89,6 +89,17 @@ public class ApiService {
             return authResponse.getBody();
     }
 
+    public String makePatchRequest(String endpoint, String jsonPayload){
+        HttpHeaders authHeader=new HttpHeaders();
+        authHeader.setContentType(MediaType.APPLICATION_JSON);
+        authHeader.setBearerAuth(getToken());
+        Map<String,String> payload=new HashMap<>();
+        HttpEntity<String> entity=new HttpEntity<>(jsonPayload,authHeader);
+        ResponseEntity<String> authResponse = restTemplate.exchange(endpoint, HttpMethod.PATCH, entity, String.class);
+        System.out.println(authResponse.getBody());
+        return authResponse.getBody();
+    }
+
     public String catfact(String endpoint) {
         ResponseEntity<String> authResponse = restTemplate.getForEntity(endpoint, String.class);
         System.out.println(authResponse.getBody());

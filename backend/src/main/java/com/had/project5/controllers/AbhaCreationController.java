@@ -38,6 +38,17 @@ public class AbhaCreationController {
         return token;
     }
 
+    @GetMapping("/getEncryptedAadhaar")
+    public String getEncryptedAadhaar(@RequestBody Map<String,String> req){
+        String encryptedAadhaar;
+        try {
+            encryptedAadhaar = encryption.encryptWithPublicKey(req.get("aadhaar"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return encryptedAadhaar;
+    }
+
     @PostMapping("/generateOtp")
     public ResponseEntity<Map<String, String>> generateOtp(@RequestBody Map<String,String> req) throws Exception{
         try {

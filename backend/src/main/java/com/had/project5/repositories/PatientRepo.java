@@ -13,6 +13,5 @@ import com.had.project5.entities.User;
  * UserRepo
  */
 @Repository
-public interface UserRepo extends JpaRepository<User,String>{
-    User findByUsername(String name);
+public interface PatientRepo extends JpaRepository<User,String>{
 }

@@ -41,7 +41,7 @@ public class AppConfig {
         return http.cors().and()
                 .csrf().disable() 
 				.authorizeHttpRequests() 
-				.requestMatchers("/auth/generateToken","/generateOtp","/verifyToken","/v3/api-docs/**", "/swagger-ui/**").permitAll() //need to add endpoints which doesnot require authentication
+				.requestMatchers("/auth/generateToken","/generateOtp","/verifyToken","/v3/api-docs/**", "/swagger-ui/**","/v0.5/users/auth/on-fetch-modes").permitAll() //need to add endpoints which doesnot require authentication
 				.and() 
 				.authorizeHttpRequests().requestMatchers("/**").authenticated() 
 				.and()  
@@ -70,7 +70,7 @@ public class AppConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:3000"); // Allow requests from this origin
+        configuration.addAllowedOrigin("*"); // Allow requests from this origin
         configuration.addAllowedMethod("*"); // Allow all HTTP methods
         configuration.addAllowedHeader("*"); // Allow all headers
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

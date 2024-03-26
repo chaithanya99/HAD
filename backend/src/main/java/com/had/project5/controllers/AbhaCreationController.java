@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.crypto.Cipher;
 
+import com.had.project5.entities.Patient;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -81,6 +82,11 @@ public class AbhaCreationController {
             payload.put("otp", encryptedOtp);
             String jsonPayload=new ObjectMapper().writeValueAsString(payload);
             String res=apiService.makePostRequest("/v2/registration/aadhaar/verifyOTP",jsonPayload);
+            // Create a patient object
+//            Patient curr_patient = new Patient(req.get);
+            System.out.println("At patient creation method.");
+            System.out.println(req);
+            System.out.println(res);
             JSONObject jsonResponse= new JSONObject(res);
             Map<String, String> responseMap = new HashMap<>();
             responseMap.put("txnId", jsonResponse.getString("txnId"));

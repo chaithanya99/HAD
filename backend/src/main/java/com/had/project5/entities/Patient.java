@@ -12,7 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class Patient {
+public class Patient 
+{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private String Id;

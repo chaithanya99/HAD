@@ -1,4 +1,5 @@
 package com.had.project5.entities;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,18 +12,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-
-public class Patient 
-{
+@Entity
+public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private String Id;
-    private String abha_number;
+    private String abhaNumber;
     private String abha_address;
     private String name;
     private String gender;
     private String yearOfBirth;
     private String monthOfBirth;
     private String dayOfBirth;
-    private Address address;
+    private String mobile;
+    // private Address address;
+    private String district;
+    private String state;
+    // private String pincode;
 }

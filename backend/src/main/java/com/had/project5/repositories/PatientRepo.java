@@ -7,11 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Repository;
 
-import com.had.project5.entities.User;
+import com.had.project5.entities.Patient;
 
 /**
  * UserRepo
  */
 @Repository
-public interface PatientRepo extends JpaRepository<User,String>{
+public interface PatientRepo extends JpaRepository<Patient,String>{
+    Patient findByAbhaNumber(String abhaNumber);
 }

@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.had.project5.services.ApiService;
 import com.had.project5.services.Encryption;
 import com.had.project5.services.JwtService;
+import com.had.project5.services.PatientService;
 
 @RestController
 
@@ -30,6 +31,8 @@ public class AbhaCreationController {
     private Encryption encryption;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private PatientService patientService;
 
     @GetMapping("/getABHAtoken")
     public String getToken(){
@@ -134,7 +137,17 @@ public class AbhaCreationController {
             Map<String, String> responseMap = new HashMap<>();
             responseMap.put("healthIdNumber", jsonResponse.getString("healthIdNumber"));
             responseMap.put("mobile",jsonResponse.getString("mobile"));
-
+            Patient p=new Patient();
+            p.setAbhaNumber(jsonResponse.getString("healthIdNumber"));
+            p.setMobile(jsonResponse.getString("mobile"));
+            p.setName(jsonResponse.getString("name"));
+            p.setGender(jsonResponse.getString("gender"));
+            p.setYearOfBirth(jsonResponse.getString("yearOfBirth"));
+            p.setMonthOfBirth(jsonResponse.getString("monthOfBirth"));
+            p.setDayOfBirth(jsonResponse.getString("dayOfBirth"));
+            p.setDistrict(jsonResponse.getString("districtName"));
+            p.setState(jsonResponse.getString("stateName"));
+            patientService.addPatient(p);
             System.out.println(jsonResponse);
             return ResponseEntity.ok(responseMap);
         } catch (Exception e) {
@@ -149,4 +162,11 @@ public class AbhaCreationController {
         jwtService.isTokenExpired(token);
     }
     
+
+    @PostMapping("/addPatient")
+    public ResponseEntity<String> addPatient(@RequestBody Patient p){
+        String s=patientService.addPatient(p);
+        return ResponseEntity.ok(s);
+    }
+
 }

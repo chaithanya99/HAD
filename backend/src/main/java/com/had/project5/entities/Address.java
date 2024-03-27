@@ -1,13 +1,15 @@
 package com.had.project5.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+// import jakarta.persistence.Entity;
+// import lombok.Getter;
+// import lombok.Setter;
 
-@Setter
-@Getter
+// @Setter
+// @Getter
+// @Entity
 public class Address {
-    private String line;
-    private String district;
-    private String state;
-    private String pincode;
+    // private String line;
+    // private String district;
+    // private String state;
+    // private String pincode;
 }

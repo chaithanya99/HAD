@@ -20,5 +20,5 @@ public class User {
     @Column(length = 100)
     private String password;
     @Column(length = 100)
-    private String role;
+    private String roles;
 }

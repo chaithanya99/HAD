@@ -147,6 +147,7 @@ public class AbhaCreationController {
             p.setDayOfBirth(jsonResponse.getString("dayOfBirth"));
             p.setDistrict(jsonResponse.getString("districtName"));
             p.setState(jsonResponse.getString("stateName"));
+            p.setAbha_address("adfds");
             patientService.addPatient(p);
             System.out.println(jsonResponse);
             return ResponseEntity.ok(responseMap);
@@ -167,6 +168,23 @@ public class AbhaCreationController {
     public ResponseEntity<String> addPatient(@RequestBody Patient p){
         String s=patientService.addPatient(p);
         return ResponseEntity.ok(s);
+    }
+
+    @GetMapping("/testing")
+    public String testing(){
+        Patient p=new Patient();
+            p.setAbhaNumber("healthIdNumber");
+            p.setMobile("mobile");
+            p.setName("name");
+            p.setGender("gender");
+            p.setYearOfBirth("yearOfBirth");
+            p.setMonthOfBirth("monthOfBirth");
+            p.setDayOfBirth("dayOfBirth");
+            p.setDistrict("districtName");
+            p.setState("stateName");
+            p.setAbha_address("adfds");
+            patientService.addPatient(p);
+            return "added patient";
     }
 
 }

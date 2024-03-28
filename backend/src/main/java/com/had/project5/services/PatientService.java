@@ -19,7 +19,7 @@ public class PatientService {
             return "patient exists";
         }
         else{
-            patientRepo.save(pp);
+            patientRepo.save(p);
             return "patient added";
         }
 

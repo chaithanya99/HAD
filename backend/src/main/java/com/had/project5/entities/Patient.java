@@ -15,8 +15,8 @@ import lombok.Setter;
 @Entity
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private String Id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long Id;
     private String abhaNumber;
     private String abha_address;
     private String name;

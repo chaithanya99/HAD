@@ -44,7 +44,7 @@ public class AdminController {
         User user = new User();
         user.setUsername(doctor.getAbha_id());
         user.setPassword(passwordEncoder.encode(generatedPassword)); // Encode the password
-        user.setRole(role);
+        user.setRoles(role);
         
         // Save the new User entity
         userRepo.save(user);

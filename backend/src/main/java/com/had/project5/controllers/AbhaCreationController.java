@@ -170,6 +170,12 @@ public class AbhaCreationController {
         return ResponseEntity.ok(s);
     }
 
+    @PostMapping("/isPatientPresent")
+    public ResponseEntity<Boolean> isPatientPresent(@RequestBody Map<String,String> req){
+        boolean present=patientService.isPatientPresent(req.get("abhaNumber"));
+        return ResponseEntity.ok(present);
+    }
+
     @GetMapping("/testing")
     public String testing(){
         Patient p=new Patient();

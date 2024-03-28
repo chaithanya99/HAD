@@ -24,4 +24,13 @@ public class PatientService {
         }
 
     }
+
+    public boolean isPatientPresent(String abhaNumber){
+        Patient p=patientRepo.findByAbhaNumber(abhaNumber);
+        if(p==null){
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -13,6 +13,6 @@ import com.had.project5.entities.Patient;
  * UserRepo
  */
 @Repository
-public interface PatientRepo extends JpaRepository<Patient,String>{
+public interface PatientRepo extends JpaRepository<Patient,Long>{
     Patient findByAbhaNumber(String abhaNumber);
 }

@@ -1,0 +1,68 @@
+.container {
+    display: flex;
+    justify-content: center; /* Center the main content horizontally */
+    align-items: center; /* Center the main content vertically */
+    height: 100vh; /* Ensure the container takes up the full height of the viewport */
+  }
+  
+  .main-content {
+    padding: 3rem;
+    border-radius: 10px;
+    width: 80%;
+    justify-content: center; /* Center the main content horizontally */
+    align-items: center; /* Center the main content vertically */
+    box-shadow: 0px 1px 11px 2px #0000001f;
+    background-color: white;
+  }
+  
+  .card {
+    padding: 20px; /* Add padding to the card */
+    text-align: center; /* Center the content inside the card */
+    background-color: #fff;
+    border-radius: 8px;
+    width: 80%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block; /* Ensure labels are on a new line */
+    margin-bottom: 5px; /* Add space between labels and inputs */
+  }
+  
+  input[type="text"],
+  input[type="email"] {
+    width: calc(100% - 22px); /* Subtract padding and border width */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

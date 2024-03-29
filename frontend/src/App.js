@@ -8,6 +8,8 @@ import Dashboard from './components/Dashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './components/Login_Dashboard/Login';
+import DoctorAdd from './Admin_pages/Doctor_add';
+
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/adddoc" element={<DoctorAdd/>}/>
         {/* <Route path="/register-patient" element={<PatientRegistration/>}/> */}
       </Routes>
       <ToastContainer/>

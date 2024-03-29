@@ -27,5 +27,5 @@ public class Doctor
     private String address;
     private String gender;
     private String YearofBirth;
-    private boolean active; 
+    private boolean active=true; 
 }

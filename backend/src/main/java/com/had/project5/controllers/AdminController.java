@@ -51,7 +51,7 @@ public class AdminController {
         
         // Save the Doctor entity
         doctorRepo.save(doctor);
-         
+        System.out.println("Doctor with id"+user.getUsername()+" has been saved"); 
         return doctor;
         // Return a response indicating success
         // return ResponseEntity.ok("Doctor created successfully. User credentials: " +

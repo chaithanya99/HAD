@@ -1,0 +1,62 @@
+/* Container for the Step2 component */
+.step2-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* OTP input fields */
+  .otp-input {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 50px;
+  }
+  
+  /* Timer */
+  .timer {
+    margin-bottom: 10px;
+  }
+  
+  /* Resend button */
+  .resend-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .resend-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Verify button */
+  .verify-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .verify-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Go back button */
+  .go-back-btn {
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .go-back-btn:hover {
+    text-decoration: underline;
+  }
+  

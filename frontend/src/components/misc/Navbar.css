@@ -1,12 +1,11 @@
 /* src/components/Navbar.css */
 header {
     height: 6vh;
-    background: linear-gradient(to right, #ffffff, #000000);
+    background: rgba(23, 77, 163, 0.874);
     color: #fff;
     display: flex;
     align-items: center;
     padding: 0 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .navbar {

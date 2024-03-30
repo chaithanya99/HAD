@@ -29,7 +29,7 @@ const ActionCard = () => {
           </div>
           {isDropdownOpen && (
             <div className="dropdown-options">
-              <div className="dropdown-option" onClick={() => handleDropdownSelect('/register-patient')}>
+              <div className="dropdown-option" onClick={() => handleDropdownSelect('/RP')}>
                 Create ABHA ID
               </div>
               <div className="dropdown-option" onClick={() => handleDropdownSelect('/register-patient-step2')}>

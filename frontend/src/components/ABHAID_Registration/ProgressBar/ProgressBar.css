@@ -1,0 +1,55 @@
+.progress-bar-container {
+    position: relative;
+    width: 80%;
+    margin-bottom: 20px;
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+.progress-bar {
+    width: calc(100%); /* Adjusted width */
+    height: 5px;
+    background-color: rgba(203, 211, 255, 0.25);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative; /* Added position relative */
+    top: 12px; /* Adjusted position */
+}
+
+.progress {
+    height: 100%;
+    background-color: rgba(0, 183, 255, 0.874); /* Green color for progress */
+}
+
+.stage-indicators {
+    position: relative; /* Changed to relative */
+    width: 100%;
+    height: 2rem;
+}
+
+.stage-indicator {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%); /* Adjusted for center alignment */
+    background-color: rgba(0, 183, 255, 0.874);
+    border-radius: 50%;
+    color: #000000;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 50%; /* Added to center horizontally */
+}
+
+.stage-indicator.completed {
+    background-color: rgba(0, 98, 255, 0.874); /* Green color for completed stages */
+    color: #000000;
+}  
+
+.stage-name {
+    position: absolute;
+    top: 100%;
+    font-size: 17px;
+    font-family: Cambria; /* Change font family */
+    text-align: center;
+}

@@ -1,0 +1,106 @@
+/* Step1.css */
+
+.Stage-1 {
+  width: 80%;
+  padding: 1%;
+  margin-bottom: 0;
+  border: 1px solid #042c40;
+  border-radius: 4px;
+  font-size: 1.5rem; /* Using viewport width for font-size */
+  text-align: center;
+  margin: 0 auto; /* Center the container horizontally */
+  background-color: rgba(203, 211, 255, 0.25);
+}
+
+.Stage-1 form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Stage-1 label {
+  margin-top: 2%;
+  margin-bottom: 0%;
+  font-family: Cambria; /* Change font family */
+  display: inline-block; /* Display checkbox inline */
+  width: 80%;
+}
+
+.TermsAndConditionsTitle {
+  font-size: 1.5rem; /* Adjust font size as needed */
+  font-family: Cambria; /* Change font family */
+  margin-bottom: 1px; /* Add some spacing below the title */
+}
+
+.Stage-1 input[type="text"] {
+  width: 90%; /* Adjust width as needed */
+  padding: 1%;
+  font-size: 1.5rem; /* Using viewport width for font-size */
+  font-family: Cambria; /* Change font family */
+  letter-spacing: 1em; /* Adjust letter spacing for even distribution */
+  text-align: center; /* Center the text horizontally */
+  background-color: white;
+}
+
+.Stage-1 input[type="checkbox"] {
+  margin-right: 1%;/* Step1.css */
+  display: inline-block; /* Display checkbox inline */
+  transform: scale(1.5); /* Increase checkbox size */
+}
+
+.Stage-1 button {
+  margin-top: 1%;
+  padding: 1% 2%;
+  font-size: 1.5rem; /* Using viewport width for font-size */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Stage-1 button:hover {
+  background-color: #0056b3;
+}
+
+.TermsAndConditions {
+  margin-top: 0%;
+  font-size: 1rem;
+  flex: 1;
+  overflow-y: auto; 
+  max-height: 5rem;
+  max-width: 80%;
+  padding-right: 10px;
+  border: 1px solid #000000;
+  background-color: white;
+}
+
+/* Responsive Styles */
+
+@media only screen and (max-width: 768px) {
+  .Stage-1 {
+    width: 90%;
+    font-size: 1rem;
+  }
+  
+  .Stage-1 input[type="text"] {
+    width: calc(100% - 2%); /* Adjusted width considering padding */
+    font-size: 0.6rem;
+    letter-spacing: 0.6em; /* Adjust letter spacing for even distribution */
+
+  }
+
+  .TermsAndConditionsTitle {
+    font-size: 1rem;
+  }
+
+  .TermsAndConditions
+  {
+    font-size: 0.8rem;
+  }
+  
+  .Stage-1 button {
+    font-size: 1rem;
+  }
+}

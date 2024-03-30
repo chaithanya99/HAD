@@ -14,12 +14,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Doctor
+public class Worker
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
-    private String specialization;
     private String name;
     private String abha_id;
     private String email_Id;
@@ -27,5 +26,6 @@ public class Doctor
     private String address;
     private String gender;
     private String YearofBirth;
-    private boolean active=true; 
+    private boolean active; 
 }
+

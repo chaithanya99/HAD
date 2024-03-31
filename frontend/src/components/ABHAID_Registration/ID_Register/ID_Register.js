@@ -12,15 +12,15 @@ const ID_Register = () => {
   const otpSize = 6;
   const [step, setStep] = useState(1);
   const [aadharNumber, setAadharNumber] = useState('');
-  const [Otp, setOtp] = useState('');
-  const inputRefs = useRef([]);
+  const [Otp, setOtp] = useState(new Array(otpSize).fill(""));
+  const OtpBoxReference = useRef([]);
   const [iAgree, setIAgree] = useState(false);
   const [timer, setTimer] = useState(0);
   const [mobileNumber, setMobileNumber] = useState('');
   const [mobileOtp, setMobileOtp] = useState('');
   const [txn, setTxn] = useState('B'); // A or B
-  const [txnId,setTxnId] = useState('');
-  const [abhaId,setAbhaId] = useState('');
+  const [txnId, setTxnId] = useState('');
+  const [abhaId, setAbhaId] = useState('');
   const token = localStorage.getItem('token');
 
   // Function to handle form submission for each step
@@ -33,18 +33,23 @@ const ID_Register = () => {
       if (aadharNumber.length === 14 && iAgree) {
         // Conditions met, proceed to the next step
         console.log(aadharNumber.split(' ').join(''));
-        const response = await axios.post("http://localhost:8080/generateOtp", {
-          "aadhaar": aadharNumber.split(' ').join('')
-        }, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        setTxnId(response.data.txnId);
-        console.log(response.data.txnId);
-        setTimer(60);
-        setOtp([])
-        setStep(step + 1);
+        // try {
+          const response = await axios.post("http://localhost:8080/generateOtp", {
+            "aadhaar": aadharNumber.split(' ').join('')
+          }, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          setTxnId(response.data.txnId);
+          console.log(response.data.txnId);
+          setTimer(60);
+          setStep(step + 1);
+        // }
+        // catch (error) {
+        //   // Handle errors from the backend
+        //   console.error('Error:', error.message);
+        // }
       } else {
         // Display an error message or handle invalid input
         alert('Please enter a valid Aadhar number and check the agreement.');
@@ -71,9 +76,10 @@ const ID_Register = () => {
       //   alert('Please enter complete OTP');
       // }
       try {
+        const actualOtp = Otp.join('')
         const response = await axios.post("http://localhost:8080/verifyAadhaarOTP", {
           txnId,
-          otp: Otp
+          otp: actualOtp
         }, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -81,7 +87,7 @@ const ID_Register = () => {
         });
         setStep(step + 1);
         console.log(response.data); // Handle response accordingly
-        
+
         // Proceed to the next step or handle response
       } catch (error) {
         // Handle errors from the backend
@@ -93,15 +99,14 @@ const ID_Register = () => {
           console.log(mobileNumber);
           const response = await axios.post("http://localhost:8080/checkAndGenerateMobileOTP", {
             txnId,
-            "mobile" : mobileNumber
+            "mobile": mobileNumber
           }, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
           });
           console.log(response.data.mobileLinked);
-          if(response.data.mobileLinked === "true")
-          {
+          if (response.data.mobileLinked === "true") {
             const response = await axios.post("http://localhost:8080/generateHealthID", {
               txnId,
             }, {
@@ -112,12 +117,10 @@ const ID_Register = () => {
             setAbhaId(response.data.healthIdNumber);
             setTxn('A');
           }
-          else
-          {
+          else {
             setTxn('B');
           }
           setTimer(60);
-          setMobileOtp([]);
           setStep(step + 1);
         }
         else {
@@ -178,12 +181,11 @@ const ID_Register = () => {
         <div className='progbar'>
           <ProgressBar currentStage={step} />
         </div>
-        <div className='orb'/>
         {/* Render form based on the current step */}
         <div className='Stage-Components'>
           {step === 1 && <Step1 aadharNumber={aadharNumber} changeAadharNumber={changeAadharNumber} iAgree={iAgree} handleSubmit={handleSubmit} setIAgree={setIAgree} />}
-          {step === 2 && <Step2 aadharNumber={aadharNumber} Otp={Otp} setOtp = {setOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} step={step} setStep={setStep}/>}
-          {step === 3 && <Step3 mobileNumber={mobileNumber} handleSubmit={handleSubmit} setMobileNumber={setMobileNumber} setStep={setStep} step={step}/>}
+          {step === 2 && <Step2 aadharNumber={aadharNumber} Otp={Otp} setOtp={setOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} step={step} setStep={setStep} otpSize={otpSize} otpBoxReference={OtpBoxReference}/>}
+          {step === 3 && <Step3 mobileNumber={mobileNumber} handleSubmit={handleSubmit} setMobileNumber={setMobileNumber} setStep={setStep} step={step} />}
           {step === 4 && <Step4 txn={txn} abhaId={abhaId} mobileOtp={mobileOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} setStep={setStep} step={step} />}
         </div>
       </div>

@@ -37,7 +37,7 @@
   padding: 1%;
   font-size: 1.5rem; /* Using viewport width for font-size */
   font-family: Cambria; /* Change font family */
-  letter-spacing: 1em; /* Adjust letter spacing for even distribution */
+  letter-spacing: 0.65em; /* Adjust letter spacing for even distribution */
   text-align: center; /* Center the text horizontally */
   background-color: white;
 }
@@ -68,12 +68,16 @@
   margin-top: 0%;
   font-size: 1rem;
   flex: 1;
-  overflow-y: auto; 
-  max-height: 5rem;
+  overflow-y: visible; 
+  max-height: fit-content; /*5rem*/
   max-width: 80%;
   padding-right: 10px;
   border: 1px solid #000000;
   background-color: white;
+  text-align: justify;
+  line-height: 1.5;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 /* Responsive Styles */

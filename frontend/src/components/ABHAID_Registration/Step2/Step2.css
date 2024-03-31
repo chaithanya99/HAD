@@ -1,62 +1,85 @@
 /* Container for the Step2 component */
-.step2-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+.Stage-2 {
+  width: 80%;
+  padding: 1%;
+  margin-bottom: 0;
+  border: 1px solid #042c40;
+  border-radius: 4px;
+  font-size: 1.5rem; /* Using viewport width for font-size */
+  text-align: center;
+  margin: 0 auto; /* Center the container horizontally */
+  background-color: rgba(203, 211, 255, 0.25);
+}
+
+.Stage-2 form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Stage-2 button {
+  margin: 1%;
+  padding: 1% 2%;
+  font-size: 1.5rem; /* Using viewport width for font-size */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
   
-  /* OTP input fields */
-  .otp-input {
-    margin-bottom: 10px;
-    padding: 8px;
-    width: 50px;
-  }
+/* OTP input fields */
+.Otp input {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 50px;
+  font-size: 20px;
+  height: fit-content;
+}
   
-  /* Timer */
-  .timer {
-    margin-bottom: 10px;
-  }
-  
-  /* Resend button */
-  .resend-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .resend-btn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  /* Verify button */
-  .verify-btn {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .verify-btn:hover {
-    background-color: #218838;
-  }
-  
-  /* Go back button */
-  .go-back-btn {
-    background-color: transparent;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-  }
-  
-  .go-back-btn:hover {
-    text-decoration: underline;
-  }
-  
+/* Timer */
+.timer {
+  margin-bottom: 10px;
+}
+
+/* Resend button */
+.resend-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.resend-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Verify button */
+.verify-btn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.verify-btn:hover {
+  background-color: #218838;
+}
+
+/* Go back button */
+.go-back-btn {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.go-back-btn:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,11 @@
+.Stage-3 {
+  width: 80%;
+  padding: 1%;
+  margin-bottom: 0;
+  border: 1px solid #042c40;
+  border-radius: 4px;
+  font-size: 1.5rem; /* Using viewport width for font-size */
+  text-align: center;
+  margin: 0 auto; /* Center the container horizontally */
+  background-color: rgba(203, 211, 255, 0.25);
+}

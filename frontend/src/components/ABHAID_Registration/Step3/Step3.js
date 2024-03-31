@@ -1,8 +1,9 @@
 import React from 'react';
+import './Step3.css'
 
 const Step3 = ({ mobileNumber, handleSubmit, setMobileNumber, setStep, step }) => {
   return (
-    <div>
+    <div className='Stage-3'>
       <p>Enter the mobile number you want to link your ABHA Number to</p>
       <form onSubmit={handleSubmit}>
         <label>
@@ -15,7 +16,7 @@ const Step3 = ({ mobileNumber, handleSubmit, setMobileNumber, setStep, step }) =
               setMobileNumber(number.replace(/\D/g, ''));
             }}
             maxLength={10}
-            placeholder="Mobile Number"
+            placeholder="Eg: 7829923447"
           />
         </label>
         <button type="button" onClick={handleSubmit}>

@@ -23,8 +23,8 @@ const DoctorAdd = () => {
     setDoctorDetails({ ...doctorDetails, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    // e.preventDefault();
     try {
       // Send a POST request to your server endpoint
       const response = await axios.post("http://localhost:8080/admin/createdoc", doctorDetails,

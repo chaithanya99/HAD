@@ -11,7 +11,7 @@ import './Dashboard.css';
 const Dashboard = () => {
   return (
     <div className="dashboard">
-    <Navbar />
+    {/* <Navbar /> */}
       <div className="main-container">
         <Sidebar />
         <div className="content-container">

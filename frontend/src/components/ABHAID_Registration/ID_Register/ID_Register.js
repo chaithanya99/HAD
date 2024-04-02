@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Navbar from '../../misc/Navbar';
+import Sidebar from '../../misc/Sidebar';
 import axios from 'axios';
 import './ID_Register.css';
 import ProgressBar from '../ProgressBar/ProgressBar';
@@ -175,18 +176,20 @@ const ID_Register = () => {
 
   return (
     <div className='Regpage'>
-      <Navbar />
-      <h1 style={{ textAlign: 'center' }}> Create ABHA Number</h1>
-      <div className="centered-box" style={{ textAlign: 'center' }}>
-        <div className='progbar'>
-          <ProgressBar currentStage={step} />
-        </div>
-        {/* Render form based on the current step */}
-        <div className='Stage-Components'>
-          {step === 1 && <Step1 aadharNumber={aadharNumber} changeAadharNumber={changeAadharNumber} iAgree={iAgree} handleSubmit={handleSubmit} setIAgree={setIAgree} />}
-          {step === 2 && <Step2 aadharNumber={aadharNumber} Otp={Otp} setOtp={setOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} step={step} setStep={setStep} otpSize={otpSize} otpBoxReference={OtpBoxReference}/>}
-          {step === 3 && <Step3 mobileNumber={mobileNumber} handleSubmit={handleSubmit} setMobileNumber={setMobileNumber} setStep={setStep} step={step} />}
-          {step === 4 && <Step4 txn={txn} abhaId={abhaId} mobileOtp={mobileOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} setStep={setStep} step={step} />}
+      <Sidebar />
+      <div className='content'>
+        <h1 style={{ textAlign: 'center' }}> Create ABHA Number</h1>
+        <div className="centered-box" style={{ textAlign: 'center' }}>
+          <div className='progbar'>
+            <ProgressBar currentStage={step} />
+          </div>
+          {/* Render form based on the current step */}
+          <div className='Stage-Components'>
+            {step === 1 && <Step1 aadharNumber={aadharNumber} changeAadharNumber={changeAadharNumber} iAgree={iAgree} handleSubmit={handleSubmit} setIAgree={setIAgree} />}
+            {step === 2 && <Step2 aadharNumber={aadharNumber} Otp={Otp} setOtp={setOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} step={step} setStep={setStep} otpSize={otpSize} otpBoxReference={OtpBoxReference}/>}
+            {step === 3 && <Step3 mobileNumber={mobileNumber} handleSubmit={handleSubmit} setMobileNumber={setMobileNumber} setStep={setStep} step={step} />}
+            {step === 4 && <Step4 txn={txn} abhaId={abhaId} mobileOtp={mobileOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} setStep={setStep} step={step} />}
+          </div>
         </div>
       </div>
     </div>

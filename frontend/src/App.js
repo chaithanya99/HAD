@@ -20,6 +20,8 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/adddoc" element={<DoctorAdd/>}/>
         <Route path="/RP" element={<ID_Register/>}/>
+        <Route path="/logout" element={<Navigate to="/login" />} />
+
 
       </Routes>
       <ToastContainer/>

@@ -1,40 +1,45 @@
 .Regpage {
-  justify-content: center;
-  align-items: center;
+  display: flex; /* Use flexbox layout */
+  justify-content: flex-start; /* Align content to the start */
+  align-items: flex-start; /* Align content to the start */
   height: 100vh;
   background-image: url('../../../img/background.png'); /* Update the background image path */
   background-size: cover; 
 }
 
-.centered-box {
-    margin: 0 auto;
-    max-width: 80%; /* Adjust as per your design */
-    max-height: fit-content;
-    padding: 20px;
-    border: 1px solid #000000;
-    border-radius: 8px;
-    background-color: white;
-  }
-
-.Regpage h1 {
-    margin-bottom: 5rem;
-    font-family: Cambria; /* Change font family */
-    font-size: 3rem; /* Change font size */
+.content {
+  flex-grow: 1; /* Allow content to grow to fill remaining space */
+  display: flex; /* Use flexbox layout */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center content horizontally */
 }
 
-  /* Style for your progress bar */
-  .progbar {
-    position: center;
-    width: 100%;
-    height: 6rem;
-    background-color: #ffffff;
-    border-radius: 4px;
-    overflow: hidden;
-    position: inherit;
-  }
-  
-  .Stage-Components {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  
+.centered-box {
+  margin: 0 auto;
+  max-width: 80%; /* Adjust as per your design */
+  max-height: fit-content;
+  padding: 20px;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.Regpage h1 {
+  margin-bottom: 5rem;
+  font-family: Cambria; /* Change font family */
+  font-size: 3rem; /* Change font size */
+}
+
+/* Style for your progress bar */
+.progbar {
+  width: 100%;
+  height: 6rem;
+  background-color: #ffffff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.Stage-Components {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

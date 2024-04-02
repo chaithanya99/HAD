@@ -68,8 +68,8 @@
   margin-top: 0%;
   font-size: 1rem;
   flex: 1;
-  overflow-y: visible; 
-  max-height: fit-content; /*5rem*/
+  overflow-y: auto; 
+  max-height: 5rem;
   max-width: 80%;
   padding-right: 10px;
   border: 1px solid #000000;

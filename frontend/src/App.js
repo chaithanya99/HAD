@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Login from './components/Login_Dashboard/Login';
 import DoctorAdd from './Admin_pages/Doctor_add';
 import NurseDashboard from './Nurse_pages/NurseDashboard';
+import DashboardPage from './Nurse_pages/DashboardPage';
 
 
 const App = () => {
@@ -22,7 +23,7 @@ const App = () => {
         <Route path="/adddoc" element={<DoctorAdd/>}/>
         <Route path="/RP" element={<ID_Register/>}/>
         <Route path="/logout" element={<Navigate to="/login" />} />
-        <Route path="/nurseDashboard" element={<NurseDashboard/>}/>
+        <Route path="/nurseDashboard" element={<DashboardPage/>}/>
 
       </Routes>
       <ToastContainer/>

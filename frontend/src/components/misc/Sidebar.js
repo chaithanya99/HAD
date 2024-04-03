@@ -21,9 +21,9 @@ import { FaBars } from 'react-icons/fa';
 
 import './Sidebar.css'; // Import the CSS file for styling
 
-const Sidebar = () => {
-  const [expanded, setExpanded] = useState(false);
-  const toggleSidebar = () => setExpanded(!expanded);
+const Sidebar = ({expanded,toggleSidebar}) => {
+  // const [expanded, setExpanded] = useState(false);
+  // const toggleSidebar = () => setExpanded(!expanded);
 
   const iconDescriptions = {
     AiOutlineUserAdd: "Add User",

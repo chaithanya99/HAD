@@ -4,12 +4,13 @@
     background-position: center;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    transition: margin-left 0.3s ease;
 }
   
 .maindiv {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     margin-top: 2rem;
   }
@@ -56,19 +57,13 @@
     color: rgb(184 191 234);
   }
 
-  /* .commondiv {
-    border: 2px solid;
-    height: 8rem;
-    border-radius: 1rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    transition: background-color 0.3s ease;
-  } */
+  
   
   .commondiv:hover {
-    background-color: #f0f0f0; /* Change to desired hover color */
+    background-color: #f0f0f0; 
+  }
+
+  .sidebar-expanded {
+    margin-left: 120px; 
+
   }

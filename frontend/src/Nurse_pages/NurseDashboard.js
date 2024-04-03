@@ -11,11 +11,15 @@ import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 import { RiAdminLine } from "react-icons/ri";
 import Sidebar from "../components/misc/Sidebar";
-const NurseDashboard = () => {
+const NurseDashboard = ({sidebarExpanded}) => {
+    if(sidebarExpanded)
+      console.log("expanded");
+    else  
+      console.log("not");
     return (
-        <div className="container">
-          <Sidebar />
-          <div className="AfterSideBar">
+        <div className={`container ${sidebarExpanded ? 'sidebar-expanded' : ''}`}>
+          {/* <Sidebar /> */}
+          {/* <div className="AfterSideBar"> */}
             <div className="maindiv">
               <button className="commondiv">
                 {/* <div> */}
@@ -86,7 +90,7 @@ const NurseDashboard = () => {
                 <FaClipboardList className="overviewIcon" />
               </div>
             </div>
-          </div>
+          {/* </div> */}
         </div>
       );
 }

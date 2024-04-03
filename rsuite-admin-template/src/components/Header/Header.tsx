@@ -120,11 +120,6 @@ const Header = () => {
   return (
     <Stack className="header" spacing={8}>
       <IconButton
-        icon={<HeartIcon style={{ fontSize: 20 }} color="red" />}
-        href="https://opencollective.com/rsuite"
-        target="_blank"
-      />
-      <IconButton
         icon={<GithubIcon style={{ fontSize: 20 }} />}
         href="https://github.com/rsuite/rsuite-admin-template"
         target="_blank"
@@ -140,9 +135,9 @@ const Header = () => {
         />
       </Whisper>
 
-      <Whisper placement="bottomEnd" trigger="click" ref={trigger} speaker={renderSettingSpeaker}>
+      {/* <Whisper placement="bottomEnd" trigger="click" ref={trigger} speaker={renderSettingSpeaker}>
         <IconButton icon={<GearIcon style={{ fontSize: 20 }} />} />
-      </Whisper>
+      </Whisper> */}
 
       <Whisper placement="bottomEnd" trigger="click" ref={trigger} speaker={renderAdminSpeaker}>
         <Avatar

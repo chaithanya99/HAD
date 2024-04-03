@@ -15,8 +15,9 @@ import SignInPage from './pages/authentication/sign-in';
 import SignUpPage from './pages/authentication/sign-up';
 import MembersPage from './pages/tables/members';
 import VirtualizedTablePage from './pages/tables/virtualized';
-import FormBasicPage from './pages/forms/basic';
-import FormWizardPage from './pages/forms/wizard';
+import FormBasicPage from './pages/forms/Add_Doctor';
+import FormWizardPage from './pages/forms/ABHA_Registration';
+import FormBasic2Page from './pages/forms/Add_Nurse';
 import CalendarPage from './pages/calendar';
 import { appNavs } from './config';
 
@@ -37,6 +38,7 @@ const App = () => {
             <Route path="sign-in" element={<SignInPage />} />
             <Route path="sign-up" element={<SignUpPage />} />
             <Route path="form-basic" element={<FormBasicPage />} />
+            <Route path="form-basic2" element={<FormBasic2Page />} />
             <Route path="form-wizard" element={<FormWizardPage />} />
             <Route path="calendar" element={<CalendarPage />} />
           </Route>

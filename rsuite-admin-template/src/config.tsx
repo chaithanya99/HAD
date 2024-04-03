@@ -38,65 +38,70 @@ export const appNavs = [
   {
     eventKey: 'forms',
     icon: <Icon as={MdModeEditOutline} />,
-    title: 'Forms',
+    title: 'Add User',
     to: '/form-basic',
     children: [
       {
         eventKey: 'form-basic',
-        title: 'Basic',
+        title: 'Add Doctor',
         to: '/form-basic'
       },
       {
+        eventKey: 'form-basic2',
+        title: 'Add Nurse',
+        to: '/form-basic2'
+      },
+      {
         eventKey: 'form-wizard',
-        title: 'Wizard',
+        title: 'ABHA Registration',
         to: '/form-wizard'
       }
     ]
   },
-  {
-    eventKey: 'authentication',
-    title: 'Authentication',
-    icon: <Icon as={MdFingerprint} />,
-    children: [
-      {
-        eventKey: 'sign-in',
-        title: 'Sign In',
-        to: '/sign-in'
-      },
+  // {
+  //   eventKey: 'authentication',
+  //   title: 'Authentication',
+  //   icon: <Icon as={MdFingerprint} />,
+  //   children: [
+  //     {
+  //       eventKey: 'sign-in',
+  //       title: 'Sign In',
+  //       to: '/sign-in'
+  //     },
 
-      {
-        eventKey: 'sign-up',
-        title: 'Sign Up',
-        to: '/sign-up'
-      },
-      {
-        eventKey: 'error403',
-        title: 'Error 403',
-        to: '/error-403'
-      },
-      {
-        eventKey: 'error404',
-        title: 'Error 404',
-        to: '/error-404'
-      },
-      {
-        eventKey: 'error500',
-        title: 'Error 500',
-        to: '/error-500'
-      },
-      {
-        eventKey: 'error503',
-        title: 'Error 503',
-        to: '/error-503'
-      }
-    ]
-  },
+  //     {
+  //       eventKey: 'sign-up',
+  //       title: 'Sign Up',
+  //       to: '/sign-up'
+  //     },
+  //     {
+  //       eventKey: 'error403',
+  //       title: 'Error 403',
+  //       to: '/error-403'
+  //     },
+  //     {
+  //       eventKey: 'error404',
+  //       title: 'Error 404',
+  //       to: '/error-404'
+  //     },
+  //     {
+  //       eventKey: 'error500',
+  //       title: 'Error 500',
+  //       to: '/error-500'
+  //     },
+  //     {
+  //       eventKey: 'error503',
+  //       title: 'Error 503',
+  //       to: '/error-503'
+  //     }
+  //   ]
+  // },
 
-  {
-    eventKey: 'components',
-    title: 'Components',
-    icon: <CubesIcon />,
-    href: 'https://rsuitejs.com/components/overview/',
-    target: '_blank'
-  }
+  // {
+  //   eventKey: 'components',
+  //   title: 'Components',
+  //   icon: <CubesIcon />,
+  //   href: 'https://rsuitejs.com/components/overview/',
+  //   target: '_blank'
+  // }
 ];

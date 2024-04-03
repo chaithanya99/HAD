@@ -8,13 +8,14 @@ import Step1 from '../Step1/Step1';
 import Step2 from '../Step2/Step2';
 import Step3 from '../Step3/Step3';
 import Step4 from '../Step4/Step4';
+import Step5 from '../Step5/Step5';
 
 const ID_Register = () => {
   const otpSize = 6;
   const [step, setStep] = useState(1);
   const [aadharNumber, setAadharNumber] = useState('');
   const [Otp, setOtp] = useState(new Array(otpSize).fill(""));
-  const OtpBoxReference = useRef([]);
+  const otpBoxReference = useRef([]);
   const [iAgree, setIAgree] = useState(false);
   const [timer, setTimer] = useState(0);
   const [mobileNumber, setMobileNumber] = useState('');
@@ -35,17 +36,17 @@ const ID_Register = () => {
         // Conditions met, proceed to the next step
         console.log(aadharNumber.split(' ').join(''));
         // try {
-          const response = await axios.post("http://localhost:8080/generateOtp", {
-            "aadhaar": aadharNumber.split(' ').join('')
-          }, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-          setTxnId(response.data.txnId);
-          console.log(response.data.txnId);
-          setTimer(60);
-          setStep(step + 1);
+        const response = await axios.post("http://localhost:8080/generateOtp", {
+          "aadhaar": aadharNumber.split(' ').join('')
+        }, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setTxnId(response.data.txnId);
+        console.log(response.data.txnId);
+        setTimer(60);
+        setStep(step + 1);
         // }
         // catch (error) {
         //   // Handle errors from the backend
@@ -77,17 +78,23 @@ const ID_Register = () => {
       //   alert('Please enter complete OTP');
       // }
       try {
-        const actualOtp = Otp.join('')
-        const response = await axios.post("http://localhost:8080/verifyAadhaarOTP", {
-          txnId,
-          otp: actualOtp
-        }, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        setStep(step + 1);
-        console.log(response.data); // Handle response accordingly
+        if (Otp.length === otpSize && Otp.every((digit) => Boolean(digit))) {
+          const actualOtp = Otp.join('')
+          const response = await axios.post("http://localhost:8080/verifyAadhaarOTP", {
+            txnId,
+            otp: actualOtp
+          }, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          console.log(response.data); // Handle response accordingly
+          setStep(step + 1);
+          setOtp(new Array(otpSize).fill(""));
+        }
+        else {
+          alert('Please enter complete OTP');
+        }
 
         // Proceed to the next step or handle response
       } catch (error) {
@@ -116,13 +123,12 @@ const ID_Register = () => {
               }
             });
             setAbhaId(response.data.healthIdNumber);
-            setTxn('A');
+            setStep(step + 2);
           }
           else {
-            setTxn('B');
+            setTimer(60);
+            setStep(step + 1);
           }
-          setTimer(60);
-          setStep(step + 1);
         }
         else {
           alert('Enter Valid Mobile Number');
@@ -132,17 +138,8 @@ const ID_Register = () => {
         console.error('Error:', error.message);
       }
     } else if (step === 4) {
-      // Step 4: Display content based on the 'txn' value
-      if (txn === 'A') {
-        // Mobile number already verified, display completion message
-        // ...
-      } else if (txn === 'B') {
-        // Mobile number needs OTP verification again, similar to Step 2
-        // ...
-
-        // Proceed to the next step
-        setStep(step + 1);
-      }
+      setStep(step + 1);
+      setOtp(new Array(otpSize).fill(""));
     }
   };
 
@@ -186,9 +183,10 @@ const ID_Register = () => {
           {/* Render form based on the current step */}
           <div className='Stage-Components'>
             {step === 1 && <Step1 aadharNumber={aadharNumber} changeAadharNumber={changeAadharNumber} iAgree={iAgree} handleSubmit={handleSubmit} setIAgree={setIAgree} />}
-            {step === 2 && <Step2 aadharNumber={aadharNumber} Otp={Otp} setOtp={setOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} step={step} setStep={setStep} otpSize={otpSize} otpBoxReference={OtpBoxReference}/>}
+            {step === 2 && <Step2 aadharNumber={aadharNumber} Otp={Otp} setOtp={setOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} step={step} setStep={setStep} otpSize={otpSize} otpBoxReference={otpBoxReference} />}
             {step === 3 && <Step3 mobileNumber={mobileNumber} handleSubmit={handleSubmit} setMobileNumber={setMobileNumber} setStep={setStep} step={step} />}
-            {step === 4 && <Step4 txn={txn} abhaId={abhaId} mobileOtp={mobileOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} setStep={setStep} step={step} />}
+            {step === 4 && <Step4 txn={txn} abhaId={abhaId} mobileOtp={mobileOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} setStep={setStep} step={step} mobileNumber={mobileNumber} Otp={Otp} setOtp={setOtp} otpSize={otpSize} otpBoxReference={otpBoxReference} />}
+            {step === 5 && <Step5 abhaId={abhaId}/>}
           </div>
         </div>
       </div>

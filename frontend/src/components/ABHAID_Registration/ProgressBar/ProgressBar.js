@@ -5,11 +5,11 @@ const ProgressBar = ({ currentStage }) => {
     // Define the number of stages
     const totalStages = 5;
     const stageNames = [
-        'Consent',
+        'Patient Consent',
         'Aadhar Auth',
         'Link Mobile',
         'Verify Mobile',
-        'Stage 5',
+        'ABHA Number',
     ];
 
     // Calculate the width of the progress bar based on the current stage

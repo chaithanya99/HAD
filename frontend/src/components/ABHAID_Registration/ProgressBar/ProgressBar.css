@@ -29,7 +29,7 @@
 .stage-indicator {
     position: absolute;
     top: 0;
-    transform: translateX(-50%); /* Adjusted for center alignment */
+    transform: translateX(-50%) translateY(-13%); /* Adjusted for center alignment */
     background-color: rgba(0, 183, 255, 0.874);
     border-radius: 50%;
     color: #000000;

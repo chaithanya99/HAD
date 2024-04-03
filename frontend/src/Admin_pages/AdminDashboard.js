@@ -1,11 +1,17 @@
-import React from 'react'
-import './NurseDashboard.css'
+import React, { useState } from 'react'
+import './CSS/AdminDashboard.css'
+import Sidebar from '../components/misc/Sidebar'
 import { FaBell, FaCalendarAlt, FaClipboardList, FaFileAlt, FaUserInjured, FaUserMd, FaUserNurse, FaUserPlus } from "react-icons/fa";
-
-const NurseDashboard = ({sidebarExpanded}) => {
-    return (
+const AdminDashboard = () => {
+    const [sidebarExpanded,setSidebarExpanded]=useState(false);
+    const toggleSidebar=()=>{
+        setSidebarExpanded(!sidebarExpanded);
+    }
+  return (
+    <div>
+        <Sidebar expanded={sidebarExpanded} toggleSidebar={toggleSidebar}></Sidebar>
         <div className={`container ${sidebarExpanded ? 'sidebar-expanded' : ''}`}>
-            <div className="nurse-maindiv">
+            <div className="maindiv">
               <button className="commondiv">
                   <p>Doctors</p>
                   <FaUserMd className='overviewIcon'></FaUserMd>
@@ -13,27 +19,14 @@ const NurseDashboard = ({sidebarExpanded}) => {
               
               <div className="commondiv">
                 <div>
-                  
-                  <p>Patients</p>
+                  <p>Nurse</p>
                 </div>
-                <FaUserInjured className='overviewIcon'></FaUserInjured>
-                
+                <FaUserNurse className='overviewIcon'></FaUserNurse>
               </div>
               <div className="commondiv">
                 {" "}
                 <div>
-                  
-                  <p>Appointments</p>
-                </div>
-                
-                <FaCalendarAlt className="overviewIcon" />
-                
-              </div>
-              <div className="commondiv">
-                {" "}
-                <div>
-                  
-                  <p>Register Patient</p>
+                  <p>Add employee</p>
                 </div>
                 <FaUserPlus className="overviewIcon" />
               </div>
@@ -41,28 +34,15 @@ const NurseDashboard = ({sidebarExpanded}) => {
               <div className="commondiv">
                 {" "}
                 <div>
-                  
                   <p>Notifications</p>
                 </div>
                 <FaBell className="overviewIcon" />
               </div>
               
-              <div className="commondiv">
-                {" "}
-                <div>
-                  
-                  <p>Reports</p>
-                </div>
-                <FaClipboardList className="overviewIcon" />
-              </div>
             </div>
-          
         </div>
-      );
+    </div>
+  )
 }
 
-export default NurseDashboard;
-
-
-
-
+export default AdminDashboard

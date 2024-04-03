@@ -11,6 +11,8 @@ import Login from './components/Login_Dashboard/Login';
 import DoctorAdd from './Admin_pages/Doctor_add';
 import NurseDashboard from './Nurse_pages/NurseDashboard';
 import DashboardPage from './Nurse_pages/DashboardPage';
+import AdminDashboard from './Admin_pages/AdminDashboard';
+import DoctorDashboard from './Doctor_pages/DoctorDashboard';
 
 
 const App = () => {
@@ -24,7 +26,8 @@ const App = () => {
         <Route path="/RP" element={<ID_Register/>}/>
         <Route path="/logout" element={<Navigate to="/login" />} />
         <Route path="/nurseDashboard" element={<DashboardPage/>}/>
-
+        <Route path="/adminDashboard" element={<AdminDashboard/>}/>
+        <Route path="/doctorDashboard" element={<DoctorDashboard/>}/>
       </Routes>
       <ToastContainer/>
     </Router>

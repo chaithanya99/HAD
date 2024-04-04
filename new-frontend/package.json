@@ -1,5 +1,5 @@
 {
-  "name": "rsuite-admin-template",
+  "name": "hospital-management-system",
   "version": "1.0.0",
   "description": "RSUITE Management System",
   "main": "lib/index.js",

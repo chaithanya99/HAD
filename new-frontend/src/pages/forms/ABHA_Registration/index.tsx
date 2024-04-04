@@ -1,5 +1,5 @@
 import React from 'react';
-import WizardForm from './WizardForm';
+import ABHA_Registration from './ABHA_Registration';
 
 import { Breadcrumb, Panel } from 'rsuite';
 
@@ -17,7 +17,7 @@ const Page = () => {
         </>
       }
     >
-      <WizardForm />
+      <ABHA_Registration />
     </Panel>
   );
 };

@@ -186,7 +186,7 @@ const ID_Register = () => {
             {step === 2 && <Step2 aadharNumber={aadharNumber} Otp={Otp} setOtp={setOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} step={step} setStep={setStep} otpSize={otpSize} otpBoxReference={otpBoxReference} />}
             {step === 3 && <Step3 mobileNumber={mobileNumber} handleSubmit={handleSubmit} setMobileNumber={setMobileNumber} setStep={setStep} step={step} />}
             {step === 4 && <Step4 txn={txn} abhaId={abhaId} mobileOtp={mobileOtp} timer={timer} handleResend={handleResend} handleSubmit={handleSubmit} setStep={setStep} step={step} mobileNumber={mobileNumber} Otp={Otp} setOtp={setOtp} otpSize={otpSize} otpBoxReference={otpBoxReference} />}
-            {step === 5 && <Step5 abhaId={abhaId}/>}
+            {step === 5 && <Step5 abhaId={abhaId} />}
           </div>
         </div>
       </div>

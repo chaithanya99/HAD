@@ -62,9 +62,9 @@ export const appNavs = [
         to: '/form-basic3'
       },
       {
-        eventKey: 'form-wizard',
+        eventKey: 'ABHA-Registration',
         title: 'ABHA Registration',
-        to: '/form-wizard'
+        to: '/ABHA-Registration'
       }
     ]
   },

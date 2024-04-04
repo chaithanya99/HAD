@@ -29,7 +29,7 @@ const Login = () => {
             if (response.status === 200) {
                 // Successful login, navigate to the dashboard
                 localStorage.setItem('token', response.data);
-                navigate('/dashboard'); // Assuming you have a route for the dashboard
+                navigate('/adminDashboard'); // Assuming you have a route for the dashboard
             } else {
                 // Handle other status codes with a toast
                 toast.error('Invalid username or password');

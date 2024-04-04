@@ -53,8 +53,10 @@ public class AuthController {
         System.out.println(auth.getPassword());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(auth.getUsername(), auth.getPassword())); 
 		if (authentication.isAuthenticated()) {
+            System.out.println("in the if condition");
 			return jwtService.generateToken(auth.getUsername());
         } else {
+            System.out.println("wrong pass");
             throw new UsernameNotFoundException("invalid user");
 		} 
     }

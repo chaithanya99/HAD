@@ -1,9 +1,15 @@
 package com.had.project5.controllers;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +19,8 @@ import com.had.project5.entities.Doctor;
 import com.had.project5.entities.User;
 import com.had.project5.repositories.DoctorRepo;
 import com.had.project5.repositories.UserRepo;
+import com.had.project5.services.DoctorService;
+import com.had.project5.services.UserService;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -21,11 +29,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
+    private DoctorService doctorService;
+    @Autowired
+    private UserService userService;
+    @Autowired
     private DoctorRepo doctorRepo;
-    @Autowired
-    private UserRepo userRepo;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
     @PostMapping("/dummy")
     public void dummy()
     {
@@ -33,7 +41,7 @@ public class AdminController {
     }
     
     @PostMapping("/createdoc")
-    public Doctor createDoctor(@RequestBody Doctor doctor) 
+    public ResponseEntity<String> createDoctor(@RequestBody Doctor doctor) 
     {
         String generatedPassword = generateRandomPassword();
     
@@ -42,17 +50,22 @@ public class AdminController {
         
         // Create a new User entity for the doctor
         User user = new User();
-        user.setUsername(doctor.getAbha_id());
-        user.setPassword(passwordEncoder.encode(generatedPassword)); // Encode the password
+        user.setUsername(doctor.getAbhaId());
+        user.setPassword(generatedPassword); // Encode the password
         user.setRoles(role);
-        
+        System.out.println(generatedPassword);
         // Save the new User entity
-        userRepo.save(user);
+        String s=userService.addUser(user);
+        System.out.println(s);
+        if("user exists".equals(s)){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("User with username " + user.getUsername() + " already exists");
+        }
         
         // Save the Doctor entity
         doctorRepo.save(doctor);
         System.out.println("Doctor with id"+user.getUsername()+" has been saved"); 
-        return doctor;
+        return ResponseEntity.status(HttpStatus.CREATED).body("Doctor created successfully");
         // Return a response indicating success
         // return ResponseEntity.ok("Doctor created successfully. User credentials: " +
         //                         "Username: " + user.getUsername() + ", " +
@@ -63,18 +76,35 @@ public class AdminController {
         return "randompassword123"; // Placeholder, replace with actual implementation
     }
     @PatchMapping("/deletedoc")
-    public ResponseEntity<?> markDoctorAsInactive(@RequestBody Long Id) {
+    public ResponseEntity<?> markDoctorAsInactive(@RequestBody  Map<String,String> req) {
         // Retrieve the doctor by username
-        @SuppressWarnings("null")
-        Doctor doctor = doctorRepo.findById(Id)
-                .orElseThrow();
-
-        // Update the active status to false
+        // @SuppressWarnings("null")
+        Doctor doctor = doctorRepo.findByAbhaId(req.get("abhaId"));
+        System.out.println(req.get("abhaId"));
+        // System.out.println(doctor.get);
+        if(doctor==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Doctor not found with ABHAID: " + req.get("abhaId"));
+        }
+        else{
+            System.out.println(doctor.getAbhaId());
+        }
+        // // Update the active status to false
         doctor.setActive(false);
 
-        // Save the updated doctor
+        // // Save the updated doctor
         doctorRepo.save(doctor);
         return ResponseEntity.ok("Doctor marked as inactive successfully");
+    }
+
+    @GetMapping("/doctors")
+    public List<Doctor> getAllDoctors() {
+        return doctorService.getAllDoctors();
+    }
+
+    @GetMapping("/doctors/{specialization}")
+    public List<Doctor> getDoctorsBySpecialization(@PathVariable String specialization) {
+        return doctorService.getDoctorsBySpecialization(specialization);
     }
 }
  

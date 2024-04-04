@@ -21,7 +21,7 @@ public class Doctor
     private Long Id;
     private String specialization;
     private String name;
-    private String abha_id;
+    private String abhaId;
     private String email_Id;
     private String mobile;
     private String address;

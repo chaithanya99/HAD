@@ -69,7 +69,7 @@ const ProjectInfoForm = () => {
       <Form.Group>
           <Button appearance="primary" style={{ marginRight: '10px' }}>Resend OTP</Button>
           <Button appearance="primary">Verify OTP</Button>
-        </Form.Group>
+      </Form.Group>
 
       <Form.Group>
       <Input value={`Time remaining is ${timeRemaining} sec`} disabled style={{ textAlign: 'center',color: timerExpired ? 'red' : 'black'}} />

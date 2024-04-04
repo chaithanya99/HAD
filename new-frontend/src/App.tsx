@@ -17,7 +17,7 @@ import MembersPage from './pages/tables/members';
 import VirtualizedTablePage from './pages/tables/Doctor_List';
 import VirtualizedTable2Page from './pages/tables/Nurse_List';
 import FormBasicPage from './pages/forms/Add_Doctor';
-import FormWizardPage from './pages/forms/ABHA_Registration';
+import ABHARegistrationPage from './pages/forms/ABHA_Registration';
 import FormBasic2Page from './pages/forms/Add_Nurse';
 import FormBasic3Page from './pages/forms/Add_DataRecord';
 import CalendarPage from './pages/calendar';
@@ -43,7 +43,7 @@ const App = () => {
             <Route path="form-basic" element={<FormBasicPage />} />
             <Route path="form-basic2" element={<FormBasic2Page />} />
             <Route path="form-basic3" element={<FormBasic3Page />} />
-            <Route path="form-wizard" element={<FormWizardPage />} />
+            <Route path="ABHA-Registration" element={<ABHARegistrationPage />} />
             <Route path="calendar" element={<CalendarPage />} />
           </Route>
           <Route path="*" element={<Error404Page />} />

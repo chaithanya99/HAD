@@ -5,7 +5,7 @@ import PageContent from '@/components/PageContent';
 import PageNextIcon from '@rsuite/icons/PageNext';
 import PagePreviousIcon from '@rsuite/icons/PagePrevious';
 
-import Step1 from './Step-1';
+import Step1 from './Step1';
 import TeamSettingsForm from './TeamSettingsForm';
 import BusinessDetailForm from './BusinessDetailForm';
 import ProjectInfoForm from './ProjectInfoForm';

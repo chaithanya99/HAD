@@ -13,6 +13,13 @@ public class PatientService {
     @Autowired
     private PatientRepo patientRepo;
 
+    public Optional<Patient> getPatientById(long Id){
+        Optional<Patient> p=patientRepo.findById(Id);
+        
+
+        return p;
+    }
+
     public String addPatient(Patient p){
         Patient pp=patientRepo.findByAbhaNumber(p.getAbhaNumber());
         if(pp!=null){

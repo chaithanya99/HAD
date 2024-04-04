@@ -6,15 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
 @Setter
-public class RescheduleRequest {
-    private Long appointmentId;
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateAppointmentRequest {
     private Long doctorId;
-    // private Appointment updatedAppointment;
+    private Long patientId;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+
+    // Getters and setters
 }

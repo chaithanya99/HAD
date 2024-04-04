@@ -1,6 +1,7 @@
 package com.had.project5.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,13 @@ public class DoctorService {
     
     public List<Doctor> getAllDoctors() {
         return doctorRepo.findAll();
+    }
+
+    public Optional<Doctor> getDoctorById(Long Id){
+        // Doctor d= doctorRepo.getById(Id);
+        Optional<Doctor> d=doctorRepo.findById(Id);
+        
+        return d;
     }
 
     public List<Doctor> getDoctorsBySpecialization(String specialization) {

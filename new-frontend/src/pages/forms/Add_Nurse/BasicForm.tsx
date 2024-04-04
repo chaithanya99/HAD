@@ -67,7 +67,7 @@ const BasicForm2 = () => {
     yearofBirth: ""
   });
 
-  const token = localStorage.getItem('token');
+  //const token = localStorage.getItem('token');
 
   const handleInputChange = (e) => {
     // console.log("input has changed");
@@ -83,6 +83,7 @@ const BasicForm2 = () => {
     try {
       console.log("function triggered");
       console.log(doctorDetails);
+      
       const response1 = await axios.post("http://localhost:8080/auth/generateToken",
       {
         "username" : "admin",
@@ -90,17 +91,18 @@ const BasicForm2 = () => {
       });
 
       //Send a POST request to your server endpoint
-      const response = await axios.post("http://localhost:8080/admin/createdoc", doctorDetails,
+      const response = await axios.post("http://localhost:8080/admin/createWorker", doctorDetails,
       {
         headers: {
           'Authorization': `Bearer ${response1.data}`
         }
       });
-
+      console.log(response.status);
       // Handle success response
-      if (response.status === 200) {
+      if (response.status >= 200 && response.status < 300) {
         console.log("values are being set now");
         setDoctorDetails({
+          ...doctorDetails,
           name: "",
           abhaId: "",
           email_Id: "",
@@ -126,6 +128,7 @@ This form is used to create a Nurse.
       model={model} 
       onChange={handleInputChange}
       onSubmit={handleSubmit}
+      formValue={doctorDetails}
       className="basic-form" 
       layout="horizontal">
         <Form.Group controlId="name">
@@ -174,8 +177,8 @@ This form is used to create a Nurse.
         </Form.Group>
 
         <Form.Group controlId="yearofBirth">
-          <Form.ControlLabel>Date of Birth</Form.ControlLabel>
-          <Form.Control name="yearofBirth" accepter={DatePicker} />
+          <Form.ControlLabel>Year of Birth</Form.ControlLabel>
+          <Form.Control name="yearofBirth"/>
         </Form.Group>
 
         <Form.Group controlId="address">

@@ -71,7 +71,6 @@ const BasicForm = () => {
     setDoctorDetails(e);
   };
   const handleSubmit = async () => {
-    // e.preventDefault();
 
     try {
       console.log("function triggered");
@@ -89,9 +88,10 @@ const BasicForm = () => {
       });
 
       // Handle success response
-      if (response.status === 200) {
+      if (response.status >= 200 && response.status < 300) {
         console.log("values are being set now");
         setDoctorDetails({
+          ...doctorDetails,
           specialization: "",
           name: "",
           abhaId: "",
@@ -101,7 +101,6 @@ const BasicForm = () => {
           gender: "",
           yearofBirth: ""
         });
-  
     }} catch (error) {
       // Handle error
       toast("Error: Unable to add doctor. Please try again later.");
@@ -119,6 +118,7 @@ This form is used to create a doctor.
       model={model} 
       onChange={handleInputChange}
       onSubmit={handleSubmit}
+      formValue={doctorDetails}
       className="basic-form" 
       layout="horizontal">
         <Form.Group controlId="name">
@@ -172,8 +172,8 @@ This form is used to create a doctor.
         </Form.Group>
 
         <Form.Group controlId="yearofBirth">
-          <Form.ControlLabel>Date of Birth</Form.ControlLabel>
-          <Form.Control name="yearofBirth" accepter={DatePicker} />
+          <Form.ControlLabel>Year of Birth</Form.ControlLabel>
+          <Form.Control name="yearofBirth"/>
         </Form.Group>
 
         <Form.Group controlId="address">

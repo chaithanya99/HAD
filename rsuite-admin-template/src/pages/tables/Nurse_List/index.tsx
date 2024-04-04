@@ -1,5 +1,5 @@
 import React from 'react';
-import VirtualizedTable from './VirtualizedTable';
+import VirtualizedTable2 from './VirtualizedTable';
 
 import { Breadcrumb, Panel } from 'rsuite';
 
@@ -8,16 +8,16 @@ const Page = () => {
     <Panel
       header={
         <>
-          <h3 className="title">Virtualized Table</h3>
+          <h3 className="title">Nurse list</h3>
           <Breadcrumb>
             <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
             <Breadcrumb.Item>Tables</Breadcrumb.Item>
-            <Breadcrumb.Item active>Virtualized Table</Breadcrumb.Item>
+            <Breadcrumb.Item active>Nurse list</Breadcrumb.Item>
           </Breadcrumb>
         </>
       }
     >
-      <VirtualizedTable />
+      <VirtualizedTable2/>
     </Panel>
   );
 };

@@ -52,7 +52,8 @@
     "react-router": "6.3.0",
     "react-router-dom": "^6.3.0",
     "react-toastify": "^10.0.5",
-    "rsuite": "5.28.2"
+    "rsuite": "5.28.2",
+    "schema-types": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",

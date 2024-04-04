@@ -30,8 +30,13 @@ export const appNavs = [
       },
       {
         eventKey: 'virtualized',
-        title: 'Virtualized Table',
+        title: 'Doctor list',
         to: '/table-virtualized'
+      },
+      {
+        eventKey: 'virtualized2',
+        title: 'Nurse list',
+        to: '/table-virtualized2'
       }
     ]
   },

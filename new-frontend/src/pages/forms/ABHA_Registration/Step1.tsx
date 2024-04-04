@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { Form, Stack,MaskedInput,Checkbox,Panel,Button} from 'rsuite';
+import { Form, Stack,MaskedInput, Checkbox, Panel, Button} from 'rsuite';
 import RadioTile from '@/components/RadioTile';
 import { Icon } from '@rsuite/icons';
 import { VscNotebookTemplate, VscRepoClone, VscFile } from 'react-icons/vsc';
 import FormHeader from './FormHeader';
+import {SchemaModel, StringType} from "schema-typed";
+import PageNextIcon from '@rsuite/icons/PageNext';
+import axios from 'axios';
 
 const TermsAndConditions = () => (
-  <Panel bordered style={{ maxHeight: '190px',overflowY: 'auto',border: '1px solid #ccc' }}>
+  <Panel bordered style={{ maxHeight: 'fit-content',overflowY: 'visible',border: '1px solid #ccc' }}>
     <p>
     I, hereby declare that I am voluntarily sharing my Aadhaar number and demographic information issued by UIDAI, 
     with National Health Authority (NHA) for the sole purpose of creation of ABHA number. I understand that my ABHA 
@@ -29,14 +32,54 @@ const TermsAndConditions = () => (
   </Panel>
 );
 
-const ProjectTypeForm = () => {
-  const [type, setType] = useState('personal');
+const Step1 = ({ Agree, setAgree, setAadharNumber, aadharNumber, token, setTxnId, step, setStep }) => {
+  const formRef = React.useRef(null);
+
+  const handleChange = (e) => {
+    setAadharNumber(e.MaskedInput);
+  }
+
+  const handleSubmit = async () => {
+    if (aadharNumber.length === 14 && Agree) {
+      // Conditions met, proceed to the next step
+      console.log(aadharNumber.split(' ').join(''));
+      // try {
+      const response1 = await axios.post("http://localhost:8080/auth/generateToken",
+      {
+        "username" : "admin",
+        "password": "admin"
+      });
+      const response = await axios.post("http://localhost:8080/generateOtp", {
+        "aadhaar": aadharNumber.split(' ').join('')
+      }, {
+        headers: {
+          'Authorization': `Bearer ${response1.data}`  // token
+        }
+      });
+      setTxnId(response.data.txnId);
+      console.log(response.data.txnId);
+      setStep(step + 1);
+      // }
+      // catch (error) {
+      //   // Handle errors from the backend
+      //   console.error('Error:', error.message);
+      // }
+    } 
+    else {
+      // Display an error message or handle invalid input
+      alert('Please enter a valid Aadhar number and check the agreement.');
+    }
+  }
 
   return (
-    <Form>
+    <Form
+    ref={formRef}
+    onChange={handleChange}
+    onSubmit={handleSubmit}
+    >
       <FormHeader
         title="Enter your Aadhaar Number"
-        description="Your Aadhaar number will be used for user authentication and generation of your ABHA Number and Address."
+        description="Your Aadhaar number will be used for user authentication and generation of your ABHA Number."
       />
         <Form.Group controlId="MaskedInput">
           <Form.ControlLabel>Enter Aadhaar Number</Form.ControlLabel>
@@ -67,10 +110,20 @@ const ProjectTypeForm = () => {
       <Form.Group controlId="termsAndConditions">
         <Form.ControlLabel>Terms and Conditions</Form.ControlLabel>
         <TermsAndConditions />
-        <Checkbox>Accept Terms and Conditions</Checkbox>
+        <Checkbox onChange={() => setAgree(!Agree)}>Accept Terms and Conditions</Checkbox>
+        <Button appearance="primary" type="submit" style={{ marginLeft: '10px'}}>Submit</Button>
       </Form.Group>
+      {/* <IconButton
+        icon={<PageNextIcon />}
+        placement="right"
+        appearance="primary"
+        // onSubmit={handleSubmit}
+        // onClick={() => setStep(Math.min(step + 1, 4))}
+        >
+        Submit
+      </IconButton> */}
     </Form>
   );
 };
 
-export default ProjectTypeForm;
+export default Step1;

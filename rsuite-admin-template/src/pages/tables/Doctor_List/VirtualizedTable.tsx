@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DOMHelper, Table } from 'rsuite';
 import { mockUsers } from '@/data/mock';
+import axios from 'axios';
 
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
 
-const data = mockUsers(1000);
+// const data = mockUsers(1000);
 
 const VirtualizedTable = () => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response1 = await axios.post("http://localhost:8080/auth/generateToken",
+        {
+          "username" : "admin",
+          "password": "admin"
+        });
+        const response = await axios.get("http://localhost:8080/admin/doctors",
+        {
+          headers: {
+            'Authorization': `Bearer ${response1.data}`
+          }
+        });
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <Table
       virtualized
@@ -22,12 +46,12 @@ const VirtualizedTable = () => {
 
       <Column width={130}>
         <HeaderCell>First Name</HeaderCell>
-        <Cell dataKey="firstName" />
+        <Cell dataKey="name" />
       </Column>
 
       <Column width={130}>
         <HeaderCell>Last Name</HeaderCell>
-        <Cell dataKey="lastName" />
+        <Cell dataKey="name" />
       </Column>
 
       <Column width={130}>
@@ -42,17 +66,17 @@ const VirtualizedTable = () => {
 
       <Column width={100}>
         <HeaderCell>Age</HeaderCell>
-        <Cell dataKey="age" />
+        <Cell dataKey="yearOfBirth" />
       </Column>
 
       <Column width={200}>
         <HeaderCell>City</HeaderCell>
-        <Cell dataKey="city" />
+        <Cell dataKey="address" />
       </Column>
 
       <Column minWidth={200} flexGrow={1}>
         <HeaderCell>Email</HeaderCell>
-        <Cell dataKey="email" />
+        <Cell dataKey="email_Id" />
       </Column>
     </Table>
   );

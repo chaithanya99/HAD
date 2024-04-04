@@ -7,5 +7,5 @@ import com.had.project5.entities.Worker;
 
 @Repository
 public interface WorkerRepo extends JpaRepository<Worker, Long> {
-    // You can add custom query methods here if needed
+    Worker findByAbhaId(String abhaId);
 }

@@ -147,7 +147,7 @@ public class AbhaCreationController {
             p.setDayOfBirth(jsonResponse.getString("dayOfBirth"));
             p.setDistrict(jsonResponse.getString("districtName"));
             p.setState(jsonResponse.getString("stateName"));
-            p.setAbha_address("adfds");
+            p.setAbha_address(jsonResponse.getString("healthIdNumber").replace("-", "")+"@sbx");
             patientService.addPatient(p);
             System.out.println(jsonResponse);
             return ResponseEntity.ok(responseMap);

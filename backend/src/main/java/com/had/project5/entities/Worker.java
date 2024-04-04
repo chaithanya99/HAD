@@ -20,12 +20,12 @@ public class Worker
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
     private String name;
-    private String abha_id;
+    private String abhaId;
     private String email_Id;
     private String mobile;
     private String address;
     private String gender;
-    private String YearofBirth;
+    private String yearofBirth;
     private boolean active; 
 }
 

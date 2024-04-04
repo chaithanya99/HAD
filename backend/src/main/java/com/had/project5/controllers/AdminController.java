@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.had.project5.entities.Doctor;
 import com.had.project5.entities.User;
+import com.had.project5.entities.Worker;
 import com.had.project5.repositories.DoctorRepo;
 import com.had.project5.repositories.UserRepo;
+import com.had.project5.repositories.WorkerRepo;
 import com.had.project5.services.DoctorService;
 import com.had.project5.services.UserService;
 
@@ -28,6 +30,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @CrossOrigin(origins = "*") // Specify the allowed origin(s)
 @RequestMapping("/admin")
 public class AdminController {
+    @Autowired
+    private WorkerRepo workerRepo;
     @Autowired
     private DoctorService doctorService;
     @Autowired
@@ -106,7 +110,72 @@ public class AdminController {
     public List<Doctor> getDoctorsBySpecialization(@PathVariable String specialization) {
         return doctorService.getDoctorsBySpecialization(specialization);
     }
-}
+
  
 // create and delete health worker
 // get doctors, patients, healthcare workers
+
+@PostMapping("/createWorker")
+    public ResponseEntity<String> createWorker(@RequestBody Worker worker) 
+    {
+        String generatedPassword = generateRandomPassword();
+    
+        // Set the role for the user entity
+        String role = "ROLE_WORKER";
+        
+        // Create a new User entity for the doctor
+        User user = new User();
+        user.setUsername(worker.getAbhaId());
+        user.setPassword(generatedPassword); // Encode the password
+        user.setRoles(role);
+        // System.out.println(generatedPassword);
+        // Save the new User entity
+        String s=userService.addUser(user);
+        System.out.println(s);
+        if("user exists".equals(s)){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("User with username " + user.getUsername() + " already exists");
+        }
+        
+        // Save the Doctor entity
+        // doctorRepo.save(doctor);
+        workerRepo.save(worker);
+        System.out.println("Worker with id"+user.getUsername()+" has been saved"); 
+        return ResponseEntity.status(HttpStatus.CREATED).body("Worker created successfully");
+        
+    }
+
+
+@PatchMapping("/deleteWorker")
+    public ResponseEntity<?> markWorkerAsInactive(@RequestBody  Map<String,String> req) {
+        Worker worker=workerRepo.findByAbhaId(req.get("abhaId"));
+        // Doctor doctor = doctorRepo.findByAbhaId(req.get("abhaId"));
+        // System.out.println(req.get("abhaId"));
+        // System.out.println(doctor.get);
+        if(worker==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Worker not found with ABHAID: " + req.get("abhaId"));
+        }
+        else{
+            System.out.println(worker.getAbhaId());
+        }
+        // // Update the active status to false
+        worker.setActive(false);
+
+        // // Save the updated doctor
+        workerRepo.save(worker);
+        // doctorRepo.save(doctor);
+        return ResponseEntity.ok("Worker marked as inactive successfully");
+    }
+
+
+    @GetMapping("/workers")
+    public List<Worker> getAllWorkers() {
+        return workerRepo.findAll();
+    }
+
+
+
+
+
+}

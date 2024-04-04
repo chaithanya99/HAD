@@ -19,11 +19,11 @@ const WizardForm = () => {
   return (
     <PageContent>
       <Steps current={step}>
-        <Steps.Item title="Project Type" />
-        <Steps.Item title="Project Info" />
-        <Steps.Item title="Team settings" />
-        <Steps.Item title="Business Info" />
-        <Steps.Item title="Completed" />
+        <Steps.Item title="Patient Consent" />
+        <Steps.Item title="Aadhaar Auth" />
+        <Steps.Item title="Link Mobile" />
+        <Steps.Item title="Verify Mobile" />
+        <Steps.Item title="ABHA Number" />
       </Steps>
 
       <Divider />

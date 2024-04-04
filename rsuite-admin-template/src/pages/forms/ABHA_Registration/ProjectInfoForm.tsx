@@ -1,69 +1,80 @@
 import React from 'react';
-import { Form, Stack, InputGroup } from 'rsuite';
+import { Form, Stack, InputGroup,Input,Button,MaskedInput} from 'rsuite';
 import { Icon } from '@rsuite/icons';
 import { VscLock, VscWorkspaceTrusted } from 'react-icons/vsc';
 import RadioTile from '@/components/RadioTile';
 import Textarea from '@/components/Textarea';
 import FormHeader from './FormHeader';
+import { useState, useEffect,useRef} from 'react';
 
 const ProjectInfoForm = () => {
-  const [level, setLevel] = React.useState('Private');
+  const [timeRemaining, setTimeRemaining] = useState(5);
+  const [timerExpired, setTimerExpired] = useState(false);
+
+  const inputs = useRef([]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeRemaining(prevTime => Math.max(prevTime - 1, 0)); // Ensure timeRemaining is never below zero
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+
+  useEffect(() => {
+    if (timeRemaining === 0) {
+      setTimerExpired(true);
+    }
+  }, [timeRemaining]);
+
+
+  const focusNextInput = (index) => {
+    if (inputs.current[index + 1]) {
+      inputs.current[index + 1].focus();
+    }
+  };
+
 
   return (
     <Form fluid>
       <FormHeader
-        title="Project Info"
-        description="Create a blank project to house your files, plan your work, and collaborate on code, among
-          other things."
+        title="OTP Validation"
+        description="Enter the OTP sent to your mobile number to generate your ABHA Number."
       />
-
-      <Form.Group controlId="name">
-        <Form.ControlLabel>Project Name</Form.ControlLabel>
-        <Form.Control name="name" />
-        <Form.HelpText>Project names must be unique.</Form.HelpText>
+      <Form.Group controlId="aadhaar_display">
+        <Form.ControlLabel>Your Aadhaar Number is:</Form.ControlLabel>
+        <div style={{ fontWeight: 'bold', fontSize: '18px', marginBottom: '10px' }}>7789-4468-91-5554</div>
       </Form.Group>
 
-      <Form.Group controlId="url">
-        <Form.ControlLabel>Project URL</Form.ControlLabel>
+      <Form.Group controlId = "otp_enter">
+          <Form.ControlLabel>Enter OTP</Form.ControlLabel>
+          <div style={{ display: 'flex', gap: '5px' }}>
+            {[0, 1, 2, 3, 4, 5].map((index) => (
+              <Input
+                key={index}
+                inputRef={(ref) => inputs.current[index] = ref}
+                style={{ width: '35px', textAlign: 'center' }}
+                maxLength={1}
+                onChange={(value) => {
+                  if (value && value.length === 1) {
+                    focusNextInput(index);
+                  }
+                }}
+              />
+            ))}
+          </div>
+        </Form.Group>
 
-        <InputGroup style={{ width: '100%' }}>
-          <InputGroup.Addon>https://rsuitejs.com/</InputGroup.Addon>
-          <Form.Control name="url" />
-        </InputGroup>
-        <Form.HelpText>
-          Want to house several dependent projects under the same namespace? <a>Create a group.</a>
-        </Form.HelpText>
+      <Form.Group>
+          <Button appearance="primary" style={{ marginRight: '10px' }}>Resend OTP</Button>
+          <Button appearance="primary">Verify OTP</Button>
+        </Form.Group>
+
+      <Form.Group>
+      <Input value={`Time remaining is ${timeRemaining} sec`} disabled style={{ textAlign: 'center',color: timerExpired ? 'red' : 'black'}} />
       </Form.Group>
 
-      <Form.Group controlId="description">
-        <Form.ControlLabel>Project description (optional)</Form.ControlLabel>
-        <Form.Control name="description" accepter={Textarea} />
-      </Form.Group>
-
-      <Form.Group controlId="plan">
-        <Form.ControlLabel>Visibility Level</Form.ControlLabel>
-        <Stack spacing={10} direction="column" alignItems={'stretch'}>
-          <RadioTile
-            icon={<Icon as={VscLock} />}
-            title="Private"
-            value={level}
-            name="Private"
-            onChange={setLevel}
-          >
-            Project access must be granted explicitly to each user. If this project is part of a
-            group, access will be granted to members of the group.
-          </RadioTile>
-          <RadioTile
-            icon={<Icon as={VscWorkspaceTrusted} />}
-            title="Internal"
-            value={level}
-            name="Internal"
-            onChange={setLevel}
-          >
-            The project can be accessed by any logged in user except external users.
-          </RadioTile>
-        </Stack>
-      </Form.Group>
     </Form>
   );
 };

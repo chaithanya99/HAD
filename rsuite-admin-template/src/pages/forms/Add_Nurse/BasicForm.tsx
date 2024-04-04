@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from 'axios'; 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {SchemaModel, StringType} from "schema-typed";
 import {
   Form,
   RadioGroup,
@@ -32,7 +33,6 @@ import {
   AutoComplete
 } from 'rsuite';
 import PageContent from '@/components/PageContent';
-
 import { mockTreeData } from '@/data/mock';
 
 // const treeData = mockTreeData({ limits: [2, 3, 3], labels: ['Provincial', 'County', 'Town'] });
@@ -50,32 +50,50 @@ const Textarea = React.forwardRef<HTMLInputElement, any>((props, ref) => (
 ));
 
 const BasicForm2 = () => {
-  const [doctorDetails, setDoctorDetails] = useState({
-    specialization: "",
+  const formRef = React.useRef(null);
+  const model = SchemaModel({
+    Input: StringType().isRequired("Value is required"),
+    email: StringType().isEmail("Email needs to be valid"),
+    MaskedInput: StringType().isRequired("Value is required")
+  })
+
+  const [doctorDetails, setDoctorDetails] = React.useState({
     name: "",
-    abha_id: "",
+    abhaId: "",
     email_Id: "",
     mobile: "",
     address: "",
     gender: "",
-    YearofBirth: ""
+    yearofBirth: ""
   });
+
   const token = localStorage.getItem('token');
+
   const handleInputChange = (e) => {
-    console.log("input has changed");
-    const { name, value } = e.target;
-    setDoctorDetails({ ...doctorDetails, [name]: value });
+    // console.log("input has changed");
+    // console.log(e.target);
+    // const { name, value } = e.target;
+    setDoctorDetails(e);
+    // setDoctorDetails({ ...doctorDetails, [name]: value });
   };
+
   const handleSubmit = async () => {
     // e.preventDefault();
 
     try {
       console.log("function triggered");
+      console.log(doctorDetails);
+      const response1 = await axios.post("http://localhost:8080/auth/generateToken",
+      {
+        "username" : "admin",
+        "password": "admin"
+      });
+
       //Send a POST request to your server endpoint
       const response = await axios.post("http://localhost:8080/admin/createdoc", doctorDetails,
       {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${response1.data}`
         }
       });
 
@@ -83,16 +101,14 @@ const BasicForm2 = () => {
       if (response.status === 200) {
         console.log("values are being set now");
         setDoctorDetails({
-          specialization: "",
           name: "",
-          abha_id: "",
+          abhaId: "",
           email_Id: "",
           mobile: "",
           address: "",
           gender: "",
-          YearofBirth: ""
+          yearofBirth: ""
         });
-  
     }} catch (error) {
       // Handle error
       toast("Error: Unable to add doctor. Please try again later.");
@@ -105,26 +121,32 @@ const BasicForm2 = () => {
 This form is used to create a Nurse.
       </Message>
       <Divider />
-      <Form className="basic-form" layout="horizontal">
-        <Form.Group controlId="Input">
+      <Form 
+      ref={formRef} 
+      model={model} 
+      onChange={handleInputChange}
+      onSubmit={handleSubmit}
+      className="basic-form" 
+      layout="horizontal">
+        <Form.Group controlId="name">
           <Form.ControlLabel>Name</Form.ControlLabel>
-          <Form.Control name="Input"/>
+          <Form.Control name="name"/>
         </Form.Group>
 
-        <Form.Group controlId="Input">
+        <Form.Group controlId="abhaId">
           <Form.ControlLabel>ABHA ID</Form.ControlLabel>
-          <Form.Control name="Input" placeholder="your id@sbx"/>
+          <Form.Control name="abhaId" placeholder="your id@sbx"/>
         </Form.Group>
 
-        <Form.Group controlId="Input">
+        <Form.Group controlId="email_Id">
           <Form.ControlLabel>Email</Form.ControlLabel>
-          <Form.Control name="Input" placeholder="mail@gmail.com"/>
+          <Form.Control name="email_Id" placeholder="mail@gmail.com"/>
         </Form.Group>
 
-        <Form.Group controlId="MaskedInput">
+        <Form.Group controlId="mobile">
           <Form.ControlLabel>Phone Number</Form.ControlLabel>
           <Form.Control
-            name="MaskedInput"
+            name="mobile"
             accepter={MaskedInput}
             placeholder="(+91) 97404-61745"
             mask={[
@@ -146,25 +168,24 @@ This form is used to create a Nurse.
           />
         </Form.Group>
 
-        <Form.Group controlId="inputPicker">
+        <Form.Group controlId="gender">
           <Form.ControlLabel>Gender</Form.ControlLabel>
-          <Form.Control name="inputPicker" accepter={InputPicker} data={genData} />
+          <Form.Control name="gender" accepter={InputPicker} data={genData} />
         </Form.Group>
 
-        <Form.Group controlId="datePicker">
+        <Form.Group controlId="yearofBirth">
           <Form.ControlLabel>Date of Birth</Form.ControlLabel>
-          <Form.Control name="datePicker" accepter={DatePicker} />
+          <Form.Control name="yearofBirth" accepter={DatePicker} />
         </Form.Group>
 
-        <Form.Group controlId="Textarea">
+        <Form.Group controlId="address">
           <Form.ControlLabel>Address</Form.ControlLabel>
-          <Form.Control name="Textarea" accepter={Textarea} rows={3} />
+          <Form.Control name="address" accepter={Textarea} rows={3} />
         </Form.Group>
 
         <Form.Group>
           <ButtonToolbar>
-            <Button appearance="primary"
-              onClick={handleSubmit}> 
+            <Button appearance="primary" type="submit"> 
             Submit</Button>
             <Button appearance="default">Cancel</Button>
           </ButtonToolbar>

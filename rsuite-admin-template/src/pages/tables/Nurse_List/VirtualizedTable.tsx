@@ -7,7 +7,7 @@ const { getHeight } = DOMHelper;
 
 const data = mockUsers(1000);
 
-const VirtualizedTable = () => {
+const VirtualizedTable2 = () => {
   return (
     <Table
       virtualized
@@ -29,6 +29,7 @@ const VirtualizedTable = () => {
         <HeaderCell>Last Name</HeaderCell>
         <Cell dataKey="lastName" />
       </Column>
+
 
       <Column width={100}>
         <HeaderCell>Gender</HeaderCell>
@@ -53,4 +54,4 @@ const VirtualizedTable = () => {
   );
 };
 
-export default VirtualizedTable;
+export default VirtualizedTable2;

@@ -4,6 +4,7 @@ export function mockUsers(length: number) {
   const createRowData = rowIndex => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
+    const specialization = faker.name.jobTitle();
     const gender = faker.name.gender(true) as 'female' | 'male';
     const name = faker.name.findName(firstName, lastName, gender);
     const avatar = faker.image.avatar();
@@ -26,6 +27,7 @@ export function mockUsers(length: number) {
       name,
       firstName,
       lastName,
+      specialization,
       avatar,
       city,
       street,

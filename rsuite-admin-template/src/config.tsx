@@ -30,8 +30,13 @@ export const appNavs = [
       },
       {
         eventKey: 'virtualized',
-        title: 'Virtualized Table',
+        title: 'Doctor list',
         to: '/table-virtualized'
+      },
+      {
+        eventKey: 'virtualized2',
+        title: 'Nurse list',
+        to: '/table-virtualized2'
       }
     ]
   },
@@ -50,6 +55,11 @@ export const appNavs = [
         eventKey: 'form-basic2',
         title: 'Add Nurse',
         to: '/form-basic2'
+      },
+      {
+        eventKey: 'form-basic3',
+        title: 'Add health record',
+        to: '/form-basic3'
       },
       {
         eventKey: 'form-wizard',

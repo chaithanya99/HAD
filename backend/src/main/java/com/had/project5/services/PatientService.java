@@ -33,4 +33,12 @@ public class PatientService {
         return true;
     }
 
+    public Long getId(String abhaNumber){
+        Patient p=patientRepo.findByAbhaNumber(abhaNumber);
+        if(p==null){
+            return (long)-1;
+        }
+        return p.getId();
+    }
+
 }

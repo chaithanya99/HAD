@@ -19,3 +19,14 @@ CREATE TABLE IF NOT EXISTS Patient (
     district VARCHAR(100),
     state VARCHAR(100)
 );
+
+
+CREATE TABLE Appointment (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    doctor_id INT NOT NULL,
+    patient_id INT NOT NULL,
+    startDateTime DATETIME,
+    endDateTime DATETIME,
+    FOREIGN KEY (doctor_id) REFERENCES Doctor(Id),
+    FOREIGN KEY (patient_id) REFERENCES Patient(Id)
+);

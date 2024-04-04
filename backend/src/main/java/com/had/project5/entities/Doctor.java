@@ -26,6 +26,6 @@ public class Doctor
     private String mobile;
     private String address;
     private String gender;
-    private String YearofBirth;
+    private String yearOfBirth;
     private boolean active=true; 
 }

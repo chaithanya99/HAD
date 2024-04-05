@@ -3,7 +3,7 @@ import { Form, SelectPicker } from 'rsuite';
 import Textarea from '@/components/Textarea';
 import FormHeader from './FormHeader';
 
-const BusinessDetailForm = () => {
+const Step4 = () => {
   return (
     <Form fluid>
       <FormHeader
@@ -19,4 +19,4 @@ const BusinessDetailForm = () => {
   );
 };
 
-export default BusinessDetailForm;
+export default Step4;

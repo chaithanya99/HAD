@@ -32,28 +32,31 @@ const TermsAndConditions = () => (
   </Panel>
 );
 
-const Step1 = ({ Agree, setAgree, setAadharNumber, aadharNumber, token, setTxnId, step, setStep }) => {
+const Step1 = ({ setAadharNumber, aadharNumber, token, setTxnId, step, setStep }) => {
   const formRef = React.useRef(null);
+  const [Agree, setAgree] = useState(false);
 
   const handleChange = (e) => {
     setAadharNumber(e.MaskedInput);
   }
 
   const handleSubmit = async () => {
-    if (aadharNumber.length === 14 && Agree) {
+    const actualAadharNumber = aadharNumber.split('-').join('').trim();
+    console.log(actualAadharNumber.length);
+    if (actualAadharNumber.length === 12 && Agree) {
       // Conditions met, proceed to the next step
-      console.log(aadharNumber.split(' ').join(''));
       // try {
       const response1 = await axios.post("http://localhost:8080/auth/generateToken",
       {
         "username" : "admin",
         "password": "admin"
       });
+      localStorage.setItem('token', response1.data);
       const response = await axios.post("http://localhost:8080/generateOtp", {
-        "aadhaar": aadharNumber.split(' ').join('')
+        "aadhaar": actualAadharNumber
       }, {
         headers: {
-          'Authorization': `Bearer ${response1.data}`  // token
+          'Authorization': `Bearer ${response1.data}`
         }
       });
       setTxnId(response.data.txnId);
@@ -67,7 +70,15 @@ const Step1 = ({ Agree, setAgree, setAadharNumber, aadharNumber, token, setTxnId
     } 
     else {
       // Display an error message or handle invalid input
-      alert('Please enter a valid Aadhar number and check the agreement.');
+      if(actualAadharNumber.length != 12) {
+        alert('Please enter valid Aadhar number');
+      }
+      else if (Agree === false) {
+        alert('Please read & agree to the Terms & Conditions');
+      }
+      else {
+        alert('IDK Die');
+      }
     }
   }
 
@@ -93,12 +104,12 @@ const Step1 = ({ Agree, setAgree, setAadharNumber, aadharNumber, token, setTxnId
               /\d/,
               /\d/,
               /\d/,
-              ' ',
+              '-',
               /\d/,
               /\d/,
               /\d/,
               /\d/,
-              ' ',
+              '-',
               /\d/,
               /\d/,
               /\d/,

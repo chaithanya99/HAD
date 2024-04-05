@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, DatePicker } from 'rsuite';
 import axios from 'axios';
 import FormHeader from './FormHeader';
 
-const ProjectInfoForm = ({ token, setTxnId, step, formtype }) => {
-  const [formData, setFormData] = useState(getInitialFormData(formtype));
+const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, setFormData }) => {
+
+  useEffect(() => {
+    setFormData(getInitialFormData(formtype));
+  }, [formtype]);
 
   // Function to get initial form data based on formtype
   function getInitialFormData(formtype) {
@@ -27,16 +30,16 @@ const ProjectInfoForm = ({ token, setTxnId, step, formtype }) => {
         return {
           type: formtype,
           expiry: "",
-          PatientId: "",
-          DoctorId: "",
+          PatientID: "",
+          DoctorID: "",
           Medication: ""
         };
       case 'Immunization Record':
         return {
           type: formtype,
           expiry: "",
-          PatientId: "",
-          DoctorId: "",
+          PatientID: "",
+          DoctorID: "",
           Immunization_Details: "",
           Immunization_recommendation: ""
         };
@@ -44,24 +47,24 @@ const ProjectInfoForm = ({ token, setTxnId, step, formtype }) => {
         return{
           type: formtype,
           expiry: "",
-          PatientId: "",
-          DoctorId: "",
+          PatientID: "",
+          DoctorID: "",
           Diagnosis_Report: "",
         }
         case 'General health report':
           return{
             type: formtype,
             expiry: "",
-            PatientId: "",
-            DoctorId: "",
+            PatientID: "",
+            DoctorID: "",
             Health_report: "",
           }
         case 'Wellness Record':
           return{
             type: formtype,
             expiry: "",
-            PatientId: "",
-            DoctorId: "",
+            PatientID: "",
+            DoctorID: "",
             HeartRate: "",
             Respiratory_rate: "",
             temperature: "",
@@ -75,8 +78,8 @@ const ProjectInfoForm = ({ token, setTxnId, step, formtype }) => {
           return{
             type: formtype,
             expiry: "",
-            PatientId: "",
-            DoctorId: "",
+            PatientID: "",
+            DoctorID: "",
             complaints: "",
             Physical_Examination: "",
             Allergies: "",
@@ -97,6 +100,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, formtype }) => {
   const handleSubmit = async () => {
     try {
       console.log("Form data:", formData);
+      setStep(step + 1);
       // Send formData to the endpoint using axios
       // const response = await axios.post('your_endpoint_here', formData);
       // console.log(response.data); // Handle response accordingly
@@ -112,7 +116,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, formtype }) => {
   return (
     <div>
       <Form onSubmit={handleSubmit}>
-        <FormHeader title={`Enter ${formtype} Details`} />
+        <FormHeader title={`Enter ${formtype} Details`} description={''} />
         {/* Render form fields based on type */}
         
 

@@ -57,9 +57,9 @@ export const appNavs = [
         to: '/form-basic2'
       },
       {
-        eventKey: 'form-basic3',
+        eventKey: 'Healthrec',
         title: 'Add health record',
-        to: '/form-basic3'
+        to: '/Healthrec'
       },
       {
         eventKey: 'ABHA-Registration',

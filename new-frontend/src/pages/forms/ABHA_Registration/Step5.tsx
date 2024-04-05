@@ -1,8 +1,11 @@
 import React from 'react';
 import { ButtonToolbar, Button, Stack ,Panel} from 'rsuite';
 import CheckRoundIcon from '@rsuite/icons/CheckRound';
+import { useNavigate } from 'react-router-dom';
 
-const Completed = () => {
+const Step5 = ({ abhaId }) => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <div style={{ margin: '40px 0' }}>
@@ -16,14 +19,14 @@ const Completed = () => {
       </div>
       
       <Panel header="ABHA Number" bordered style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'center' }}>
-        <h4>1234567894165</h4>
+        <h4>{abhaId}</h4>
       </Panel>
       
       <ButtonToolbar style={{ marginTop: 20 }}>
-        <Button appearance="primary">Return to Dashboard</Button>
+        <Button appearance="primary" onClick={() => {navigate('/dashboard')}}>Return to Dashboard</Button>
       </ButtonToolbar>
     </div>
   );
 };
 
-export default Completed;
+export default Step5;

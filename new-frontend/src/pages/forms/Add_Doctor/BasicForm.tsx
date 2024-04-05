@@ -133,7 +133,7 @@ This form is used to create a doctor.
         </Form.Group>
 
         <Form.Group controlId="abhaId">
-          <Form.ControlLabel>ABHA ID</Form.ControlLabel>
+          <Form.ControlLabel>ABHA Id</Form.ControlLabel>
           <Form.Control name="abhaId" placeholder="your id@sbx"/>
         </Form.Group>
 
@@ -147,19 +147,18 @@ This form is used to create a doctor.
           <Form.Control
             name="mobile"
             accepter={MaskedInput}
-            placeholder="(+91) 97404-61745"
+            placeholder="XX - XXXXX - XXX"
+            placeholderChar = {'\u2000'}
             mask={[
-              '(',
-              /[1-9]/,
               /\d/,
               /\d/,
-              ')',
               ' ',
               /\d/,
               /\d/,
               /\d/,
-              '-',
               /\d/,
+              /\d/,
+              ' ',
               /\d/,
               /\d/,
               /\d/

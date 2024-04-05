@@ -6,69 +6,52 @@ import PageNextIcon from '@rsuite/icons/PageNext';
 import PagePreviousIcon from '@rsuite/icons/PagePrevious';
 
 import Step1 from './Step1';
-import Step2 from './Step2';
-import Step3 from './Step3';
-import Step4 from './Step4';
-import Step5 from './Step5';
+import ProjectInfoForm from './ProjectInfoForm';
+import Completed from './Completed';
+import axios from 'axios';
 
-const ABHA_Registration = () => {
-  const otpSize = 6;
+const HealthRecord = () => {
   const [step, setStep] = useState(0);
   const [txnId, setTxnId] = useState('');
-  const [aadharNumber, setAadharNumber] = useState('')
-  const [mobileNumber, setMobileNumber] = useState('')
-  const [abhaId, setAbhaId] = useState('')
   const token = localStorage.getItem('token');
+  const [type, settype] = useState('')
+  const [formData, setFormData] = useState({});
+
 
   const step1Props = {
-    setAadharNumber: setAadharNumber,
-    aadharNumber: aadharNumber,
+    step: step,
+    setStep: setStep,
+    type: type,
+    settype: settype,
+  };
+
+  const projectInfoProps = {
     token: token,
     setTxnId: setTxnId,
     step: step,
     setStep: setStep,
+    formtype: type,
+    formData: formData,
+    setFormData: setFormData,
   };
 
-  const step2Props = {
-    otpSize: otpSize,
-    txnId: txnId,
-    step: step,
-    setStep: setStep,
-    aadharNumber: aadharNumber,
-    token: token,
-  };
-
-  const step3Props = {
-    mobileNumber: mobileNumber,
-    setMobileNumber: setMobileNumber,
-    txnId: txnId,
-    token: token,
-    abhaId: abhaId,
-    setAbhaId: setAbhaId,
-    step: step,
-    setStep: setStep,
-  };
-
-  const step4Props = {
-    // Define variables and functions specific to BusinessDetailForm
-  };
-
-  const step5Props = {
+  const completedProps = {
     // Define variables and functions specific to Completed
+    formData: formData,
+    step: step, 
   };
 
-  const forms = [Step1, Step2, Step3, Step4, Step5]
-  const formProps = [step1Props, step2Props, step3Props, step4Props, step5Props];
+  const forms = [Step1, ProjectInfoForm, Completed]
+  const formProps = [step1Props, projectInfoProps, completedProps];
   const Form = forms[step];
+
 
   return (
     <PageContent>
       <Steps current={step}>
-        <Steps.Item title="Patient Consent" />
-        <Steps.Item title="Aadhaar Auth" />
-        <Steps.Item title="Link Mobile" />
-        <Steps.Item title="Verify Mobile" />
-        <Steps.Item title="ABHA Number" />
+        <Steps.Item title="Choose Record Type" />
+        <Steps.Item title="Create a Record" />
+        <Steps.Item title="Completed" />
       </Steps>
 
       <Divider />
@@ -101,4 +84,4 @@ const ABHA_Registration = () => {
   );
 };
 
-export default ABHA_Registration;
+export default HealthRecord;

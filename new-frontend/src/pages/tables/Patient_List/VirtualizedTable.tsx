@@ -14,7 +14,7 @@ const calculateAge = (yearOfBirth) => {
   return currentYear - yearOfBirth;
 };
 
-const VirtualizedTable = () => {
+const VirtualizedTable3 = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +24,7 @@ const VirtualizedTable = () => {
           "username" : "admin",
           "password": "admin"
         });
-        const response = await axios.get("http://localhost:8080/admin/doctors",
+        const response = await axios.get("http://localhost:8080/admin/workers",
         {
           headers: {
             'Authorization': `Bearer ${response1.data}`
@@ -86,4 +86,4 @@ const VirtualizedTable = () => {
   );
 };
 
-export default VirtualizedTable;
+export default VirtualizedTable3;

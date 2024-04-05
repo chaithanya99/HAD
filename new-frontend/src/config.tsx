@@ -37,6 +37,11 @@ export const appNavs = [
         eventKey: 'virtualized2',
         title: 'Nurse list',
         to: '/table-virtualized2'
+      },
+      {
+        eventKey: 'virtualized3',
+        title: 'Patient list',
+        to: '/table-virtualized3'
       }
     ]
   },
@@ -59,7 +64,7 @@ export const appNavs = [
       {
         eventKey: 'Healthrec',
         title: 'Add health record',
-        to: '/Healthrec'
+        to: '/Healthrecord'
       },
       {
         eventKey: 'ABHA-Registration',

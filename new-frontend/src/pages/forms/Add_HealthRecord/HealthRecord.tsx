@@ -11,11 +11,12 @@ import Completed from './Completed';
 import axios from 'axios';
 
 const HealthRecord = () => {
-  const otpSize = 6;
   const [step, setStep] = useState(0);
   const [txnId, setTxnId] = useState('');
   const token = localStorage.getItem('token');
   const [type, settype] = useState('')
+  const [formData, setFormData] = useState({});
+
 
   const step1Props = {
     step: step,
@@ -30,10 +31,14 @@ const HealthRecord = () => {
     step: step,
     setStep: setStep,
     formtype: type,
+    formData: formData,
+    setFormData: setFormData,
   };
 
   const completedProps = {
     // Define variables and functions specific to Completed
+    formData: formData,
+    step: step, 
   };
 
   const forms = [Step1, ProjectInfoForm, Completed]

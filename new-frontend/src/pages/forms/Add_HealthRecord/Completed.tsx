@@ -2,7 +2,9 @@ import React from 'react';
 import { ButtonToolbar, Button, Stack ,Panel} from 'rsuite';
 import CheckRoundIcon from '@rsuite/icons/CheckRound';
 
-const Completed = () => {
+const Completed = ({formData, step}) => {
+  console.log("Form data:", formData);
+  console.log("Step:", step);
   return (
     <div>
       <div style={{ margin: '40px 0' }}>

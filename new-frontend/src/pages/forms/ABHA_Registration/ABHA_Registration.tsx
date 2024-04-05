@@ -53,7 +53,7 @@ const ABHA_Registration = () => {
   };
 
   const step5Props = {
-    // Define variables and functions specific to Completed
+    abhaId: abhaId,
   };
 
   const forms = [Step1, Step2, Step3, Step4, Step5]

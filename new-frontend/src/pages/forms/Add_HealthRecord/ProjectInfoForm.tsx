@@ -3,7 +3,7 @@ import { Form, Button, DatePicker } from 'rsuite';
 import axios from 'axios';
 import FormHeader from './FormHeader';
 
-const ProjectInfoForm = ({ token, setTxnId, step, formtype }) => {
+const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype }) => {
   const [formData, setFormData] = useState(getInitialFormData(formtype));
 
   // Function to get initial form data based on formtype
@@ -97,6 +97,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, formtype }) => {
   const handleSubmit = async () => {
     try {
       console.log("Form data:", formData);
+      setStep(step + 1);
       // Send formData to the endpoint using axios
       // const response = await axios.post('your_endpoint_here', formData);
       // console.log(response.data); // Handle response accordingly

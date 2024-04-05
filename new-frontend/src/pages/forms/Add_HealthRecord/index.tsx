@@ -1,5 +1,5 @@
 import React from 'react';
-import ABHA_Registration from './ABHA_Registration';
+import HealthRecord from './HealthRecord';
 
 import { Breadcrumb, Panel } from 'rsuite';
 
@@ -8,16 +8,16 @@ const Page = () => {
     <Panel
       header={
         <>
-          <h3 className="title">ABHA Registration</h3>
+          <h3 className="title">Health Record</h3>
           <Breadcrumb>
             <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
             <Breadcrumb.Item>Forms</Breadcrumb.Item>
-            <Breadcrumb.Item active>ABHA Registration</Breadcrumb.Item>
+            <Breadcrumb.Item active>Health Record</Breadcrumb.Item>
           </Breadcrumb>
         </>
       }
     >
-      <ABHA_Registration />
+      <HealthRecord />
     </Panel>
   );
 };

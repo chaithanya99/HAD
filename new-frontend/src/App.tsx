@@ -19,11 +19,9 @@ import VirtualizedTable2Page from './pages/tables/Nurse_List';
 import FormBasicPage from './pages/forms/Add_Doctor';
 import ABHARegistrationPage from './pages/forms/ABHA_Registration';
 import FormBasic2Page from './pages/forms/Add_Nurse';
-import FormBasic3Page from './pages/forms/Add_DataRecord';
 import CalendarPage from './pages/calendar';
 import { appNavs } from './config';
-import HealthRec from './pages/forms/Add_HealthRecord/ABHA_Registration';
-
+import Healthrecordpage from './pages/forms/Add_HealthRecord';
 const App = () => {
   return (
     <IntlProvider locale="en" messages={locales.en}>
@@ -43,9 +41,8 @@ const App = () => {
             <Route path="sign-up" element={<SignUpPage />} />
             <Route path="form-basic" element={<FormBasicPage />} />
             <Route path="form-basic2" element={<FormBasic2Page />} />
-            <Route path="form-basic3" element={<FormBasic3Page />} />
+            <Route path="HealthRecord" element={<Healthrecordpage />} />
             <Route path="ABHA-Registration" element={<ABHARegistrationPage />} />
-            <Route path="Healthrec" element={<HealthRec />} />
             <Route path="calendar" element={<CalendarPage />} />
           </Route>
           <Route path="*" element={<Error404Page />} />

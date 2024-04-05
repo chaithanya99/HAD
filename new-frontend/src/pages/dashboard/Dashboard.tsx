@@ -42,14 +42,14 @@ const Dashboard = () => {
         </Col>
         <Col xs={8}>
           <Panel className="trend-box bg-gradient-green">
-            <img className="chart-img" src={images.VVICon} />
+            <img className="chart-img" src={images.PVIcon} />
             <div className="title">Health Workers</div>
             <div className="value">200</div>
           </Panel>
         </Col>
         <Col xs={8}>
           <Panel className="trend-box bg-gradient-blue">
-            <img className="chart-img" src={images.UVIcon} />
+            <img className="chart-img" src={images.PVIcon} />
             <div className="title">Patients</div>
             <div className="value">920</div>
           </Panel>

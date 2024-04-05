@@ -7,9 +7,9 @@ import PageToolbar from '@/components/PageToolbar';
 const Page = () => {
   return (
     <Panel header={<h3 className="title">Dashboard</h3>}>
-      <PageToolbar />
+      {/* <PageToolbar /> */}
       <Dashboard />
-      <Copyright />
+      {/* <Copyright /> */}
     </Panel>
   );
 };

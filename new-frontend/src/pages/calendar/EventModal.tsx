@@ -10,21 +10,17 @@ const EventModal = (props: EventModalProps) => {
   return (
     <Modal open={open} onClose={onClose} backdrop="static" {...rest}>
       <Modal.Header>
-        <Modal.Title>Add a New Event</Modal.Title>
+        <Modal.Title>Create a New Appointment</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form fluid>
           <Form.Group controlId="name">
-            <Form.ControlLabel>Event Name</Form.ControlLabel>
+            <Form.ControlLabel>Patient ID</Form.ControlLabel>
             <Form.Control name="name" />
           </Form.Group>
           <Form.Group controlId="description">
-            <Form.ControlLabel>Event Description</Form.ControlLabel>
+            <Form.ControlLabel>Notes</Form.ControlLabel>
             <Form.Control name="description" />
-          </Form.Group>
-          <Form.Group controlId="location">
-            <Form.ControlLabel>Event Location</Form.ControlLabel>
-            <Form.Control name="location" />
           </Form.Group>
           <Form.Group controlId="start">
             <Form.ControlLabel>Event Date</Form.ControlLabel>
@@ -41,7 +37,6 @@ const EventModal = (props: EventModalProps) => {
                 style={{ width: 200 }}
                 placeholder="End Date"
               />
-              <Checkbox>All Day</Checkbox>
             </Stack>
           </Form.Group>
         </Form>

@@ -101,13 +101,9 @@ const DataTable = () => {
   return (
     <>
       <Stack className="table-toolbar" justifyContent="space-between">
-        <Button appearance="primary" onClick={() => setShowDrawer(true)}>
-          Add Member
-        </Button>
-
         <Stack spacing={6}>
           <SelectPicker
-            label="Rating"
+            label="ABHA ID"
             data={ratingList}
             searchable={false}
             value={rating}
@@ -134,61 +130,39 @@ const DataTable = () => {
           <Cell dataKey="id" />
         </Column>
 
-        <Column width={50} fixed>
-          <HeaderCell style={{ padding: 0 }}>
-            <div style={{ lineHeight: '40px' }}>
-              <Checkbox
-                inline
-                checked={checked}
-                indeterminate={indeterminate}
-                onChange={handleCheckAll}
-              />
-            </div>
-          </HeaderCell>
-          <CheckCell dataKey="id" checkedKeys={checkedKeys} onChange={handleCheck} />
-        </Column>
-        <Column width={80} align="center">
-          <HeaderCell>Avatar</HeaderCell>
-          <ImageCell dataKey="avatar" />
-        </Column>
-
-        <Column minWidth={160} flexGrow={1} sortable>
+        <Column minWidth={80} flexGrow={1} sortable>
           <HeaderCell>Name</HeaderCell>
           <NameCell dataKey="name" />
         </Column>
 
-        <Column width={230} sortable>
-          <HeaderCell>Skill Proficiency</HeaderCell>
-          <Cell style={{ padding: '10px 0' }} dataKey="progress">
-            {rowData => <Progress percent={rowData.progress} showInfo={false} />}
-          </Cell>
-        </Column>
-
-        <Column width={100} sortable>
-          <HeaderCell>Rating</HeaderCell>
-          <Cell dataKey="rating">
-            {rowData =>
-              Array.from({ length: rowData.rating }).map((_, i) => <span key={i}>⭐️</span>)
-            }
-          </Cell>
-        </Column>
-
-        <Column width={100} sortable>
-          <HeaderCell>Income</HeaderCell>
+        <Column width={80} sortable>
+          <HeaderCell>Gender</HeaderCell>
           <Cell dataKey="amount">{rowData => `$${rowData.amount}`}</Cell>
         </Column>
 
-        <Column width={300}>
+        <Column width={180}>
           <HeaderCell>Email</HeaderCell>
           <Cell dataKey="email" />
         </Column>
 
-        <Column width={120}>
+        <Column width={120} fixed="right">
+        <HeaderCell>...</HeaderCell>
+        <Cell style={{ padding: '2px' }}>
+          {rowData => (
+            <Button appearance="primary" onClick={() => setShowDrawer(true)}>
+              More Options
+            </Button>
+          )}
+        </Cell>
+      </Column>
+
+        {/* <Column width={120}>
           <HeaderCell>
             <MoreIcon />
           </HeaderCell>
           <ActionCell dataKey="id" />
-        </Column>
+        </Column> */}
+        
       </Table>
 
       <DrawerView open={showDrawer} onClose={() => setShowDrawer(false)} />

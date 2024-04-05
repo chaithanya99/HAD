@@ -9,6 +9,7 @@ import EventModal from './EventModal';
 
 const Calendar = () => {
   const [editable, setEditable] = React.useState(false);
+  
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     console.log(selectInfo);
     setEditable(true);

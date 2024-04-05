@@ -83,6 +83,7 @@ const VirtualizedTable3 = () => {
         <Cell dataKey="email_Id" />
       </Column>
     </Table>
+    
   );
 };
 

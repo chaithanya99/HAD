@@ -25,7 +25,7 @@ export const appNavs = [
     children: [
       {
         eventKey: 'members',
-        title: 'Members',
+        title: 'Patients',
         to: '/table-members'
       },
       {

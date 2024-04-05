@@ -24,7 +24,7 @@ const VirtualizedTable3 = () => {
           "username" : "admin",
           "password": "admin"
         });
-        const response = await axios.get("http://localhost:8080/admin/workers",
+        const response = await axios.get("http://localhost:8080/admin/patients",
         {
           headers: {
             'Authorization': `Bearer ${response1.data}`

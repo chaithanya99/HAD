@@ -1,36 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { DOMHelper, Table } from 'rsuite';
+import { DOMHelper, Table, Button } from 'rsuite'; // Import Button from rsuite
 import { mockUsers } from '@/data/mock';
 import axios from 'axios';
 
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
 
-// const data = mockUsers(1000);
 const calculateAge = (yearOfBirth) => {
   const currentYear = new Date().getFullYear(); // Get current year
-  console.log(currentYear);
-  console.log(yearOfBirth);
   return currentYear - yearOfBirth;
 };
+
 const VirtualizedTable2 = () => {
   const [data, setData] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await axios.post("http://localhost:8080/auth/generateToken",
-        {
+        const response1 = await axios.post("http://localhost:8080/auth/generateToken", {
           "username" : "admin",
           "password": "admin"
         });
-        const response = await axios.get("http://localhost:8080/admin/workers",
-        {
+        const response = await axios.get("http://localhost:8080/admin/workers", {
           headers: {
             'Authorization': `Bearer ${response1.data}`
           }
         });
         setData(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -38,6 +34,17 @@ const VirtualizedTable2 = () => {
 
     fetchData();
   }, []);
+
+  // Custom cell renderer for buttons
+  const renderButtons = (rowData) => (
+    <Cell>
+      {/* Example buttons */}
+      <Button appearance="primary">Edit</Button>
+      <Button appearance="primary">Delete</Button>
+      <Button appearance="primary">View</Button>
+    </Cell>
+  );
+
   return (
     <Table
       virtualized

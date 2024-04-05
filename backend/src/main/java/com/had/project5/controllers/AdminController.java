@@ -2,6 +2,8 @@ package com.had.project5.controllers;
 import java.util.List;
 import java.util.Map;
 
+import com.had.project5.entities.Patient;
+import com.had.project5.repositories.PatientRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AdminController {
     @Autowired
     private WorkerRepo workerRepo;
+    @Autowired
+    private PatientRepo patientrepo;
     @Autowired
     private DoctorService doctorService;
     @Autowired
@@ -175,7 +179,10 @@ public class AdminController {
     }
 
 
-
+    @GetMapping("/patients")
+    public List<Patient> getAllPatients() {
+        return patientrepo.findAll();
+    }
 
 
 }

@@ -24,6 +24,7 @@ public class PatientController
     private PatientService patientService;
     @Autowired
     private PatientRepo patientRepo;
+
     @GetMapping("/Id")
     public ResponseEntity<Long> getDoctorId(@RequestBody Map<String,String> req){
         System.out.println(req.get("abhaNumber"));

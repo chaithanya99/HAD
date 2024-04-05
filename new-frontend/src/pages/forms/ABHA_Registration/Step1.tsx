@@ -26,7 +26,6 @@ const TermsAndConditions = () => (
     benefits across the NDHE. I am aware that my personal identifiable information excluding Aadhaar number / VID number can be 
     used and shared for purposes as mentioned above. I reserve the right to revoke the given consent at any point of time as 
     per provisions of Aadhaar Act and Regulations.
-
     </p>
 
   </Panel>
@@ -121,18 +120,9 @@ const Step1 = ({ setAadharNumber, aadharNumber, token, setTxnId, step, setStep }
       <Form.Group controlId="termsAndConditions">
         <Form.ControlLabel>Terms and Conditions</Form.ControlLabel>
         <TermsAndConditions />
-        <Checkbox onChange={() => setAgree(!Agree)}>Accept Terms and Conditions</Checkbox>
-        <Button appearance="primary" type="submit" style={{ marginLeft: '10px'}}>Submit</Button>
+        <Checkbox onChange={() => setAgree(!Agree)} style={{marginBottom: '2px'}}>Accept Terms and Conditions</Checkbox>
       </Form.Group>
-      {/* <IconButton
-        icon={<PageNextIcon />}
-        placement="right"
-        appearance="primary"
-        // onSubmit={handleSubmit}
-        // onClick={() => setStep(Math.min(step + 1, 4))}
-        >
-        Submit
-      </IconButton> */}
+      <Button appearance="primary" type="submit" style={{ marginLeft: '10px'}}>Submit</Button>
     </Form>
   );
 };

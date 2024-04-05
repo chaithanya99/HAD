@@ -7,7 +7,7 @@ import { FaGit, FaGithub, FaGitlab } from 'react-icons/fa';
 import FormHeader from './FormHeader';
 import axios from 'axios';
 
-const Step3 = ({ mobileNumber, setMobileNumber, txnId, token, abhaId, setAbhaId, step, setStep }) => {
+const Step3 = ({ mobileNumber, setMobileNumber, txnId, token, setAbhaId, step, setStep }) => {
 
   const handleSubmit = async () => {
     try {

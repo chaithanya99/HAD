@@ -43,7 +43,6 @@ const ABHA_Registration = () => {
     setMobileNumber: setMobileNumber,
     txnId: txnId,
     token: token,
-    abhaId: abhaId,
     setAbhaId: setAbhaId,
     step: step,
     setStep: setStep,

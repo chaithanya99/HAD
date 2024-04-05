@@ -16,8 +16,6 @@ const Step2 = ({ otpSize, txnId, step, setStep, aadharNumber, token }) => {
   const [timeRemaining, setTimeRemaining] = useState(retryTime);
   const [timerExpired, setTimerExpired] = useState(false);
 
-  const inputs = useRef([]);
-
   const handleSubmit = async () => {
     try {
       if (otp.length === otpSize && otp.every((digit) => Boolean(digit))) {
@@ -95,7 +93,7 @@ const Step2 = ({ otpSize, txnId, step, setStep, aadharNumber, token }) => {
     >
       <FormHeader
         title="OTP Validation"
-        description="Enter the OTP sent to your mobile number to generate your ABHA Number."
+        description="Enter the OTP sent to your Aadhar linked mobile number to verify your Aadhar Number."
       />
       <Form.Group controlId="aadhaar_display">
         <Form.ControlLabel>Your Aadhaar Number is:</Form.ControlLabel>
@@ -126,6 +124,11 @@ const Step2 = ({ otpSize, txnId, step, setStep, aadharNumber, token }) => {
 
       <Form.Group>
       <Input value={`Time remaining is ${timeRemaining} sec`} disabled style={{ textAlign: 'center',color: timerExpired ? 'red' : 'black'}} />
+      </Form.Group>
+
+      <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+          <p>Wrong Aadhar Number?</p>
+          <Button appearance="primary" onClick={handleResend} style={{ marginLeft: '10px' }}>Go Back</Button>
       </Form.Group>
 
     </Form>

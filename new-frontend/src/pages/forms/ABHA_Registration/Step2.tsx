@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Stack, InputGroup,Input,Button,MaskedInput} from 'rsuite';
+import { Form, Input, Button } from 'rsuite';
 import { Icon } from '@rsuite/icons';
 import { VscLock, VscWorkspaceTrusted } from 'react-icons/vsc';
 import RadioTile from '@/components/RadioTile';
@@ -8,11 +8,10 @@ import FormHeader from './FormHeader';
 import { useState, useEffect,useRef} from 'react';
 import axios from 'axios';
 
-const Step2 = ({ otpSize, txnId, step, setStep, aadharNumber, token }) => {
+const Step2 = ({ otpSize, txnId, step, setStep, aadharNumber, token, retryTime }) => {
   const formRef = React.useRef(null);
   const otpBoxReference = useRef([]);
-  const retryTime = 30;
-  const [otp, setOtp] = useState(Array(otpSize).fill(''))
+  const [otp, setOtp] = useState(new Array(otpSize).fill(''))
   const [timeRemaining, setTimeRemaining] = useState(retryTime);
   const [timerExpired, setTimerExpired] = useState(false);
 

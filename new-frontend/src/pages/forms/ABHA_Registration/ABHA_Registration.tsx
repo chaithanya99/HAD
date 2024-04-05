@@ -13,6 +13,7 @@ import Step5 from './Step5';
 
 const ABHA_Registration = () => {
   const otpSize = 6;
+  const retryTime = 30;
   const [step, setStep] = useState(0);
   const [txnId, setTxnId] = useState('');
   const [aadharNumber, setAadharNumber] = useState('')
@@ -36,6 +37,7 @@ const ABHA_Registration = () => {
     setStep: setStep,
     aadharNumber: aadharNumber,
     token: token,
+    retryTime: retryTime,
   };
 
   const step3Props = {
@@ -49,11 +51,20 @@ const ABHA_Registration = () => {
   };
 
   const step4Props = {
-    // Define variables and functions specific to BusinessDetailForm
+    mobileNumber: mobileNumber,
+    otpSize: otpSize,
+    retryTime: retryTime,
+    token: token,
+    step: step,
+    setStep: setStep,
+    txnId: txnId,
   };
 
   const step5Props = {
     abhaId: abhaId,
+    token: token,
+    step: step,
+    setStep: setStep,
   };
 
   const forms = [Step1, Step2, Step3, Step4, Step5]
@@ -74,9 +85,9 @@ const ABHA_Registration = () => {
       <div className="wizard-form">
         <Form {...formProps[step]}/>
 
-        <Divider />
+        {/* <Divider /> */}
 
-        <Stack justifyContent="space-between">
+        {/* <Stack justifyContent="space-between">
           {step !== 0 && (
             <IconButton icon={<PagePreviousIcon />} onClick={() => setStep(Math.max(step - 1, 0))}>
               Back
@@ -94,7 +105,7 @@ const ABHA_Registration = () => {
               Continue
             </IconButton>
           )}
-        </Stack>
+        </Stack> */}
       </div>
     </PageContent>
   );

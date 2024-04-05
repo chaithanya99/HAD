@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Form, Stack, SelectPicker,Input,InputGroup,MaskedInput,Button,Panel} from 'rsuite';
 import RadioTile from '@/components/RadioTile';
 import { Icon } from '@rsuite/icons';
@@ -8,6 +8,7 @@ import FormHeader from './FormHeader';
 import axios from 'axios';
 
 const Step3 = ({ mobileNumber, setMobileNumber, txnId, token, setAbhaId, step, setStep }) => {
+  const formRef = useRef(null);
 
   const handleSubmit = async () => {
     try {
@@ -54,6 +55,7 @@ const Step3 = ({ mobileNumber, setMobileNumber, txnId, token, setAbhaId, step, s
 
   return (
     <Form fluid
+    ref={formRef}
     onChange={handleChange}
     onSubmit={handleSubmit}
     >

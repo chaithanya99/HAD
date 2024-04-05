@@ -25,7 +25,7 @@ public class Worker
     private String mobile;
     private String address;
     private String gender;
-    private String yearofBirth;
+    private String yearOfBirth;
     private boolean active; 
 }
 

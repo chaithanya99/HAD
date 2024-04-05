@@ -64,7 +64,7 @@ const BasicForm2 = () => {
     mobile: "",
     address: "",
     gender: "",
-    yearofBirth: ""
+    yearOfBirth: ""
   });
 
   //const token = localStorage.getItem('token');
@@ -109,7 +109,7 @@ const BasicForm2 = () => {
           mobile: "",
           address: "",
           gender: "",
-          yearofBirth: ""
+          yearOfBirth: ""
         });
     }} catch (error) {
       // Handle error
@@ -176,9 +176,9 @@ This form is used to create a Nurse.
           <Form.Control name="gender" accepter={InputPicker} data={genData} />
         </Form.Group>
 
-        <Form.Group controlId="yearofBirth">
+        <Form.Group controlId="yearOfBirth">
           <Form.ControlLabel>Year of Birth</Form.ControlLabel>
-          <Form.Control name="yearofBirth"/>
+          <Form.Control name="yearOfBirth"/>
         </Form.Group>
 
         <Form.Group controlId="address">

@@ -65,7 +65,7 @@ const BasicForm = () => {
     mobile: "",
     address: "",
     gender: "",
-    yearofBirth: ""
+    yearOfBirth: ""
   });
   const handleInputChange = (e) => {
     setDoctorDetails(e);
@@ -90,6 +90,7 @@ const BasicForm = () => {
       // Handle success response
       if (response.status >= 200 && response.status < 300) {
         console.log("values are being set now");
+        console.log(response.data);
         setDoctorDetails({
           ...doctorDetails,
           specialization: "",
@@ -99,7 +100,7 @@ const BasicForm = () => {
           mobile: "",
           address: "",
           gender: "",
-          yearofBirth: ""
+          yearOfBirth: ""
         });
     }} catch (error) {
       // Handle error
@@ -171,9 +172,9 @@ This form is used to create a doctor.
           <Form.Control name="gender" accepter={InputPicker} data={genData} />
         </Form.Group>
 
-        <Form.Group controlId="yearofBirth">
+        <Form.Group controlId="yearOfBirth">
           <Form.ControlLabel>Year of Birth</Form.ControlLabel>
-          <Form.Control name="yearofBirth"/>
+          <Form.Control name="yearOfBirth"/>
         </Form.Group>
 
         <Form.Group controlId="address">

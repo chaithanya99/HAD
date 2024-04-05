@@ -6,23 +6,21 @@ import PageNextIcon from '@rsuite/icons/PageNext';
 import PagePreviousIcon from '@rsuite/icons/PagePrevious';
 
 import Step1 from './Step1';
-import TeamSettingsForm from './TeamSettingsForm';
-import BusinessDetailForm from './BusinessDetailForm';
-import ProjectInfoForm from './ProjectInfoForm';
-import Completed from './Completed';
-import axios from 'axios';
+import Step2 from './Step2';
+import Step3 from './Step3';
+import Step4 from './Step4';
+import Step5 from './Step5';
 
 const ABHA_Registration = () => {
   const otpSize = 6;
   const [step, setStep] = useState(0);
   const [txnId, setTxnId] = useState('');
   const [aadharNumber, setAadharNumber] = useState('')
-  const [Agree, setAgree] = useState(false);
+  const [mobileNumber, setMobileNumber] = useState('')
+  const [abhaId, setAbhaId] = useState('')
   const token = localStorage.getItem('token');
 
   const step1Props = {
-    Agree: Agree,
-    setAgree: setAgree,
     setAadharNumber: setAadharNumber,
     aadharNumber: aadharNumber,
     token: token,
@@ -31,140 +29,37 @@ const ABHA_Registration = () => {
     setStep: setStep,
   };
 
-  const projectInfoProps = {
-    // Define variables and functions specific to ProjectInfoForm
+  const step2Props = {
+    otpSize: otpSize,
+    txnId: txnId,
+    step: step,
+    setStep: setStep,
+    aadharNumber: aadharNumber,
+    token: token,
   };
 
-  const teamSettingsProps = {
-    // Define variables and functions specific to TeamSettingsForm
+  const step3Props = {
+    mobileNumber: mobileNumber,
+    setMobileNumber: setMobileNumber,
+    txnId: txnId,
+    token: token,
+    abhaId: abhaId,
+    setAbhaId: setAbhaId,
+    step: step,
+    setStep: setStep,
   };
 
-  const businessDetailProps = {
+  const step4Props = {
     // Define variables and functions specific to BusinessDetailForm
   };
 
-  const completedProps = {
+  const step5Props = {
     // Define variables and functions specific to Completed
   };
 
-  const forms = [Step1, ProjectInfoForm, TeamSettingsForm, BusinessDetailForm, Completed]
-  const formProps = [step1Props, projectInfoProps, teamSettingsProps, businessDetailProps, completedProps];
+  const forms = [Step1, Step2, Step3, Step4, Step5]
+  const formProps = [step1Props, step2Props, step3Props, step4Props, step5Props];
   const Form = forms[step];
-
-  // const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // if (step === 1) {
-    //   console.log(aadharNumber);
-    //   // Check Aadhar number and "I agree" checkbox
-    //   if (aadharNumber.length === 14 && Agree) {
-    //     // Conditions met, proceed to the next step
-    //     console.log(aadharNumber.split(' ').join(''));
-    //     // try {
-    //     const response = await axios.post("http://localhost:8080/generateOtp", {
-    //       "aadhaar": aadharNumber.split(' ').join('')
-    //     }, {
-    //       headers: {
-    //         'Authorization': `Bearer ${token}`
-    //       }
-    //     });
-    //     setTxnId(response.data.txnId);
-    //     console.log(response.data.txnId);
-    //     // }
-    //     // catch (error) {
-    //     //   // Handle errors from the backend
-    //     //   console.error('Error:', error.message);
-    //     // }
-    //   } else {
-    //     // Display an error message or handle invalid input
-    //     alert('Please enter a valid Aadhar number and check the agreement.');
-    //   }
-  //   } else if (step === 2) {
-  //     // Add logic for other steps if needed
-  //     // For example, OTP verification logic
-  //     // ...
-  //     // if (otp.length === otpSize && otp.every((digit) => Boolean(digit))) {
-  //     //   const otpstring = otp.join('');
-  //     //   console.log(otpstring);
-  //     //   const response = await axios.post("http://localhost:8080/verifyAadhaarOTP", {
-  //     //     txnId,
-  //     //     "otp": otpstring
-  //     //   }, {
-  //     //     headers: {
-  //     //       'Authorization': `Bearer ${token}`
-  //     //     }
-  //     //   });
-  //     //   setStep(step + 1);
-  //     //   console.log(response);
-  //     // }
-  //     // else {
-  //     //   alert('Please enter complete OTP');
-  //     // }
-
-  //     try {
-  //       if (Otp.length === otpSize && Otp.every((digit) => Boolean(digit))) {
-  //         const actualOtp = Otp.join('')
-  //         const response = await axios.post("http://localhost:8080/verifyAadhaarOTP", {
-  //           txnId,
-  //           otp: actualOtp
-  //         }, {
-  //           headers: {
-  //             'Authorization': `Bearer ${token}`
-  //           }
-  //         });
-  //         console.log(response.data); // Handle response accordingly
-  //         setStep(step + 1);
-  //         setOtp(new Array(otpSize).fill(""));
-  //       }
-  //       else {
-  //         alert('Please enter complete OTP');
-  //       }
-
-  //       // Proceed to the next step or handle response
-  //     } catch (error) {
-  //       // Handle errors from the backend
-  //       console.error('Error:', error.message);
-  //     }
-  //   } else if (step === 3) {
-  //     try {
-  //       if (mobileNumber.length === 10) {
-  //         console.log(mobileNumber);
-  //         const response = await axios.post("http://localhost:8080/checkAndGenerateMobileOTP", {
-  //           txnId,
-  //           "mobile": mobileNumber
-  //         }, {
-  //           headers: {
-  //             'Authorization': `Bearer ${token}`
-  //           }
-  //         });
-  //         console.log(response.data.mobileLinked);
-  //         if (response.data.mobileLinked === "true") {
-  //           const response = await axios.post("http://localhost:8080/generateHealthID", {
-  //             txnId,
-  //           }, {
-  //             headers: {
-  //               'Authorization': `Bearer ${token}`
-  //             }
-  //           });
-  //           setAbhaId(response.data.healthIdNumber);
-  //           setStep(step + 2);
-  //         }
-  //         else {
-  //           setTimer(60);
-  //           setStep(step + 1);
-  //         }
-  //       }
-  //       else {
-  //         alert('Enter Valid Mobile Number');
-  //       }
-  //     } catch (error) {
-  //       // Handle errors from the backend
-  //       console.error('Error:', error.message);
-  //     }
-  //   } else if (step === 4) {
-  //     setOtp(new Array(otpSize).fill(""));
-  //   }
-    // }
-  // }
 
   return (
     <PageContent>

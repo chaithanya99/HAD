@@ -50,7 +50,7 @@ const data = [
 
 const DataTable = () => {
   return (
-    <Panel className="card" header="Most Visited Pages">
+    <Panel className="card" header="More Hospital Data">
       <Table height={300} data={data} rowKey="id">
         <Column flexGrow={1} minWidth={100}>
           <HeaderCell>PAGE NAME </HeaderCell>

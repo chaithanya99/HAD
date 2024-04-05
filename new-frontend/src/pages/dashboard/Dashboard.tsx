@@ -125,7 +125,7 @@ const Dashboard = () => {
         </Col>
         <Col xs={8}>
           <PieChart
-            title="Browsers"
+            title="Hospital Data"
             data={[10000, 3000, 2000, 1000, 900]}
             type="pie"
             labels={['Chrome', 'Edge', 'Firefox', 'Safari', 'Other']}

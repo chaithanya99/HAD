@@ -36,10 +36,6 @@ import PageContent from '@/components/PageContent';
 import { mockTreeData } from '@/data/mock';
 
 // const treeData = mockTreeData({ limits: [2, 3, 3], labels: ['Provincial', 'County', 'Town'] });
-const specData = ['Radiology', 'Neurology', 'Cardiologist', 'Oncologist', 'ENT', 'Other'].map(item => ({
-  label: item,
-  value: item
-}));
 const rateofseverity = ['Mild', 'High', 'low', 'insignificant'].map(item => ({
   label: item,
   value: item
@@ -59,12 +55,90 @@ const BasicForm3 = () => {
     type: "",
     expiry: "",
     PatientId: "",
-    DoctorId: "",
-    PastHistory: "",
-    BodySite: "",
-    Severity: "",
-    Diagnosis: ""
+    DoctorId: ""
   });
+  const [Opconsult, setOpconsult] = useState({
+    type: "",
+    expiry: "",
+    PatientId: "",
+    DoctorId: "",
+    condition: "",
+    Physical_Examination: "",
+    Allergies: "",
+    Medical_History: "",
+    Family_History: "",
+    Advice: "",
+    Procedure: "",
+    Medicattion: ""
+  });
+  const [Prescription, setPrescription] = useState({
+    type: "",
+    expiry: "",
+    PatientId: "",
+    DoctorId: "",
+    Medication: ""
+  });
+
+  const [ImmunizationRecord, setImmunizationRecord] = useState({
+    type: "",
+    expiry: "",
+    PatientId: "",
+    DoctorId: "",
+    Details: "",
+    Immunization_recommendation: ""
+  });
+
+  const [Diagnosticreport, setDiagnosticreport] = useState({
+    type: "",
+    expiry: "",
+    PatientId: "",
+    DoctorId: "",
+    Diagnosis_Report: "",
+
+  });
+
+  const [Dischargesummary, setDischargesummary] = useState({
+    type: "",
+    expiry: "",
+    PatientId: "",
+    DoctorId: "",
+    complaints: "",
+    Physical_Examination: "",
+    Allergies: "",
+    Medical_History: "",
+    Family_History: "",
+    Labs_and_Imaging: "",
+    Procedure: "",
+    careplan: "",
+    Medicattion: ""
+  });
+
+  const [WellnessRecord, setWellnessRecord] = useState({
+    type: "",
+    expiry: "",
+    PatientId: "",
+    DoctorId: "",
+    HeartRate: "",
+    Respiratory_rate: "",
+    temperature: "",
+    blood_pressure: "",
+    weight: "",
+    height: "",
+    General_assessment: "",
+    Lifestyle: ""
+  });
+
+  const [Healthreport, setHealthreport] = useState({
+    type: "",
+    expiry: "",
+    PatientId: "",
+    DoctorId: "",
+    Health_report: "",
+
+  });
+
+
+
   const token = localStorage.getItem('token');
   const handleInputChange = (e) => {
     console.log("input has changed");
@@ -77,7 +151,34 @@ const BasicForm3 = () => {
     try {
       console.log("function triggered");
       //Send a POST request to your server endpoint
-      const response = await axios.post("http://localhost:8080/admin/createdoc", HealthRecord,
+      let endpoint = "";
+      switch (HealthRecord.type) {
+        case 'Diagnostic Report':
+          endpoint = "http://localhost:8080/admin/createDiagnosticReport";
+          break;
+        case 'OP consult':
+          endpoint = "http://localhost:8080/admin/createOPConsult";
+          break;
+        case 'General health report':
+          endpoint = "http://localhost:8080/admin/createGeneralHealthReport";
+          break;
+        case 'Wellness Record':
+          endpoint = "http://localhost:8080/admin/createWellnessRecord";
+          break;
+        case 'Prescription':
+          endpoint = "http://localhost:8080/admin/createPrescription";
+          break;
+        case 'Immunization Record':
+          endpoint = "http://localhost:8080/admin/createImmunizationRecord";
+          break;
+        case 'Discharge Summary':
+          endpoint = "http://localhost:8080/admin/createDischargeSummary";
+          break;
+        default:
+          // Handle default case or show error message
+          break;
+      }
+      const response = await axios.post(endpoint, HealthRecord,
       {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -91,11 +192,7 @@ const BasicForm3 = () => {
           type: "",
           expiry: "",
           PatientId: "",
-          DoctorId: "",
-          PastHistory: "",
-          BodySite: "",
-          Severity: "",
-          Diagnosis: ""
+          DoctorId: ""
         });
   
     }} catch (error) {
@@ -104,6 +201,8 @@ const BasicForm3 = () => {
     } finally {
     }
   };
+
+  
   return (
     <PageContent>
       <Message>
@@ -131,51 +230,6 @@ This form is used to create a Health Record.
           <Form.Control name="Input" placeholder="Enter your Id"/>
         </Form.Group>
 
-        {/* <Form.Group controlId="MaskedInput">
-          <Form.ControlLabel>Phone Number</Form.ControlLabel>
-          <Form.Control
-            name="MaskedInput"
-            accepter={MaskedInput}
-            placeholder="(+91) 97404-61745"
-            mask={[
-              '(',
-              /[1-9]/,
-              /\d/,
-              /\d/,
-              ')',
-              ' ',
-              /\d/,
-              /\d/,
-              /\d/,
-              '-',
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/
-            ]}
-          />
-        </Form.Group> */}
-
-
-        <Form.Group controlId="Textarea">
-          <Form.ControlLabel>PastHistory</Form.ControlLabel>
-          <Form.Control name="Textarea" accepter={Textarea} rows={3} />
-        </Form.Group>
-
-        <Form.Group controlId="Textarea">
-          <Form.ControlLabel>Body Site</Form.ControlLabel>
-          <Form.Control name="Textarea" accepter={Textarea} rows={3} />
-        </Form.Group>
-
-        <Form.Group controlId="inputPicker">
-          <Form.ControlLabel>Severity</Form.ControlLabel>
-          <Form.Control name="inputPicker" accepter={InputPicker} data={rateofseverity} />
-        </Form.Group>
-
-        <Form.Group controlId="Textarea">
-          <Form.ControlLabel>Diagnosis</Form.ControlLabel>
-          <Form.Control name="Textarea" accepter={Textarea} rows={3} />
-        </Form.Group>
 
         <Form.Group>
           <ButtonToolbar>

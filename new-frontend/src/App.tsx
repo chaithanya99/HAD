@@ -22,6 +22,7 @@ import FormBasic2Page from './pages/forms/Add_Nurse';
 import FormBasic3Page from './pages/forms/Add_DataRecord';
 import CalendarPage from './pages/calendar';
 import { appNavs } from './config';
+import HealthRec from './pages/forms/Add_HealthRecord/ABHA_Registration';
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
             <Route path="form-basic2" element={<FormBasic2Page />} />
             <Route path="form-basic3" element={<FormBasic3Page />} />
             <Route path="ABHA-Registration" element={<ABHARegistrationPage />} />
+            <Route path="Healthrec" element={<HealthRec />} />
             <Route path="calendar" element={<CalendarPage />} />
           </Route>
           <Route path="*" element={<Error404Page />} />

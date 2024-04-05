@@ -13,12 +13,18 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HealthRecord {
+public class OPconsult {
     @Id
-    @GeneratedValue
     private Long id;
     private String type;
     private Date expiry;
     private Long patientId;
     private Long doctorId;
+    private String medicalcondition;
+    private String physical_examination;
+    private String allergies;
+    private String medical_history;
+    private String family_history;
+    private String medicalprocedure;
+    private String medication;
 }

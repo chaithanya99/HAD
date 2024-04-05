@@ -18,7 +18,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
           expiry: "",
           PatientID: "",
           DoctorID: "",
-          condition: "",
+          Condition: "",
           Physical_Examination: "",
           Allergies: "",
           Medical_History: "",
@@ -138,7 +138,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {formtype === 'OP consult' && (
           <Form.Group>
             <Form.ControlLabel>Condition</Form.ControlLabel>
-            <Form.Control name="condition" onChange={value => handleChange(value, 'condition')} />
+            <Form.Control name="Condition" onChange={value => handleChange(value, 'Condition')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}

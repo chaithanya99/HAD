@@ -21,7 +21,7 @@ const Step1 = ({ step, setStep, type, settype }) => {
 
   return (
     <Form onChange={handleChange} onSubmit={handleSubmit}>
-      <FormHeader title="Enter the type of record you want to make" />
+      <FormHeader title="Enter the type of record you want to make" description={''} />
       <Form.Group controlId="Type">
         <Form.ControlLabel>Type</Form.ControlLabel>
         <Form.Control name="Type" accepter={InputPicker} data={Report} onChange={handleChange} />

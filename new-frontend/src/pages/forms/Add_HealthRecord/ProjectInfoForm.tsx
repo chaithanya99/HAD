@@ -112,7 +112,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, formtype }) => {
   return (
     <div>
       <Form onSubmit={handleSubmit}>
-        <FormHeader title={`Enter ${formtype} Details`} />
+        <FormHeader title={`Enter ${formtype} Details`} description={''} />
         {/* Render form fields based on type */}
         
 

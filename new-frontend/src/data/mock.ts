@@ -5,7 +5,7 @@ export function mockUsers(length: number) {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
     const specialization = faker.name.jobTitle();
-    const gender = faker.name.gender(true) as 'female' | 'male';
+    const gender = faker.name.gender(true) as 'Female' | 'Male';
     const name = faker.name.findName(firstName, lastName, gender);
     const avatar = faker.image.avatar();
 
@@ -40,7 +40,8 @@ export function mockUsers(length: number) {
       followers,
       rating,
       progress,
-      amount
+      amount,
+      abha_id:"rand@sbx"
     };
   };
 

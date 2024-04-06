@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import {
-  Input,
-  InputGroup,
-  Table,
-  Button,
-  DOMHelper,
-  Progress,
-  Checkbox,
-  Stack,
-  SelectPicker
-} from 'rsuite';
-import SearchIcon from '@rsuite/icons/Search';
-import MoreIcon from '@rsuite/icons/legacy/More';
-import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
 import { NameCell, ImageCell, CheckCell, ActionCell } from './Cells';
-
-const data = mockUsers(20);
+import DrawerView from './DrawerView';
+import {Input,InputGroup,Table,Button,DOMHelper,Progress,Checkbox,Stack,SelectPicker,Icon,Whisper} from 'rsuite';
+import Tooltip from 'rsuite/Tooltip';
+import { LuClock } from "react-icons/lu";
+import { GrDocumentUpload } from "react-icons/gr";
+import { FaEdit,FaEye} from 'react-icons/fa';
+import SearchIcon from '@rsuite/icons/Search';
+import { IconButton, ButtonToolbar } from 'rsuite';
+import ConsentRequestModal from '/src/pages/tables/members/ConsentRequestModal';
+import EventModal from './EventModal';
+const data = mockUsers(6);
 
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
@@ -31,6 +26,7 @@ const ratingList = Array.from({ length: 5 }).map((_, index) => {
 });
 
 const DataTable = () => {
+  const [editable, setEditable] = React.useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const [checkedKeys, setCheckedKeys] = useState<number[]>([]);
   const [sortColumn, setSortColumn] = useState();
@@ -100,7 +96,13 @@ const DataTable = () => {
 
   return (
     <>
-      <Stack className="table-toolbar" justifyContent="space-between">
+      <ConsentRequestModal
+        open={editable}
+        onClose={() => setEditable(false)}
+        onAddEvent={() => {
+          setEditable(false);
+        }}/>
+      <Stack className="table-toolbar">
         <Stack spacing={6}>
           <SelectPicker
             label="ABHA ID"
@@ -123,50 +125,96 @@ const DataTable = () => {
         data={filteredData()}
         sortColumn={sortColumn}
         sortType={sortType}
-        onSortColumn={handleSortColumn}
-      >
-        <Column width={50} align="center" fixed>
+        onSortColumn={handleSortColumn}>
+        <Column width={80} align="center" fixed sortable>
           <HeaderCell>Id</HeaderCell>
           <Cell dataKey="id" />
         </Column>
 
-        <Column minWidth={80} flexGrow={1} sortable>
+        <Column width={190} sortable>
           <HeaderCell>Name</HeaderCell>
           <NameCell dataKey="name" />
         </Column>
 
-        <Column width={80} sortable>
+        <Column width={90} sortable>
           <HeaderCell>Gender</HeaderCell>
-          <Cell dataKey="amount">{rowData => `$${rowData.amount}`}</Cell>
+          <Cell dataKey="gender">{rowData => `${rowData.gender}`}</Cell>
         </Column>
 
-        <Column width={180}>
+        <Column width={120} sortable>
+          <HeaderCell>ABHA Id</HeaderCell>
+          <Cell dataKey="abha_id" />
+        </Column>
+
+        <Column width={200} sortable>
           <HeaderCell>Email</HeaderCell>
           <Cell dataKey="email" />
         </Column>
 
-        <Column width={120} fixed="right">
-        <HeaderCell>...</HeaderCell>
-        <Cell style={{ padding: '2px' }}>
-          {rowData => (
-            <Button appearance="primary" onClick={() => setShowDrawer(true)}>
-              More Options
-            </Button>
-          )}
-        </Cell>
-      </Column>
+        <Column width={200} fixed="right">
+          <HeaderCell>Actions</HeaderCell>
+          <Cell style={{ padding: '2px' }}>
+            {rowData => (
+                <ButtonToolbar>
+                    <Whisper
+                      controlId="control-id-container"
+                      preventOverflow
+                      trigger="hover"
+                      speaker={
+                        <Tooltip style={{ width: 120 }}>
+                           Set an Appointment.
+                        </Tooltip>
+                      }
+                      placement="auto">
+                      <IconButton color="yellow" appearance="link" icon={<LuClock />} />
+                    </Whisper>
 
-        {/* <Column width={120}>
-          <HeaderCell>
-            <MoreIcon />
-          </HeaderCell>
-          <ActionCell dataKey="id" />
-        </Column> */}
-        
+                    <Whisper
+                      controlId="control-id-container"
+                      preventOverflow
+                      trigger="hover"
+                      speaker={
+                        <Tooltip style={{ width: 120 }}>
+                          View Health Records.
+                        </Tooltip>
+                      }
+                      placement="auto">
+                      <IconButton color="green" appearance="link" icon={<FaEye />} />
+                    </Whisper>
+                    
+                    <Whisper
+                      controlId="control-id-container"
+                      preventOverflow
+                      trigger="hover"
+                      speaker={
+                        <Tooltip style={{ width: 120 }}>
+                          Create a Health Record.
+                        </Tooltip>
+                      }
+                      placement="auto">
+                      <IconButton color="red" appearance="link" icon={<GrDocumentUpload/>} />
+                    </Whisper>
+
+                    <Whisper
+                      controlId="control-id-container"
+                      preventOverflow
+                      trigger="hover"
+                      speaker={
+                        <Tooltip style={{ width: 120 }}>
+                          Create a consent Request.
+                        </Tooltip>
+                      }
+                      placement="auto">
+                      <IconButton color="blue" appearance="link" icon={<FaEdit />} />
+                    </Whisper>
+                </ButtonToolbar>
+            )}
+          </Cell>
+        </Column>
       </Table>
-
       <DrawerView open={showDrawer} onClose={() => setShowDrawer(false)} />
     </>
+    
   );
 };
 

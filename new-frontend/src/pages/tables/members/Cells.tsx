@@ -14,7 +14,7 @@ export const NameCell = ({ rowData, dataKey, ...props }: CellProps) => {
         <b>Gender:</b> {rowData.gender}
       </p>
       <p>
-        <b>City:</b> {rowData.city}
+        <b>ABHA ID:</b> {rowData.abha_id}
       </p>
       <p>
         <b>Street:</b> {rowData.street}
@@ -71,23 +71,6 @@ export const CheckCell = ({
   </Cell>
 );
 
-const renderMenu = ({ onClose, left, top, className }: any, ref) => {
-  const handleSelect = eventKey => {
-    onClose();
-    console.log(eventKey);
-  };
-  return (
-    <Popover ref={ref} className={className} style={{ left, top }} full>
-      <Dropdown.Menu onSelect={handleSelect}>
-        <Dropdown.Item eventKey={1}>Follow</Dropdown.Item>
-        <Dropdown.Item eventKey={2}>Sponsor</Dropdown.Item>
-        <Dropdown.Item eventKey={3}>Add to friends</Dropdown.Item>
-        <Dropdown.Item eventKey={4}>View Profile</Dropdown.Item>
-        <Dropdown.Item eventKey={5}>Block</Dropdown.Item>
-      </Dropdown.Menu>
-    </Popover>
-  );
-};
 
 export const ActionCell = props => {
   return (

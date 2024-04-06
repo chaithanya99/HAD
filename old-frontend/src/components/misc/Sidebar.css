@@ -1,0 +1,62 @@
+.sidebar {
+    width: 60px; /* Adjust the width as needed */
+    height: 100%; /* Make it full height */
+    background-color: rgba(112, 133, 253, 0.25); /* Sidebar background color */
+    color: #fff; /* Text color */
+    position: fixed; /* Fixed position */
+    top: 0; /* Position from the top */
+    left: 0; /* Position from the left */
+    transition: width 0.3s ease; /* Smooth transition effect */
+  }
+  
+  .sidebar.expanded {
+    width: 120px; /* Expanded width */
+  }
+  
+  .Icondesign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .icons {
+    text-decoration: none;
+    color: rgb(67, 27, 112);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+  }
+  
+  .icons svg {
+    font-size: 32px; /* Increase the size of the icons */
+  }
+  .icons:hover {
+    background-color: rgba(93, 116, 248, 0.25); /* Darker background color on hover */
+  }
+  
+  .icons1 {
+    background: none;
+    border: none;
+    color: rgb(67, 27, 112);
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .icons1 svg{
+    font-size: 32px;
+  }
+  .expander {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  span {
+    font-size: 12px; /* Adjust the font size of the description */
+  }
+  

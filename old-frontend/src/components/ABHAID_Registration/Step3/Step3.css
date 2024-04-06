@@ -1,0 +1,65 @@
+.Stage-3 {
+  width: 80%;
+  padding: 1%;
+  margin-bottom: 0;
+  border: 1px solid #042c40;
+  border-radius: 4px;
+  font-size: 1.5rem; /* Using viewport width for font-size */
+  text-align: center;
+  margin: 0 auto; /* Center the container horizontally */
+  background-color: rgba(203, 211, 255, 0.25);
+}
+
+.Stage-3 p {
+  margin-top: 2%;
+  margin-bottom: 0%;
+  font-family: Cambria; /* Change font family */
+  display: inline-block; /* Display checkbox inline */
+  width: 100%;
+}
+
+.Stage-3 p1 {
+  margin-top: 2%;
+  margin-bottom: 1%;
+  font-family: Cambria; /* Change font family */
+  display: inline-block; /* Display checkbox inline */
+  width: 100%;
+  font-size: 90%;
+}
+
+.Stage-3 form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Stage-3 label {
+  margin-top: 2%;
+  margin-bottom: 0%;
+  font-family: Cambria; /* Change font family */
+  display: inline-block; /* Display checkbox inline */
+  width: 80%;
+}
+
+.Stage-3 button {
+  margin: 1%;
+  padding: 1% 2%;
+  font-size: 1.5rem; /* Using viewport width for font-size */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Stage-3 input[type="text"] {
+  width: 90%; /* Adjust width as needed */
+  padding: 1%;
+  font-size: 1.5rem; /* Using viewport width for font-size */
+  font-family: Cambria; /* Change font family */
+  letter-spacing: 0.15em; /* Adjust letter spacing for even distribution */
+  text-align: center; /* Center the text horizontally */
+  background-color: white;
+  margin-bottom: 2%;
+}

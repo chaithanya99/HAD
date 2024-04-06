@@ -1,0 +1,48 @@
+.Regpage {
+  display: flex; /* Use flexbox layout */
+  justify-content: flex-start; /* Align content to the start */
+  align-items: flex-start; /* Align content to the start */
+  height: 100vh;
+  /* max-height: fit-content; */
+  background-image: url('../../../img/background.png'); /* Update the background image path */
+  background-size: cover; 
+  overflow-y: auto;
+}
+
+.content {
+  flex-grow: 1; /* Allow content to grow to fill remaining space */
+  display: flex; /* Use flexbox layout */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center content horizontally */
+}
+
+.centered-box {
+  margin: 0 auto;
+  min-width: 80vw;
+  max-width: 80%; /* Adjust as per your design */
+  max-height: fit-content;
+  padding: 20px;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.Regpage h1 {
+  margin-bottom: 5rem;
+  font-family: Cambria; /* Change font family */
+  font-size: 3rem; /* Change font size */
+}
+
+/* Style for your progress bar */
+.progbar {
+  width: 100%;
+  height: 6rem;
+  background-color: #ffffff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.Stage-Components {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

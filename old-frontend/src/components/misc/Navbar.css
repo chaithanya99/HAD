@@ -1,0 +1,29 @@
+/* src/components/Navbar.css */
+header {
+    height: 6vh;
+    background: rgba(23, 77, 163, 0.874);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.logo {
+    font-size: 1.5rem; /* Adjust font size as needed */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Adjust the space between links */
+}
+
+.nav-links li {
+    cursor: pointer;
+}

@@ -16,77 +16,77 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         return {
           type: formtype,
           expiry: "",
-          PatientID: "",
-          DoctorID: "",
-          Condition: "",
-          Physical_Examination: "",
-          Allergies: "",
-          Medical_History: "",
-          Family_History: "",
-          Procedure: "",
-          Medication: ""
+          patientID: "",
+          doctorID: "",
+          medicalcondition: "",
+          physical_examination: "",
+          allergies: "",
+          medical_history: "",
+          family_history: "",
+          medicalprocedure: "",
+          medication: ""
         };
       case 'Prescription':
         return {
           type: formtype,
           expiry: "",
-          PatientID: "",
-          DoctorID: "",
-          Medication: ""
+          patientID: "",
+          doctorID: "",
+          medication: ""
         };
       case 'Immunization Record':
         return {
           type: formtype,
           expiry: "",
-          PatientID: "",
-          DoctorID: "",
-          Immunization_Details: "",
-          Immunization_recommendation: ""
+          patientID: "",
+          doctorID: "",
+          immunization_details: "",
+          immunization_recommendation: ""
         };
       case 'Diagnostic Report':
         return{
           type: formtype,
           expiry: "",
-          PatientID: "",
-          DoctorID: "",
-          Diagnosis_Report: "",
+          patientID: "",
+          doctorID: "",
+          diagnosis: "",
         }
         case 'General health report':
           return{
             type: formtype,
             expiry: "",
-            PatientID: "",
-            DoctorID: "",
-            Health_report: "",
+            patientID: "",
+            doctorID: "",
+            health_report: "",
           }
         case 'Wellness Record':
           return{
             type: formtype,
             expiry: "",
-            PatientID: "",
-            DoctorID: "",
-            HeartRate: "",
-            Respiratory_rate: "",
+            patientID: "",
+            doctorID: "",
+            heart_rate: "",
+            respiratory_rate: "",
             temperature: "",
             blood_pressure: "",
             weight: "",
             height: "",
-            General_assessment: "",
-            Lifestyle: ""
+            general_assessment: "",
+            lifestyle: ""
           }
         case 'Discharge Summary':
           return{
             type: formtype,
             expiry: "",
-            PatientID: "",
-            DoctorID: "",
+            patientID: "",
+            doctorID: "",
             complaints: "",
-            Physical_Examination: "",
-            Allergies: "",
-            Medical_History: "",
-            Family_History: "",
-            Labs_and_Imaging: "",
-            Procedure: "",
+            physical_examination: "",
+            allergies: "",
+            medical_history: "",
+            family_history: "",
+            labs_and_imaging: "",
+            medicalprocedure: "",
             careplan: "",
             Medicattion: ""
           }
@@ -102,8 +102,20 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
       console.log("Form data:", formData);
       setStep(step + 1);
       // Send formData to the endpoint using axios
-      // const response = await axios.post('your_endpoint_here', formData);
-      // console.log(response.data); // Handle response accordingly
+      const response1 = await axios.post("http://localhost:8080/auth/generateToken",
+      {
+        "username" : "admin",
+        "password": "admin"
+      });
+
+      const response = await axios.post('http://localhost:8080/HealthRecord/createhealthrecord', formData,
+       { 
+        headers: {
+        'Authorization': `Bearer ${response1.data}`
+        } 
+      }
+      );
+      console.log(response.data); // Handle response accordingly
     } catch (error) {
       console.error('Error submitting form:', error);
     }
@@ -122,12 +134,12 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
 
         <Form.Group>
           <Form.ControlLabel>Patient ID</Form.ControlLabel>
-          <Form.Control name="PatientID" placeholder="your id" onChange={value => handleChange(value, 'PatientID')}/>
+          <Form.Control name="patientID" placeholder="your id" onChange={value => handleChange(value, 'patientID')}/>
         </Form.Group>
 
         <Form.Group>
           <Form.ControlLabel>Doctor Id</Form.ControlLabel>
-          <Form.Control name="DoctorID" placeholder="Enter your Id" onChange={value => handleChange(value, 'DoctorID')}/>
+          <Form.Control name="doctorID" placeholder="Enter your Id" onChange={value => handleChange(value, 'doctorID')}/>
         </Form.Group>
 
         <Form.Group>
@@ -137,8 +149,8 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
 
         {formtype === 'OP consult' && (
           <Form.Group>
-            <Form.ControlLabel>Condition</Form.ControlLabel>
-            <Form.Control name="Condition" onChange={value => handleChange(value, 'Condition')} />
+            <Form.ControlLabel>medicalcondition</Form.ControlLabel>
+            <Form.Control name="medicalcondition" onChange={value => handleChange(value, 'medicalcondition')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
@@ -146,7 +158,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {(formtype === 'OP consult' || formtype === 'Discharge Summary') && (
           <Form.Group>
             <Form.ControlLabel>Physical Examination</Form.ControlLabel>
-            <Form.Control name="Physical_Examination" onChange={value => handleChange(value, 'Physical_Examination')} />
+            <Form.Control name="physical_examination" onChange={value => handleChange(value, 'physical_examination')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
@@ -154,7 +166,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {(formtype === 'OP consult' || formtype === 'Discharge Summary') && (
           <Form.Group>
             <Form.ControlLabel>Allergies</Form.ControlLabel>
-            <Form.Control name="Allergies" onChange={value => handleChange(value, 'Allergies')} />
+            <Form.Control name="allergies" onChange={value => handleChange(value, 'allergies')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
@@ -162,7 +174,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {(formtype === 'OP consult' || formtype === 'Discharge Summary') && (
           <Form.Group>
             <Form.ControlLabel>Medical History</Form.ControlLabel>
-            <Form.Control name="Medical_History" onChange={value => handleChange(value, 'Medical_History')} />
+            <Form.Control name="medical_history" onChange={value => handleChange(value, 'medical_history')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
@@ -170,15 +182,15 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {(formtype === 'OP consult' || formtype === 'Discharge Summary') && (
           <Form.Group>
             <Form.ControlLabel>Family History</Form.ControlLabel>
-            <Form.Control name="Family_History" onChange={value => handleChange(value, 'Family_History')} />
+            <Form.Control name="family_history" onChange={value => handleChange(value, 'family_history')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
 
         {(formtype === 'OP consult' || formtype === 'Discharge Summary') && (
           <Form.Group>
-            <Form.ControlLabel>Procedure</Form.ControlLabel>
-            <Form.Control name="Procedure" onChange={value => handleChange(value, 'Procedure')} />
+            <Form.ControlLabel>medicalprocedure</Form.ControlLabel>
+            <Form.Control name="medicalprocedure" onChange={value => handleChange(value, 'medicalprocedure')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
@@ -186,8 +198,8 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
 
         {(formtype === 'OP consult' || formtype === 'Prescription' || formtype === 'Discharge Summary') && (
           <Form.Group>
-            <Form.ControlLabel>Medication</Form.ControlLabel>
-            <Form.Control name="Medication" value={formData.Medication} onChange={value => handleChange(value, 'Medication')} />
+            <Form.ControlLabel>medication</Form.ControlLabel>
+            <Form.Control name="medication" value={formData.medication} onChange={value => handleChange(value, 'Medication')} />
             {/* Add more form fields for 'Prescription' type */}
           </Form.Group>
         )}
@@ -195,7 +207,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {formtype === 'Immunization Record'  && (
           <Form.Group>
             <Form.ControlLabel>Immunization Details</Form.ControlLabel>
-            <Form.Control name="Immunization_Details" onChange={value => handleChange(value, 'Immunization_Details')} />
+            <Form.Control name="immunization_details" onChange={value => handleChange(value, 'immunization_details')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
@@ -203,7 +215,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {formtype === 'Immunization Record'  && (
           <Form.Group>
             <Form.ControlLabel>Immunization recommendation</Form.ControlLabel>
-            <Form.Control name="Immunization_recommendation" onChange={value => handleChange(value, 'Immunization_recommendation')} />
+            <Form.Control name="immunization_recommendation" onChange={value => handleChange(value, 'immunization_recommendation')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
@@ -211,7 +223,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {formtype === 'Diagnostic Report'  && (
           <Form.Group>
             <Form.ControlLabel>Diagnosis Report</Form.ControlLabel>
-            <Form.Control name="Diagnosis_Report" onChange={value => handleChange(value, 'Diagnosis_Report')} />
+            <Form.Control name="diagnosis" onChange={value => handleChange(value, 'diagnosis')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
@@ -219,7 +231,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {formtype === 'General health report'  && (
           <Form.Group>
             <Form.ControlLabel>Health report</Form.ControlLabel>
-            <Form.Control name="Health_report" onChange={value => handleChange(value, 'Health_report')} />
+            <Form.Control name="health_report" onChange={value => handleChange(value, 'health_report')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
@@ -227,7 +239,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {formtype === 'Wellness Record'  && (
           <Form.Group>
             <Form.ControlLabel>Heart Rate</Form.ControlLabel>
-            <Form.Control name="HeartRate" onChange={value => handleChange(value, 'HeartRate')} />
+            <Form.Control name="heart_rate" onChange={value => handleChange(value, 'heart_rate')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
@@ -235,14 +247,14 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {formtype === 'Wellness Record'  && (
           <Form.Group>
             <Form.ControlLabel>Respiratory rate</Form.ControlLabel>
-            <Form.Control name="Respiratory_rate" onChange={value => handleChange(value, 'Respiratory_rate')} />
+            <Form.Control name="respiratory_rate" onChange={value => handleChange(value, 'respiratory_rate')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
 
         {formtype === 'Wellness Record'  && (
           <Form.Group>
-            <Form.ControlLabel>Temperature</Form.ControlLabel>
+            <Form.ControlLabel>temperature</Form.ControlLabel>
             <Form.Control name="temperature" onChange={value => handleChange(value, 'temperature')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
@@ -275,22 +287,22 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {formtype === 'Wellness Record'  && (
           <Form.Group>
             <Form.ControlLabel>General assessment</Form.ControlLabel>
-            <Form.Control name="General_assessment" onChange={value => handleChange(value, 'General_assessment')} />
+            <Form.Control name="general_assessment" onChange={value => handleChange(value, 'general_assessment')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
 
         {formtype === 'Wellness Record'  && (
           <Form.Group>
-            <Form.ControlLabel>Lifestyle</Form.ControlLabel>
-            <Form.Control name="Lifestyle" onChange={value => handleChange(value, 'Lifestyle')} />
+            <Form.ControlLabel>lifestyle</Form.ControlLabel>
+            <Form.Control name="lifestyle" onChange={value => handleChange(value, 'lifestyle')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}
 
         {formtype === 'Discharge Summary'  && (
           <Form.Group>
-            <Form.ControlLabel>Complaints</Form.ControlLabel>
+            <Form.ControlLabel>complaints</Form.ControlLabel>
             <Form.Control name="complaints" onChange={value => handleChange(value, 'complaints')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
@@ -299,7 +311,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {formtype === 'Discharge Summary'  && (
           <Form.Group>
             <Form.ControlLabel>Labs and Imaging</Form.ControlLabel>
-            <Form.Control name="Labs_and_Imaging" onChange={value => handleChange(value, 'Labs_and_Imaging')} />
+            <Form.Control name="labs_and_imaging" onChange={value => handleChange(value, 'labs_and_imaging')} />
             {/* Add more form fields for 'OP consult' type */}
           </Form.Group>
         )}

@@ -1,4 +1,4 @@
-package com.had.project5.entities;
+package com.had.project5.entities.healthrecordstuff;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,12 +13,19 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HealthRecord {
+public class WellnessRecord {
     @Id
-    @GeneratedValue
     private Long id;
     private String type;
     private Date expiry;
     private Long patientId;
     private Long doctorId;
+    private String heart_rate;
+    private String respiratory_rate;
+    private String temperature;
+    private String blood_pressure;
+    private String weight;
+    private String height;
+    private String general_assessment;
+    private String lifestyle;
 }

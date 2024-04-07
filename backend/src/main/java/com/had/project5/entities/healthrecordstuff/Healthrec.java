@@ -1,4 +1,4 @@
-package com.had.project5.entities;
+package com.had.project5.entities.healthrecordstuff;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

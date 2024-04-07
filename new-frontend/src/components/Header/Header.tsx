@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import loginImage from '/src/images/login/doctoravatar.png';
 import {
   Dropdown,
   Popover,
@@ -97,17 +98,8 @@ const renderSettingSpeaker = ({ onClose, left, top, className }: any, ref) => {
 const renderNoticeSpeaker = ({ onClose, left, top, className }: any, ref) => {
   const notifications = [
     [
-      '7 hours ago',
-      'The charts of the dashboard have been fully upgraded and are more visually pleasing.'
-    ],
-    [
-      '13 hours ago',
-      'The function of virtualizing large lists has been added, and the style of the list can be customized as required.'
-    ],
-    ['2 days ago', 'Upgraded React 18 and Webpack 5.'],
-    [
-      '3 days ago',
-      'Upgraded React Suite 5 to support TypeScript, which is more concise and efficient.'
+      '2 hours ago',
+      'New Appointment has been created for Dr.Jayesh!!'
     ]
   ];
 
@@ -139,16 +131,16 @@ const Header = () => {
 
   return (
     <Stack className="header" spacing={8}>
-      <IconButton
+      {/* <IconButton
         icon={<GithubIcon style={{ fontSize: 20 }} />}
-        href="https://github.com/rsuite/rsuite-admin-template"
+        href="https://github.com/chaithanya99/HAD"
         target="_blank"
-      />
+      /> */}
 
       <Whisper placement="bottomEnd" trigger="click" ref={trigger} speaker={renderNoticeSpeaker}>
         <IconButton
           icon={
-            <Badge content={5}>
+            <Badge content={1}>
               <NoticeIcon style={{ fontSize: 20 }} />
             </Badge>
           }
@@ -163,7 +155,7 @@ const Header = () => {
         <Avatar
           size="sm"
           circle
-          src="https://avatars.githubusercontent.com/u/1203827"
+          src={loginImage}
           alt="@simonguo"
           style={{ marginLeft: 8 }}
         />

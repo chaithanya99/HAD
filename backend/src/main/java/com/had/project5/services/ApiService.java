@@ -1,5 +1,6 @@
 package com.had.project5.services;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,7 +101,8 @@ public class ApiService {
         return authResponse.getBody();
     }
 
-    public String catfact(String endpoint) {
+    public String catfact() {
+        String endpoint = "https://catfact.ninja/fact?max_length=20";
         ResponseEntity<String> authResponse = restTemplate.getForEntity(endpoint, String.class);
         System.out.println(authResponse.getBody());
         return authResponse.getBody();
@@ -116,5 +118,18 @@ public class ApiService {
         long currentTimeInSeconds = System.currentTimeMillis() / 1000;
         System.out.println(expiry < currentTimeInSeconds);
         return expiry < currentTimeInSeconds;
+    }
+
+    public String makeSpecialRequest(String url, String reqbody1) {
+        System.out.println("IM HERE THOUGH!!");
+        HttpHeaders header1 = new HttpHeaders();
+        header1.setAccept(Collections.singletonList(MediaType.ALL));
+        header1.setContentType(MediaType.APPLICATION_JSON);
+        header1.setBearerAuth(getToken());
+        header1.add("X-CM-ID","sbx");
+        HttpEntity<String> httpentity1 = new HttpEntity<>(reqbody1, header1);
+        ResponseEntity<String> response_call =restTemplate.exchange(url, HttpMethod.POST, httpentity1,String.class);
+        System.out.println(httpentity1);
+        return "RANDOM";
     }
 }

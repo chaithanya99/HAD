@@ -9,22 +9,21 @@ import com.had.project5.repositories.PrescriptionRepo;
 import com.had.project5.repositories.WellnessRecordRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.had.project5.entities.DiagnosticReport;
-import com.had.project5.entities.DischargeSummary;
-import com.had.project5.entities.GeneralReport;
-import com.had.project5.entities.HealthRecord;
-import com.had.project5.entities.Healthrec;
-import com.had.project5.entities.ImmunizationRecord;
-import com.had.project5.entities.OPconsult;
-import com.had.project5.entities.Prescription;
-import com.had.project5.entities.WellnessRecord;
+import com.had.project5.entities.healthrecordstuff.DiagnosticReport;
+import com.had.project5.entities.healthrecordstuff.DischargeSummary;
+import com.had.project5.entities.healthrecordstuff.GeneralReport;
+import com.had.project5.entities.healthrecordstuff.HealthRecord;
+import com.had.project5.entities.healthrecordstuff.Healthrec;
+import com.had.project5.entities.healthrecordstuff.ImmunizationRecord;
+import com.had.project5.entities.healthrecordstuff.OPconsult;
+import com.had.project5.entities.healthrecordstuff.Prescription;
+import com.had.project5.entities.healthrecordstuff.WellnessRecord;
 
 @RestController
 @CrossOrigin(origins = "*") // Specify the allowed origin(s)

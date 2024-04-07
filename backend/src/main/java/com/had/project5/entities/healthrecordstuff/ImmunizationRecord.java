@@ -1,4 +1,4 @@
-package com.had.project5.entities;
+package com.had.project5.entities.healthrecordstuff;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,12 +13,13 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DiagnosticReport {
+public class ImmunizationRecord {
     @Id
     private Long id;
     private String type;
     private Date expiry;
     private Long patientId;
     private Long doctorId;
-    private String diagnosis;
+    private String immunization_details;
+    private String immunization_recommendation;
 }

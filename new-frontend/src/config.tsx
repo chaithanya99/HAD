@@ -3,6 +3,7 @@ import { Icon } from '@rsuite/icons';
 import { VscTable, VscCalendar } from 'react-icons/vsc';
 import { MdFingerprint, MdDashboard, MdModeEditOutline } from 'react-icons/md';
 import CubesIcon from '@rsuite/icons/legacy/Cubes';
+import MemberIcon from '@rsuite/icons/Member';
 
 export const appNavs = [
   {
@@ -16,6 +17,12 @@ export const appNavs = [
     icon: <Icon as={VscCalendar} />,
     title: 'Calendar',
     to: '/calendar'
+  },
+  {
+    eventKey: 'members',
+    icon: <Icon as={MemberIcon} />,
+    title: 'Patient Tracker',
+    to: '/table-members'
   },
   {
     eventKey: 'tables',

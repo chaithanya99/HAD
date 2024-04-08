@@ -25,6 +25,19 @@ const ratingList = Array.from({ length: 5 }).map((_, index) => {
       .join('')
   };
 });
+const FieldList = [{
+  value:1,
+  label:"Name"
+},{
+  value:2,
+  label:"ABHA ID"
+},{
+  value:3,
+  label:"Email"
+},{
+  value:4,
+  label:"Gender"
+}];
 
 const DataTable = () => {
   const [editable, setEditable] = React.useState(false);
@@ -107,8 +120,8 @@ const DataTable = () => {
       <Stack className="table-toolbar">
         <Stack spacing={6}>
           <SelectPicker
-            label="ABHA ID"
-            data={ratingList}
+            label="Field"
+            data={FieldList}
             searchable={false}
             value={rating}
             onChange={setRating}

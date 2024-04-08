@@ -110,7 +110,13 @@ public class ApiService {
 
 
     public String makeGetRequest(String endpoint){
-        return webClient.get().uri(endpoint).retrieve().bodyToMono(String.class).block();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(getToken());
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        System.out.println("IN MAKE GET");
+        ResponseEntity<String> responseEntity = restTemplate.exchange(endpoint, HttpMethod.GET, entity,String.class);
+        System.out.println(responseEntity);
+        return "RANDOM";
     }
     
     public static boolean isTokenExpired(String token,long expiry) {

@@ -42,6 +42,16 @@ export const appNavs = [
         eventKey: 'virtualized3',
         title: 'Patient list',
         to: '/table-virtualized3'
+      },
+      {
+        eventKey: 'virtualized4',
+        title: 'Consent Tracker',
+        to: '/table-virtualized4'
+      },
+      {
+        eventKey: 'virtualized5',
+        title: 'Medical Records',
+        to: '/table-virtualized5'
       }
     ]
   },

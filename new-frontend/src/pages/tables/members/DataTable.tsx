@@ -11,6 +11,7 @@ import SearchIcon from '@rsuite/icons/Search';
 import { IconButton, ButtonToolbar } from 'rsuite';
 import ConsentRequestModal from '/src/pages/tables/members/ConsentRequestModal';
 import EventModal from './EventModal';
+import { useNavigate } from 'react-router-dom';
 const data = mockUsers(6);
 
 const { Column, HeaderCell, Cell } = Table;
@@ -36,6 +37,7 @@ const DataTable = () => {
 
   let checked = false;
   let indeterminate = false;
+  const navigate = useNavigate();
 
   if (checkedKeys.length === data.length) {
     checked = true;
@@ -166,7 +168,9 @@ const DataTable = () => {
                         </Tooltip>
                       }
                       placement="auto">
-                      <IconButton color="yellow" appearance="link" icon={<LuClock />} />
+                      <IconButton onClick = {() => {
+                          navigate('/calendar');
+                      }}color="yellow" appearance="link" icon={<LuClock />} />
                     </Whisper>
 
                     <Whisper
@@ -179,7 +183,9 @@ const DataTable = () => {
                         </Tooltip>
                       }
                       placement="auto">
-                      <IconButton color="green" appearance="link" icon={<FaEye />} />
+                      <IconButton onClick = {() => {
+                          navigate('/table-virtualized5');
+                      }}color="green" appearance="link" icon={<FaEye />} />
                     </Whisper>
                     
                     <Whisper
@@ -192,7 +198,9 @@ const DataTable = () => {
                         </Tooltip>
                       }
                       placement="auto">
-                      <IconButton color="red" appearance="link" icon={<GrDocumentUpload/>} />
+                      <IconButton onClick = {() => {
+                          navigate('/table-virtualized5');
+                      }}color="red" appearance="link" icon={<GrDocumentUpload/>} />
                     </Whisper>
 
                     <Whisper
@@ -205,7 +213,9 @@ const DataTable = () => {
                         </Tooltip>
                       }
                       placement="auto">
-                      <IconButton color="blue" appearance="link" icon={<FaEdit />} />
+                      <IconButton onClick = {() => {
+                          navigate('/table-virtualized4');
+                      }}color="blue" appearance="link" icon={<FaEdit />} />
                     </Whisper>
                 </ButtonToolbar>
             )}

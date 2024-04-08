@@ -30,9 +30,17 @@ public class LinkingController {
     private JwtService jwtService;
 
     @GetMapping("/get_registered_facilities")
-    public String getRegisteredFacilities(){
-        // write code for getting all registered facilities
-        return "WORKING ON THIS";
+    public ResponseEntity<Map<String, String>> getRegisteredFacilities() throws Exception{
+        try {
+            System.out.println("Getting all registered hrps and url.");String res=apiService.makeGetRequest("https://dev.abdm.gov.in/devservice/v1/bridges/getServices");
+            System.out.println(res);
+            JSONObject jsonResponse= new JSONObject(res);
+            Map<String, String> responseMap = new HashMap<>();
+            return ResponseEntity.ok(responseMap);
+        } catch (Exception e) {
+            // TODO: handle exception
+            throw e;
+        }
     }
 
     @PostMapping("/register_host_url")

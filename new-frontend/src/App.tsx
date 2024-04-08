@@ -10,12 +10,14 @@ import Error404Page from './pages/authentication/404';
 import Error403Page from './pages/authentication/403';
 import Error500Page from './pages/authentication/500';
 import Error503Page from './pages/authentication/503';
-import VirtualizedTable3Page from './pages/tables/Patient_List';
 import SignInPage from './pages/authentication/sign-in';
 import SignUpPage from './pages/authentication/sign-up';
 import MembersPage from './pages/tables/members';
 import VirtualizedTablePage from './pages/tables/Doctor_List';
 import VirtualizedTable2Page from './pages/tables/Nurse_List';
+import VirtualizedTable3Page from './pages/tables/Patient_List';
+import VirtualizedTable4Page from './pages/tables/Consent_List';
+import VirtualizedTable5Page from './pages/tables/Medical_Record_List';
 import FormBasicPage from './pages/forms/Add_Doctor';
 import ABHARegistrationPage from './pages/forms/ABHA_Registration';
 import FormBasic2Page from './pages/forms/Add_Nurse';
@@ -45,6 +47,12 @@ const App = () => {
             </Route>
             <Route path="table-virtualized3" element={<Frame navs={appNavs} />}>
               <Route index element={<VirtualizedTable3Page />} />
+            </Route>
+            <Route path="table-virtualized4" element={<Frame navs={appNavs} />}>
+              <Route index element={<VirtualizedTable4Page />} />
+            </Route>
+            <Route path="table-virtualized5" element={<Frame navs={appNavs} />}>
+              <Route index element={<VirtualizedTable5Page />} />
             </Route>
             <Route path="error-404" element={<Frame navs={appNavs} />}>
               <Route index element={<Error404Page />} />

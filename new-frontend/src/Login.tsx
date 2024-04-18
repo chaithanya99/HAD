@@ -37,7 +37,9 @@ const Login = () => {
                 console.log(response2.data);
                 localStorage.setItem('token', response.data);
                 localStorage.setItem('role',response2.data)
-                navigate('/dashboard'); // Assuming you have a route for the dashboard
+                navigate('/dashboard'); 
+                window.location.reload(); // Reload the entire application
+                // Assuming you have a route for the dashboard
             } else {
                 // Handle other status codes with a toast
                 toast.error('Invalid username or password');

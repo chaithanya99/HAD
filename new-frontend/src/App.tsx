@@ -22,10 +22,11 @@ import FormBasicPage from './pages/forms/Add_Doctor';
 import ABHARegistrationPage from './pages/forms/ABHA_Registration';
 import FormBasic2Page from './pages/forms/Add_Nurse';
 import CalendarPage from './pages/calendar';
-import { appNavs } from './config';
+import { getAppNavs } from './config';
 import Healthrecordpage from './pages/forms/Add_HealthRecord';
 import Login from './Login';
 const App = () => {
+  const appNavs = getAppNavs();
   return (
     <IntlProvider locale="en" messages={locales.en}>
       <CustomProvider locale={enGB}>

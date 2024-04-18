@@ -7,14 +7,30 @@ import com.had.project5.repositories.ImmunizationRecordRepo;
 import com.had.project5.repositories.OPconsultRepo;
 import com.had.project5.repositories.PrescriptionRepo;
 import com.had.project5.repositories.WellnessRecordRepo;
+import com.had.project5.services.DoctorService;
+import com.had.project5.services.FileUploadService;
+import com.had.project5.services.PatientService;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.had.project5.entities.healthrecordstuff.Pdf;
 import com.had.project5.entities.healthrecordstuff.DiagnosticReport;
 import com.had.project5.entities.healthrecordstuff.DischargeSummary;
 import com.had.project5.entities.healthrecordstuff.GeneralReport;
@@ -29,6 +45,15 @@ import com.had.project5.entities.healthrecordstuff.WellnessRecord;
 @CrossOrigin(origins = "*") // Specify the allowed origin(s)
 @RequestMapping("/HealthRecord")
 public class HealthRecordController {
+
+    @Autowired
+    private PatientService patientService;
+
+    @Autowired
+    private FileUploadService fileUploadService;
+
+    @Autowired
+    private DoctorService doctorService;
 
     @Autowired
     private HealthRecordRepo healthrecordrepo;
@@ -173,5 +198,24 @@ public class HealthRecordController {
         }
 
         return newHealthRecord;
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadPdf(@RequestParam("pdf")MultipartFile file,@RequestParam("AbhaNumber") String AbhaNumber) throws IOException{
+
+        Long doctorId=doctorService.getMyId();
+        Long patientId=patientService.getId(AbhaNumber);
+        String upload=fileUploadService.uploadPDF(file, doctorId, patientId);
+        return ResponseEntity.status(HttpStatus.OK).body(upload);
+
+    }
+
+    @GetMapping("/getRecords/{AbhaNumber}")
+    public ResponseEntity<List<Pdf>> getPdfOfPatient(@PathVariable String AbhaNumber){
+        
+        Long patientId=patientService.getId(AbhaNumber);
+        return ResponseEntity.ok().body(fileUploadService.getPdfsByPatientId(patientId)); 
+
+        
     }
 }

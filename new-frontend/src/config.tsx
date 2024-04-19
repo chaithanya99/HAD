@@ -15,12 +15,6 @@ export function getAppNavs() {
       title: 'Dashboard',
       to: '/dashboard'
     },
-    {
-      eventKey: 'members',
-      icon: <Icon as={MemberIcon} />,
-      title: 'Patient Tracker',
-      to: '/table-members'
-    },
   ];
 
   if (role === '[ROLE_ADMIN]') {
@@ -59,6 +53,11 @@ export function getAppNavs() {
             title: 'Nurse list',
             to: '/table-virtualized2'
           },
+          {
+            eventKey: 'virtualized3',
+            title: 'Patient list',
+            to: '/table-virtualized3'
+          },
         ]
       },
       
@@ -74,32 +73,22 @@ export function getAppNavs() {
         to: '/calendar'
       },
       {
-        eventKey: 'tables',
+        eventKey: 'members',
+        icon: <Icon as={MemberIcon} />,
+        title: 'Patient Tracker',
+        to: '/table-members'
+      },
+      {
+        eventKey: 'virtualized4',
         icon: <Icon as={VscTable} />,
-        title: 'Tables',
-        to: '/table-members',
-        children: [
-          {
-            eventKey: 'members',
-            title: 'Patients',
-            to: '/table-members'
-          },
-          {
-            eventKey: 'virtualized3',
-            title: 'Patient list',
-            to: '/table-virtualized3'
-          },
-          {
-            eventKey: 'virtualized4',
-            title: 'Consent Tracker',
-            to: '/table-virtualized4'
-          },
-          {
-            eventKey: 'virtualized5',
-            title: 'Medical Records',
-            to: '/table-virtualized5'
-          }
-        ]
+        title: 'Consent Tracker',
+        to: '/table-virtualized4'
+      },
+      {
+        eventKey: 'virtualized5',
+        icon: <Icon as={VscTable} />,
+        title: 'Medical Records',
+        to: '/table-virtualized5'
       },
       {
         eventKey: 'forms',

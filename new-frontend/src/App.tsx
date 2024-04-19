@@ -25,6 +25,9 @@ import CalendarPage from './pages/calendar';
 import { getAppNavs } from './config';
 import Healthrecordpage from './pages/forms/Add_HealthRecord';
 import Login from './Login';
+import { Detailed_record } from './pages/detailed_record/Detailed_record';
+
+
 const App = () => {
   const appNavs = getAppNavs();
   return (
@@ -88,6 +91,10 @@ const App = () => {
             <Route path="calendar" element={<Frame navs={appNavs} />}>
               <Route index element={<CalendarPage />} />
             </Route>
+            <Route path="Detailed_record" element={<Frame navs={appNavs} />}>
+              <Route index element={<Detailed_record/>} />
+            </Route>
+
           </Route>
           <Route path="*" element={<Error404Page />} />
         </Routes>

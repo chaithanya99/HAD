@@ -13,6 +13,7 @@ import com.had.project5.services.PatientService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -221,7 +222,45 @@ public class HealthRecordController {
     }
 
     @GetMapping("/getallRecords")
-    public List<HealthRecord> getAllPatients() {
+    public List<HealthRecord> getAllRecords() {
         return healthrecordrepo.findAll();
     }
+
+    @GetMapping("/getDiagnosticReport/{id}")
+    public Optional<DiagnosticReport> getDiagnosticReport(@PathVariable long id) {
+        return diagnosticreportrepo.findById(id);
+    }
+
+    @GetMapping("/getOPConsultReport/{id}")
+    public Optional<OPconsult> getOPConsult(@PathVariable long id) {
+        return opconsultrepo.findById(id);
+    }
+
+    @GetMapping("/getDischargeSummaryReport/{id}")
+    public Optional<DischargeSummary> getDischargeSummary(@PathVariable long id) {
+        return dischargesummaryrepo.findById(id);
+    }
+
+    @GetMapping("/getGeneralReport/{id}")
+    public Optional<GeneralReport> getGeneralReport(@PathVariable long id) {
+        return generalreportrepo.findById(id);
+    }
+
+    @GetMapping("/getImmunizationRecord/{id}")
+    public Optional<ImmunizationRecord> getImmunizationRecord(@PathVariable long id) {
+        return immunizationrecordrepo.findById(id);
+    }
+
+    @GetMapping("/getPrescription/{id}")
+    public Optional<Prescription> getPrescription(@PathVariable long id) {
+        return prescriptionrepo.findById(id);
+    }
+
+    @GetMapping("/getWellnessRecord/{id}")
+    public Optional<WellnessRecord> getWellnessRecord(@PathVariable long id) {
+        return wellnessrecordrepo.findById(id);
+    }
+    
+
+
 }

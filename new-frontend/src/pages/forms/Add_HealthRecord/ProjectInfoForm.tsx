@@ -3,7 +3,7 @@ import { Form, Button, DatePicker } from 'rsuite';
 import axios from 'axios';
 import FormHeader from './FormHeader';
 
-const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, setFormData }) => {
+const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, setFormData, pid, did }) => {
 
   useEffect(() => {
     setFormData(getInitialFormData(formtype));
@@ -11,13 +11,15 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
 
   // Function to get initial form data based on formtype
   function getInitialFormData(formtype) {
+    const parsedPid = parseInt(pid, 10);
+    const parsedDid = parseInt(did, 10);
     switch (formtype) {
       case 'OP consult':
         return {
           type: formtype,
           expiry: "",
-          patientID: "",
-          doctorID: "",
+          patientId: parsedPid,
+          doctorId: parsedDid,
           medicalcondition: "",
           physical_examination: "",
           allergies: "",
@@ -30,16 +32,16 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         return {
           type: formtype,
           expiry: "",
-          patientID: "",
-          doctorID: "",
+          patientId: parsedPid,
+          doctorId: parsedDid,
           medication: ""
         };
       case 'Immunization Record':
         return {
           type: formtype,
           expiry: "",
-          patientID: "",
-          doctorID: "",
+          patientId: parsedPid,
+          doctorId: parsedDid,
           immunization_details: "",
           immunization_recommendation: ""
         };
@@ -47,24 +49,24 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         return{
           type: formtype,
           expiry: "",
-          patientID: "",
-          doctorID: "",
+          patientId: parsedPid,
+          doctorId: parsedDid,
           diagnosis: "",
         }
         case 'General health report':
           return{
             type: formtype,
             expiry: "",
-            patientID: "",
-            doctorID: "",
+            patientId: parsedPid,
+            doctorId: parsedDid,
             health_report: "",
           }
         case 'Wellness Record':
           return{
             type: formtype,
             expiry: "",
-            patientID: "",
-            doctorID: "",
+            patientId: parsedPid,
+            doctorId: parsedDid,
             heart_rate: "",
             respiratory_rate: "",
             temperature: "",
@@ -78,8 +80,8 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
           return{
             type: formtype,
             expiry: "",
-            patientID: "",
-            doctorID: "",
+            patientId: parsedPid,
+            doctorId: parsedDid,
             complaints: "",
             physical_examination: "",
             allergies: "",
@@ -88,7 +90,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
             labs_and_imaging: "",
             medicalprocedure: "",
             careplan: "",
-            Medicattion: ""
+            medication: ""
           }
       
       // Add cases for other types...
@@ -100,6 +102,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
   const handleSubmit = async () => {
     try {
       console.log("Form data:", formData);
+      console.log(typeof formData.patientId);
       setStep(step + 1);
       // Send formData to the endpoint using axios
       const response1 = await axios.post("http://localhost:8080/auth/generateToken",
@@ -130,17 +133,6 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
       <Form onSubmit={handleSubmit}>
         <FormHeader title={`Enter ${formtype} Details`} description={''} />
         {/* Render form fields based on type */}
-        
-
-        <Form.Group>
-          <Form.ControlLabel>Patient ID</Form.ControlLabel>
-          <Form.Control name="patientID" placeholder="your id" onChange={value => handleChange(value, 'patientID')}/>
-        </Form.Group>
-
-        <Form.Group>
-          <Form.ControlLabel>Doctor Id</Form.ControlLabel>
-          <Form.Control name="doctorID" placeholder="Enter your Id" onChange={value => handleChange(value, 'doctorID')}/>
-        </Form.Group>
 
         <Form.Group>
           <Form.ControlLabel>Expiry date</Form.ControlLabel>
@@ -199,7 +191,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         {(formtype === 'OP consult' || formtype === 'Prescription' || formtype === 'Discharge Summary') && (
           <Form.Group>
             <Form.ControlLabel>medication</Form.ControlLabel>
-            <Form.Control name="medication" value={formData.medication} onChange={value => handleChange(value, 'Medication')} />
+            <Form.Control name="medication" value={formData.medication} onChange={value => handleChange(value, 'medication')} />
             {/* Add more form fields for 'Prescription' type */}
           </Form.Group>
         )}

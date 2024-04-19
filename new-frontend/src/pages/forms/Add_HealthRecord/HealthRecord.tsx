@@ -16,6 +16,8 @@ const HealthRecord = () => {
   const token = localStorage.getItem('token');
   const [type, settype] = useState('')
   const [formData, setFormData] = useState({});
+  const [pid, setPid] = useState(0);
+  const [did, setDid] = useState(0);
 
 
   const step1Props = {
@@ -23,6 +25,10 @@ const HealthRecord = () => {
     setStep: setStep,
     type: type,
     settype: settype,
+    did: did,
+    setDid: setDid,
+    pid: pid,
+    setPid: setPid,
   };
 
   const projectInfoProps = {
@@ -33,6 +39,8 @@ const HealthRecord = () => {
     formtype: type,
     formData: formData,
     setFormData: setFormData,
+    pid: pid,
+    did: did,
   };
 
   const completedProps = {

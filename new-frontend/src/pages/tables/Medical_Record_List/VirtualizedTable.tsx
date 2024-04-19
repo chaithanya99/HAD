@@ -21,7 +21,7 @@ const VirtualizedTable5 = () => {
           "username" : "admin",
           "password": "admin"
         });
-        const response = await axios.get("http://localhost:8080/admin/workers", {
+        const response = await axios.get("http://localhost:8080/HealthRecord/getallRecords", {
           headers: {
             'Authorization': `Bearer ${response1.data}`
           }
@@ -53,35 +53,28 @@ const VirtualizedTable5 = () => {
       translate3d={false}
     >
       <Column width={70} align="center" fixed>
-        <HeaderCell>Id</HeaderCell>
+        <HeaderCell>id</HeaderCell>
         <Cell dataKey="id" />
       </Column>
 
       <Column width={130}>
-        <HeaderCell>Name</HeaderCell>
-        <Cell dataKey="name" />
+        <HeaderCell>patientId</HeaderCell>
+        <Cell dataKey="patientId" />
       </Column>
 
       <Column width={100}>
-        <HeaderCell>Gender</HeaderCell>
-        <Cell dataKey="gender" />
+        <HeaderCell>doctorId</HeaderCell>
+        <Cell dataKey="doctorId" />
       </Column>
 
       <Column width={100}>
-        <HeaderCell>Age</HeaderCell>
-        <Cell dataKey="yearOfBirth">
-          {(rowData) => calculateAge(rowData.yearOfBirth)}
-        </Cell>
+        <HeaderCell>type</HeaderCell>
+        <Cell dataKey="type"/>
       </Column>
 
       <Column width={200}>
-        <HeaderCell>City</HeaderCell>
-        <Cell dataKey="address" />
-      </Column>
-
-      <Column minWidth={200} flexGrow={1}>
-        <HeaderCell>Email</HeaderCell>
-        <Cell dataKey="email_Id" />
+        <HeaderCell>expiry</HeaderCell>
+        <Cell dataKey="expiry" />
       </Column>
     </Table>
   );

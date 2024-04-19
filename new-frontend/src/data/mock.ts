@@ -5,10 +5,10 @@ export function mockUsers(length: number) {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
     const specialization = faker.name.jobTitle();
-    const gender = faker.name.gender(true) as 'Female' | 'Male';
+    const gender = faker.name.gender(true) as "female" | "male";
     const name = faker.name.findName(firstName, lastName, gender);
     const avatar = faker.image.avatar();
-
+    const status = "Accepted";
     const city = faker.address.city();
     const street = faker.address.street();
     const email = faker.internet.email();
@@ -35,6 +35,7 @@ export function mockUsers(length: number) {
       email,
       phone,
       gender,
+      status,
       age,
       stars,
       followers,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@rsuite/icons';
-import { VscTable } from 'react-icons/vsc';
+import { VscCalendar, VscTable } from 'react-icons/vsc';
 import { MdFingerprint, MdDashboard, MdModeEditOutline } from 'react-icons/md';
 import CubesIcon from '@rsuite/icons/legacy/Cubes';
 import MemberIcon from '@rsuite/icons/Member';
@@ -41,6 +41,125 @@ export function getAppNavs() {
             title: 'Add Nurse',
             to: '/form-basic2'
           },
+        ]
+      },
+      {
+        eventKey: 'tables',
+        icon: <Icon as={VscTable} />,
+        title: 'Tables',
+        to: '/table-members',
+        children: [
+          {
+            eventKey: 'virtualized',
+            title: 'Doctor list',
+            to: '/table-virtualized'
+          },
+          {
+            eventKey: 'virtualized2',
+            title: 'Nurse list',
+            to: '/table-virtualized2'
+          },
+        ]
+      },
+      
+    );
+  }
+
+  if (role === '[ROLE_DOCTOR]') {
+    appNavs.push(
+      {
+        eventKey: 'calendar',
+        icon: <Icon as={VscCalendar} />,
+        title: 'Calendar',
+        to: '/calendar'
+      },
+      {
+        eventKey: 'tables',
+        icon: <Icon as={VscTable} />,
+        title: 'Tables',
+        to: '/table-members',
+        children: [
+          {
+            eventKey: 'members',
+            title: 'Patients',
+            to: '/table-members'
+          },
+          {
+            eventKey: 'virtualized3',
+            title: 'Patient list',
+            to: '/table-virtualized3'
+          },
+          {
+            eventKey: 'virtualized4',
+            title: 'Consent Tracker',
+            to: '/table-virtualized4'
+          },
+          {
+            eventKey: 'virtualized5',
+            title: 'Medical Records',
+            to: '/table-virtualized5'
+          }
+        ]
+      },
+      {
+        eventKey: 'forms',
+        icon: <Icon as={MdModeEditOutline} />,
+        title: 'Add Data',
+        to: '/form-basic',
+        children: [
+          {
+            eventKey: 'Healthrec',
+            title: 'Add health record',
+            to: '/Healthrecord'
+          },
+          {
+            eventKey: 'ABHA-Registration',
+            title: 'ABHA Registration',
+            to: '/ABHA-Registration'
+          }
+        ]
+      },
+      
+    );
+  }
+
+  if (role === '[ROLE_WORKER]') {
+    appNavs.push(
+      {
+        eventKey: 'calendar',
+        icon: <Icon as={VscCalendar} />,
+        title: 'Calendar',
+        to: '/calendar'
+      },
+      {
+        eventKey: 'tables',
+        icon: <Icon as={VscTable} />,
+        title: 'Tables',
+        to: '/table-members',
+        children: [
+          {
+            eventKey: 'members',
+            title: 'Patients',
+            to: '/table-members'
+          },
+        ]
+      },
+      {
+        eventKey: 'forms',
+        icon: <Icon as={MdModeEditOutline} />,
+        title: 'Add Data',
+        to: '/form-basic',
+        children: [
+          {
+            eventKey: 'Healthrec',
+            title: 'Add health record',
+            to: '/Healthrecord'
+          },
+          {
+            eventKey: 'ABHA-Registration',
+            title: 'ABHA Registration',
+            to: '/ABHA-Registration'
+          }
         ]
       },
       

@@ -82,6 +82,7 @@ public class HealthRecordController {
     @PostMapping("/createhealthrecord")
     public HealthRecord createHealthRecord(@RequestBody Healthrec healthrec)
     {
+        System.out.println(healthrec.getPatientId());
         HealthRecord newHealthRecord = new HealthRecord();
         newHealthRecord.setType(healthrec.getType());
         newHealthRecord.setExpiry(healthrec.getExpiry());
@@ -217,5 +218,10 @@ public class HealthRecordController {
         return ResponseEntity.ok().body(fileUploadService.getPdfsByPatientId(patientId)); 
 
         
+    }
+
+    @GetMapping("/getallRecords")
+    public List<HealthRecord> getAllPatients() {
+        return healthrecordrepo.findAll();
     }
 }

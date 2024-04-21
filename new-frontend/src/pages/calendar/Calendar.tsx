@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useRef } from 'react';
 import FullCalendar, { DateSelectArg, EventClickArg, EventContentArg } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -6,23 +7,65 @@ import interactionPlugin from '@fullcalendar/interaction';
 import PageContent from '@/components/PageContent';
 import { INITIAL_EVENTS } from './event-utils';
 import EventModal from './EventModal';
+import { uniqueId } from 'lodash';
+// import EventEdit from './EventEdit';
 
 const Calendar = () => {
-  const [editable, setEditable] = React.useState(false);
+  const [newAppointment, setNewAppointment] = useState(false);
+  const [editAppointment, setEditAppointment] = useState(false);
+  const calendarRef = useRef(null);
+  const defaultForm = {
+    id: uniqueId(),
+    title: 'Appointment',
+    allDay: false,
+    start: null,
+    end: null,
+  }
+  const [formData, setFormData] = useState(defaultForm);
+  const [selectedEvent, setSelectedEvent] = useState();
   
   const handleDateSelect = (selectInfo: DateSelectArg) => {
-    console.log(selectInfo);
-    setEditable(true);
+    // console.log(formData)
+    console.log(selectInfo.start, selectInfo.end)
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      start: selectInfo.start,
+      end: selectInfo.start
+    }));
+    setNewAppointment(true);
   };
 
   const handleEventClick = (clickInfo: EventClickArg) => {
-    console.log(clickInfo);
-    setEditable(true);
+    console.log(clickInfo.event);
+    // setSelectedEvent(clickInfo.event);
+    // setEvents([...events, clickInfo]);
+    // setNewAppointment(true);
+    setEditAppointment(true);
   };
+
+  const handleAddEvent = (eventData, calendarApi) => {
+    // console.log(newEvent)
+    console.log(eventData)
+    console.log(formData)
+    // setEvents([...events, formData]);
+    calendarApi.unselect();
+    calendarApi.addEvent(formData);
+    setFormData(defaultForm);
+    setNewAppointment(false);
+  };
+
+  // const handleEditEvent = () => {
+  //   setEditAppointment(false);
+  // };
+
+  // const handleDeleteEvent = () => {
+
+  // };
 
   return (
     <PageContent className="calendar-app">
       <FullCalendar
+        ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
           left: 'prev,next today',
@@ -42,12 +85,17 @@ const Calendar = () => {
         eventClick={handleEventClick}
       />
       <EventModal
-        open={editable}
-        onClose={() => setEditable(false)}
-        onAddEvent={() => {
-          setEditable(false);
-        }}
+        open={newAppointment}
+        onClose={() => setNewAppointment(false)}
+        onAddEvent={(eventData) => handleAddEvent(eventData, calendarRef.current.getApi())}
+        formData={formData}
+        setFormData={setFormData}
       />
+      {/* <EventEdit
+        appointment={selectedEvent}
+        onEdit={handleEditEvent}
+        onDelete={handleDeleteEvent}
+      /> */}
     </PageContent>
   );
 };

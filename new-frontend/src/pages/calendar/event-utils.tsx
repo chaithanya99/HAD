@@ -14,6 +14,7 @@ export const INITIAL_EVENTS: EventInput[] = [
     id: uniqueId(),
     title: 'Patient Appointment',
     allDay: true,
-    start: format(firstDay, 'yyyy-MM-dd')
+    start: format(today, 'yyyy-MM-dd HH:mm:ss'),
+    end: format(today, 'yyyy-MM-dd HH:mm:ss')
   },
 ];

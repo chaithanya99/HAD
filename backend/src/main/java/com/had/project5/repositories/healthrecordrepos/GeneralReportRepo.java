@@ -1,4 +1,4 @@
-package com.had.project5.repositories;
+package com.had.project5.repositories.healthrecordrepos;
 
 import com.had.project5.entities.healthrecordstuff.GeneralReport;
 

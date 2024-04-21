@@ -1,6 +1,6 @@
-package com.example.HAD.consentrequest.bean;
+package com.had.project5.entities.consentstuff;
 
-import com.example.HAD.carecontext.bean.Resp;
+import com.had.project5.entities.Resp;
 
 public class OnFetchResponse {
 	private String requestId;

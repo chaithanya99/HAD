@@ -1,4 +1,4 @@
-package com.example.HAD.consentrequest.bean;
+package com.had.project5.entities.consentstuff;
 
 public class Identifier {
 	

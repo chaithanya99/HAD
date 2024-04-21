@@ -1,6 +1,6 @@
 package com.had.project5.entities.consentstuff;
+import  com.had.project5.entities.Resp;
 
-import com.had.project5.entities.Resp;
 
 public class HipOnRequest {
 

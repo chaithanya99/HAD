@@ -40,15 +40,6 @@ public class CmRequest {
 	public void setHiRequest(HiRequest hiRequest) {
 		this.hiRequest = hiRequest;
 	}
-
-	@Override
-	public String toString() {
-		return "CmRequest{" +
-				"transactionId='" + transactionId + '\'' +
-				", requestId='" + requestId + '\'' +
-				", timestamp='" + timestamp + '\'' +
-				", hiRequest=" + hiRequest +
-				'}';
-	}
+	
 
 }

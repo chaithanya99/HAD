@@ -1,6 +1,7 @@
-package com.example.HAD.consentrequest.bean;
+package com.had.project5.entities.consentstuff;
 
 import java.util.List;
+import com.had.project5.entities.Patient;
 
 public class OnFetchConsentDetail {
 

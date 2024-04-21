@@ -1,21 +1,11 @@
 package com.had.project5.entities.consentstuff;
 
-public class CmRequest {
-	
-	private String transactionId;
-	public String getTransactionId() {
-		return transactionId;
-	}
-
-	public void setTransactionId(String transactionId) {
-		this.transactionId = transactionId;
-	}
-
+public class ConsentNotifyResponse {
 	private String requestId;
 	
 	private String timestamp;
 	
-	private HiRequest hiRequest;
+	private Notification notification;
 
 	public String getRequestId() {
 		return requestId;
@@ -33,13 +23,12 @@ public class CmRequest {
 		this.timestamp = timestamp;
 	}
 
-	public HiRequest getHiRequest() {
-		return hiRequest;
+	public Notification getNotification() {
+		return notification;
 	}
 
-	public void setHiRequest(HiRequest hiRequest) {
-		this.hiRequest = hiRequest;
+	public void setNotification(Notification notification) {
+		this.notification = notification;
 	}
-	
 
 }

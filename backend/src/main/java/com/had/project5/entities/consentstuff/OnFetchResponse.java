@@ -1,14 +1,15 @@
 package com.had.project5.entities.consentstuff;
-import  com.had.project5.entities.Resp;
 
+import com.had.project5.entities.Resp;
 
-public class HipOnRequest {
-
+public class OnFetchResponse {
 	private String requestId;
 	
 	private String timestamp;
 	
-	private HnRequest hiRequest;
+	private OnFetchConsent consent;
+	
+	private String error;
 	
 	private Resp resp;
 
@@ -28,12 +29,20 @@ public class HipOnRequest {
 		this.timestamp = timestamp;
 	}
 
-	public HnRequest getHiRequest() {
-		return hiRequest;
+	public OnFetchConsent getConsent() {
+		return consent;
 	}
 
-	public void setHiRequest(HnRequest hiRequest) {
-		this.hiRequest = hiRequest;
+	public void setConsent(OnFetchConsent consent) {
+		this.consent = consent;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 
 	public Resp getResp() {
@@ -43,4 +52,5 @@ public class HipOnRequest {
 	public void setResp(Resp resp) {
 		this.resp = resp;
 	}
+
 }

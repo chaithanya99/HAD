@@ -1,17 +1,12 @@
 package com.had.project5.entities.consentstuff;
-import  com.had.project5.entities.Resp;
+
+import com.had.project5.entities.Resp;
 
 
-public class HipOnRequest {
-
+public class HipOnNotify {
+	
 	private String requestId;
 	
-	private String timestamp;
-	
-	private HnRequest hiRequest;
-	
-	private Resp resp;
-
 	public String getRequestId() {
 		return requestId;
 	}
@@ -28,14 +23,6 @@ public class HipOnRequest {
 		this.timestamp = timestamp;
 	}
 
-	public HnRequest getHiRequest() {
-		return hiRequest;
-	}
-
-	public void setHiRequest(HnRequest hiRequest) {
-		this.hiRequest = hiRequest;
-	}
-
 	public Resp getResp() {
 		return resp;
 	}
@@ -43,4 +30,19 @@ public class HipOnRequest {
 	public void setResp(Resp resp) {
 		this.resp = resp;
 	}
+
+	public Acknowledgement getAcknowledgement() {
+		return acknowledgement;
+	}
+
+	public void setAcknowledgement(Acknowledgement acknowledgement) {
+		this.acknowledgement = acknowledgement;
+	}
+
+	private String timestamp;
+	
+	private Resp resp;
+	
+	private Acknowledgement acknowledgement;
+
 }

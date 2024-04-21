@@ -4,13 +4,13 @@ public class Purpose {
 
 	private String text;
 	private String code;
-	private String refUri;
-	public String getRefUri() {
-		return refUri;
-	}
-	public void setRefUri(String refUri) {
-		this.refUri = refUri;
-	}
+	// private String refUri;
+	// public String getRefUri() {
+	// 	return refUri;
+	// }
+	// public void setRefUri(String refUri) {
+	// 	this.refUri = refUri;
+	// }
 	public String getText() {
 		return text;
 	}

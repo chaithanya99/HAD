@@ -4,9 +4,9 @@ public class Frequency {
 	
 	private String unit;
 	
-	private String value;
+	private long value;
 	
-	private String repeats;
+	private long repeats;
 
 	public String getUnit() {
 		return unit;
@@ -16,19 +16,19 @@ public class Frequency {
 		this.unit = unit;
 	}
 
-	public String getValue() {
+	public long getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(long value) {
 		this.value = value;
 	}
 
-	public String getRepeats() {
+	public long getRepeats() {
 		return repeats;
 	}
 
-	public void setRepeats(String repeats) {
+	public void setRepeats(long repeats) {
 		this.repeats = repeats;
 	}
 

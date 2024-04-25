@@ -65,17 +65,16 @@ public class AbhaCreationController {
             Map<String,String> payload=new HashMap<>();
             payload.put("aadhaar",encryptedAadhaar);
             String jsonPayload=new ObjectMapper().writeValueAsString(payload);
-            // String res=apiService.makePostRequest("/v2/registration/aadhaar/generateOtp",jsonPayload);
-            // JSONObject jsonResponse= new JSONObject(res);
-            // System.out.println(jsonResponse);
-            // Map<String, String> responseMap = new HashMap<>();
-            // responseMap.put("txnId", jsonResponse.getString("txnId"));
-            // return ResponseEntity.ok(responseMap);
+            String res=apiService.makePostRequest("/v2/registration/aadhaar/generateOtp",jsonPayload);
+            JSONObject jsonResponse= new JSONObject(res);
+            System.out.println(jsonResponse);
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("txnId", jsonResponse.getString("txnId"));
+            return ResponseEntity.ok(responseMap);
         } catch (Exception e) {
             // TODO: handle exception
             throw e;
         }
-        return null;
     }
     @PostMapping("/verifyAadhaarOTP")
     public ResponseEntity<Map<String, String>> verifyAadhaarOTP(@RequestBody Map<String,String> req) throws Exception{

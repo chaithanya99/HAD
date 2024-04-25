@@ -80,6 +80,7 @@ public class ApiService {
         }
     }
     public String makePostRequest(String endpoint, String jsonPayload) {
+            // System.out.println(BASE_URL+endpoint);
             HttpHeaders authHeader=new HttpHeaders();
             authHeader.setContentType(MediaType.APPLICATION_JSON);
             authHeader.setBearerAuth(getToken());
@@ -88,6 +89,7 @@ public class ApiService {
             ResponseEntity<String> authResponse = restTemplate.exchange(BASE_URL+endpoint, HttpMethod.POST, entity, String.class);
             System.out.println(authResponse.getBody());
             return authResponse.getBody();
+            // return jsonPayload;
     }
 
     public String makePatchRequest(String endpoint, String jsonPayload){
@@ -116,7 +118,8 @@ public class ApiService {
         System.out.println("IN MAKE GET");
         ResponseEntity<String> responseEntity = restTemplate.exchange(endpoint, HttpMethod.GET, entity,String.class);
         System.out.println(responseEntity);
-        return "RANDOM";
+        return responseEntity.getBody();
+        // return "RANDOM";
     }
     
     public static boolean isTokenExpired(String token,long expiry) {

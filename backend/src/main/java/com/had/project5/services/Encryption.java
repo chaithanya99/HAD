@@ -14,7 +14,7 @@ public class Encryption {
     private ApiService apiService;
     private PublicKey publicKey;
     public String encryptWithPublicKey(String data) throws Exception {
-        String Key=apiService.makeGetRequest("/v1/auth/cert");
+        String Key=apiService.makeGetRequest("https://healthidsbx.abdm.gov.in/api/v1/auth/cert");
         this.publicKey=getPublicKeyFromPEM(Key);
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);

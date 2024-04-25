@@ -7,6 +7,7 @@ import javax.crypto.Cipher;
 import com.had.project5.entities.Patient;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +21,11 @@ import com.had.project5.services.Encryption;
 import com.had.project5.services.JwtService;
 import com.had.project5.services.PatientService;
 
-@RestController
 
-    
+
 // @RequestMapping("/getABHAtoken")
+@RestController
+@CrossOrigin(origins = "*")
 public class AbhaCreationController {
     @Autowired
     private ApiService apiService;
@@ -63,16 +65,17 @@ public class AbhaCreationController {
             Map<String,String> payload=new HashMap<>();
             payload.put("aadhaar",encryptedAadhaar);
             String jsonPayload=new ObjectMapper().writeValueAsString(payload);
-            String res=apiService.makePostRequest("/v2/registration/aadhaar/generateOtp",jsonPayload);
-            JSONObject jsonResponse= new JSONObject(res);
-            System.out.println(jsonResponse);
-            Map<String, String> responseMap = new HashMap<>();
-            responseMap.put("txnId", jsonResponse.getString("txnId"));
-            return ResponseEntity.ok(responseMap);
+            // String res=apiService.makePostRequest("/v2/registration/aadhaar/generateOtp",jsonPayload);
+            // JSONObject jsonResponse= new JSONObject(res);
+            // System.out.println(jsonResponse);
+            // Map<String, String> responseMap = new HashMap<>();
+            // responseMap.put("txnId", jsonResponse.getString("txnId"));
+            // return ResponseEntity.ok(responseMap);
         } catch (Exception e) {
             // TODO: handle exception
             throw e;
         }
+        return null;
     }
     @PostMapping("/verifyAadhaarOTP")
     public ResponseEntity<Map<String, String>> verifyAadhaarOTP(@RequestBody Map<String,String> req) throws Exception{

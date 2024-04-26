@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,8 +26,8 @@ public class PatientController
     @Autowired
     private PatientRepo patientRepo;
 
-    @GetMapping("/Id")
-    public ResponseEntity<Long> getDoctorId(@RequestBody Map<String,String> req){
+    @PostMapping("/Id")
+    public ResponseEntity<Long> getPatientId(@RequestBody Map<String,String> req){
         System.out.println(req.get("abhaNumber"));
         Long id=patientService.getId(req.get("abhaNumber"));
         if(id!=(long)-1){

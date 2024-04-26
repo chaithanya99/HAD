@@ -38,6 +38,18 @@ public class PatientController
         }
     }
 
+    @GetMapping("/Id")
+    public ResponseEntity<Long> getPatientId1(@RequestBody Map<String,String> req){
+        System.out.println(req.get("abhaNumber"));
+        Long id=patientService.getId(req.get("abhaNumber"));
+        if(id!=(long)-1){
+            return ResponseEntity.ok(id);
+        }
+        else{
+            return ResponseEntity.status(400).body((long)-1);
+        }
+    }
+
     @GetMapping("/patients")
     public List<Patient> getAllPatients() {
         return patientRepo.findAll();

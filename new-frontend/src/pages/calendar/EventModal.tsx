@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Modal, Button, Form, DatePicker, ModalProps, Stack, SelectPicker } from 'rsuite';
 
 interface EventModalProps extends ModalProps {
@@ -26,12 +26,12 @@ const EventModal = (props: EventModalProps) => {
                 ]}
             />
           </Form.Group> */}
-          <Form.Group controlId="name">
+          <Form.Group controlId="patientId">
             <Form.ControlLabel>Patient ID</Form.ControlLabel>
             <Form.Control 
-              name="name" 
-              value={formData.name}
-              onChange={(value) => setFormData({ ...formData, name: value })}
+              name="patientId" 
+              value={formData.patientId}
+              onChange={(value) => setFormData({ ...formData, patientId: value })}
             />
           </Form.Group>
           <Form.Group controlId="description">

@@ -44,22 +44,19 @@ const Step1 = ({ setAadharNumber, aadharNumber, token, setTxnId, step, setStep }
     console.log(actualAadharNumber.length);
     if (actualAadharNumber.length === 12 && Agree) {
       // Conditions met, proceed to the next step
-      // try {
-      const response1 = await axios.post("http://localhost:8080/auth/generateToken",
-      {
-        "username" : "admin",
-        "password": "admin"
-      });
-      localStorage.setItem('token', response1.data);
-      const response = await axios.post("http://localhost:8080/generateOtp", {
-        "aadhaar": actualAadharNumber
-      }, {
-        headers: {
-          'Authorization': `Bearer ${response1.data}`
-        }
-      });
-      setTxnId(response.data.txnId);
-      console.log(response.data.txnId);
+      try {
+        const response = await axios.post("http://localhost:8080/generateOtp", {
+          "aadhaar": actualAadharNumber
+        }, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setTxnId(response.data.txnId);
+        console.log(response.data.txnId);
+      } catch(error) {
+        console.log('Aadhar Generate OTP', error);
+      }
       setStep(step + 1);
       // }
       // catch (error) {
@@ -95,6 +92,7 @@ const Step1 = ({ setAadharNumber, aadharNumber, token, setTxnId, step, setStep }
           <Form.ControlLabel>Enter Aadhaar Number</Form.ControlLabel>
           <Form.Control
             name="MaskedInput"
+            value={aadharNumber}
             accepter={MaskedInput}
             placeholder="XXXX - XXXX - XXXX"
             placeholderChar = {'\u2000'}

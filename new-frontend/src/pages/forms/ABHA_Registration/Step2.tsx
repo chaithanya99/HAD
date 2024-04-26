@@ -20,13 +20,12 @@ const Step2 = ({ otpSize, txnId, step, setStep, aadharNumber, token, retryTime }
       if (otp.length === otpSize && otp.every((digit) => Boolean(digit))) {
         const actualOtp = otp.join('')
         console.log(actualOtp);
-        const token1 = localStorage.getItem('token');
         const response = await axios.post("http://localhost:8080/verifyAadhaarOTP", {
           txnId,
           otp: actualOtp
         }, {
           headers: {
-            'Authorization': `Bearer ${token1}`  // token
+            'Authorization': `Bearer ${token}`  // token
           }
         });
         console.log(response.data); // Handle response accordingly
@@ -127,7 +126,7 @@ const Step2 = ({ otpSize, txnId, step, setStep, aadharNumber, token, retryTime }
 
       <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
           <p>Wrong Aadhar Number?</p>
-          <Button appearance="primary" onClick={handleResend} style={{ marginLeft: '10px' }}>Go Back</Button>
+          <Button appearance="primary" onClick={() => {setStep(step-1)}} style={{ marginLeft: '10px' }}>Go Back</Button>
       </Form.Group>
 
     </Form>

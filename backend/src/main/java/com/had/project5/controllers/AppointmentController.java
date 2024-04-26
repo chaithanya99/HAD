@@ -38,31 +38,29 @@ public class AppointmentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Appointment> getAppointment(@PathVariable Long id) {
-        Appointment appointment = appointmentRepository.findById(id)
-                .orElseThrow();
+        Appointment appointment = appointmentRepository.findById(id).orElseThrow();
         return ResponseEntity.ok(appointment);
     }
 
     @PostMapping("/create")
     public ResponseEntity<?> createAppointment(@RequestBody CreateAppointmentRequest appointmentRequest) {
-        
-        long doctorId=appointmentRequest.getDoctorId();
-        long patientId=appointmentRequest.getPatientId();
-        Optional<Doctor> d= doctorService.getDoctorById(doctorId);
+
+        long doctorId = appointmentRequest.getDoctorId();
+        long patientId = appointmentRequest.getPatientId();
+        Optional<Doctor> d = doctorService.getDoctorById(doctorId);
         Optional<Patient> p = patientService.getPatientById(patientId);
-        if(!p.isPresent() || !d.isPresent()){
+        if (!p.isPresent() || !d.isPresent()) {
             return ResponseEntity.status(400).body("error");
         }
-        Patient pp=p.get();
+        Patient pp = p.get();
         Doctor dd = d.get();
         System.out.println(dd.getName());
         System.out.println(pp.getMobile());
-        Appointment ap=new Appointment();
+        Appointment ap = new Appointment();
         ap.setDoctor(dd);
         ap.setPatient(pp);
         ap.setStartDateTime(appointmentRequest.getStartDateTime());
         ap.setEndDateTime(appointmentRequest.getEndDateTime());
-       
 
         if (isAppointmentOverlap(ap)) {
             return ResponseEntity.badRequest().body("Appointment overlaps with existing appointment");
@@ -70,8 +68,6 @@ public class AppointmentController {
         Appointment savedAppointment = appointmentRepository.save(ap);
         return ResponseEntity.ok(savedAppointment);
     }
-
-    
 
     @GetMapping("/doctor/{doctorId}")
     public ResponseEntity<List<Appointment>> getAppointmentsForDoctor(@PathVariable Long doctorId) {
@@ -115,25 +111,29 @@ public class AppointmentController {
 
     // Check for appointment overlap while creating appointment
     private boolean isAppointmentOverlap(Appointment newAppointment) {
-        
-        List<Appointment> existingAppointments = appointmentRepository.findByDoctorId(newAppointment.getDoctor().getId());
+
+        List<Appointment> existingAppointments = appointmentRepository
+                .findByDoctorId(newAppointment.getDoctor().getId());
 
         for (Appointment existingAppointment : existingAppointments) {
-            // Check if new appointment start time is between existing appointment's start and end times (inclusive)
+            // Check if new appointment start time is between existing appointment's start
+            // and end times (inclusive)
             if ((newAppointment.getStartDateTime().isAfter(existingAppointment.getStartDateTime()) ||
                     newAppointment.getStartDateTime().isEqual(existingAppointment.getStartDateTime())) &&
                     (newAppointment.getStartDateTime().isBefore(existingAppointment.getEndDateTime()) ||
-                    newAppointment.getStartDateTime().isEqual(existingAppointment.getEndDateTime()))) {
+                            newAppointment.getStartDateTime().isEqual(existingAppointment.getEndDateTime()))) {
                 return true;
             }
-            // Check if new appointment end time is between existing appointment's start and end times (inclusive)
+            // Check if new appointment end time is between existing appointment's start and
+            // end times (inclusive)
             if ((newAppointment.getEndDateTime().isAfter(existingAppointment.getStartDateTime()) ||
                     newAppointment.getEndDateTime().isEqual(existingAppointment.getStartDateTime())) &&
                     (newAppointment.getEndDateTime().isBefore(existingAppointment.getEndDateTime()) ||
-                    newAppointment.getEndDateTime().isEqual(existingAppointment.getEndDateTime()))) {
+                            newAppointment.getEndDateTime().isEqual(existingAppointment.getEndDateTime()))) {
                 return true;
             }
-            // Check if new appointment completely overlaps with existing appointment (inclusive)
+            // Check if new appointment completely overlaps with existing appointment
+            // (inclusive)
             if (newAppointment.getStartDateTime().isBefore(existingAppointment.getStartDateTime()) &&
                     newAppointment.getEndDateTime().isAfter(existingAppointment.getEndDateTime())) {
                 return true;
@@ -148,33 +148,34 @@ public class AppointmentController {
         List<Appointment> existingAppointments = appointmentRepository.findByDoctorId(rescheduleRequest.getDoctorId());
         for (Iterator<Appointment> iterator = existingAppointments.iterator(); iterator.hasNext();) {
             Appointment appointment = iterator.next();
-    
-            
+
             if (appointment.getId().equals(oldAppointment.getId())) {
-                iterator.remove(); 
+                iterator.remove();
                 break;
             }
-    
-            
+
         }
         for (Appointment existingAppointment : existingAppointments) {
-            // Check if new appointment start time is between existing appointment's start and end times (inclusive)
+            // Check if new appointment start time is between existing appointment's start
+            // and end times (inclusive)
             if ((rescheduleRequest.getStartDateTime().isAfter(existingAppointment.getStartDateTime()) ||
                     rescheduleRequest.getStartDateTime().isEqual(existingAppointment.getStartDateTime())) &&
                     (rescheduleRequest.getStartDateTime().isBefore(existingAppointment.getEndDateTime()) ||
-                    rescheduleRequest.getStartDateTime().isEqual(existingAppointment.getEndDateTime()))) {
+                            rescheduleRequest.getStartDateTime().isEqual(existingAppointment.getEndDateTime()))) {
                 return true;
             }
-            // Check if new appointment end time is between existing appointment's start and end times (inclusive)
+            // Check if new appointment end time is between existing appointment's start and
+            // end times (inclusive)
             if ((rescheduleRequest.getEndDateTime().isAfter(existingAppointment.getStartDateTime()) ||
                     rescheduleRequest.getEndDateTime().isEqual(existingAppointment.getStartDateTime())) &&
                     (rescheduleRequest.getEndDateTime().isBefore(existingAppointment.getEndDateTime()) ||
-                    rescheduleRequest.getEndDateTime().isEqual(existingAppointment.getEndDateTime()))) {
+                            rescheduleRequest.getEndDateTime().isEqual(existingAppointment.getEndDateTime()))) {
                 return true;
             }
-            // Check if new appointment completely overlaps with existing appointment (inclusive)
+            // Check if new appointment completely overlaps with existing appointment
+            // (inclusive)
             if (rescheduleRequest.getStartDateTime().isBefore(existingAppointment.getStartDateTime()) &&
-            rescheduleRequest.getEndDateTime().isAfter(existingAppointment.getEndDateTime())) {
+                    rescheduleRequest.getEndDateTime().isAfter(existingAppointment.getEndDateTime())) {
                 return true;
             }
         }

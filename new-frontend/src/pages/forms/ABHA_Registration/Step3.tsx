@@ -15,13 +15,12 @@ const Step3 = ({ mobileNumber, setMobileNumber, txnId, token, setAbhaId, step, s
       const actualMobileNumber = mobileNumber.split(' ').join('').trim();
       console.log(actualMobileNumber.length)
       if (actualMobileNumber.length === 10) {
-        const token1 = localStorage.getItem('token');
         const response = await axios.post("http://localhost:8080/checkAndGenerateMobileOTP", {
           txnId,
           "mobile": actualMobileNumber
         }, {
           headers: {
-            'Authorization': `Bearer ${token1}` // token
+            'Authorization': `Bearer ${token}` // token
           }
         });
         console.log(response.data.mobileLinked);

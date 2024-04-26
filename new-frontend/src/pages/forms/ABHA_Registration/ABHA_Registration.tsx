@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Steps, Divider, Stack, IconButton } from 'rsuite';
 import PageContent from '@/components/PageContent';
 
@@ -20,6 +20,10 @@ const ABHA_Registration = () => {
   const [mobileNumber, setMobileNumber] = useState('')
   const [abhaId, setAbhaId] = useState('')
   const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    console.log(token);
+  }, []);
 
   const step1Props = {
     setAadharNumber: setAadharNumber,
@@ -62,9 +66,6 @@ const ABHA_Registration = () => {
 
   const step5Props = {
     abhaId: abhaId,
-    token: token,
-    step: step,
-    setStep: setStep,
   };
 
   const forms = [Step1, Step2, Step3, Step4, Step5]

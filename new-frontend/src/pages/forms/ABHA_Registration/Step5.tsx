@@ -3,7 +3,7 @@ import { ButtonToolbar, Button, Stack ,Panel} from 'rsuite';
 import CheckRoundIcon from '@rsuite/icons/CheckRound';
 import { useNavigate } from 'react-router-dom';
 
-const Step5 = ({ abhaId, token }) => {
+const Step5 = ({ abhaId }) => {
   const navigate = useNavigate();
 
   return (

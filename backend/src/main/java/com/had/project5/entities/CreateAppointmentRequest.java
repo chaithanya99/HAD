@@ -15,6 +15,6 @@ public class CreateAppointmentRequest {
     private Long patientId;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
-
+    public String notes;
     // Getters and setters
 }

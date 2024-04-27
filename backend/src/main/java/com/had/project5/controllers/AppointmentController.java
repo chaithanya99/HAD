@@ -61,7 +61,7 @@ public class AppointmentController {
         ap.setPatient(pp);
         ap.setStartDateTime(appointmentRequest.getStartDateTime());
         ap.setEndDateTime(appointmentRequest.getEndDateTime());
-
+        ap.setNotes(appointmentRequest.getNotes());
         if (isAppointmentOverlap(ap)) {
             return ResponseEntity.badRequest().body("Appointment overlaps with existing appointment");
         }

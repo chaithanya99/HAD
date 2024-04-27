@@ -29,4 +29,6 @@ public class Appointment {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
 
+    private String notes;
+
 }

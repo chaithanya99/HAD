@@ -1,35 +1,133 @@
 import React from 'react';
-import { Panel, Button, FlexboxGrid, Modal } from 'rsuite';
+import { Panel, Button, FlexboxGrid, Modal, ModalProps, Form, Stack, DatePicker, List } from 'rsuite';
 
-const EventEdit = ({ open, appointment, onEdit, onDelete }) => {
-  const { id, patientId, title, start, end } = appointment;
+interface EventModalProps extends ModalProps {
+  onAddEvent: (event: React.MouseEvent) => void;
+}
 
-  const handleEdit = () => {
-    // Call the onEdit function passed from the parent component
-    onEdit(id);
-  };
+const EventEdit = (props: EventModalProps) => {
+  const { open, appointment, onEdit, onDelete, onClose, ...rest } = props;
 
-  const handleDelete = () => {
-    // Call the onDelete function passed from the parent component
-    onDelete(id);
-  };
+  function formatDateWithAMPM(date) {
+    // Get the day, month, year, hours, minutes, and seconds from the Date object
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based, so we add 1
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+  
+    // Determine if it's AM or PM
+    const period = hours >= 12 ? 'PM' : 'AM';
+    
+    // Convert hours from 24-hour format to 12-hour format
+    const formattedHours = hours % 12 || 12;
+  
+    // Concatenate the formatted date, time, and AM/PM parts
+    const formattedDate = `${day}-${month}-${year} ${formattedHours}:${minutes}:${seconds} ${period}`;
+  
+    return formattedDate;
+  }
 
   return (
-    <Modal open={open}>
-      <Panel header="Appointment Details">
-        <FlexboxGrid>
-          <FlexboxGrid.Item colspan={12}>
-            <p><strong>Patient ID:</strong> {patientId}</p>
-            <p><strong>Title:</strong> {title}</p>
-            <p><strong>Start:</strong> {start}</p>
-            <p><strong>End:</strong> {end}</p>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={12}>
-            <Button appearance="primary" onClick={handleEdit}>Edit</Button>
-            <Button appearance="ghost" onClick={handleDelete}>Delete</Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-      </Panel>
+    // <Modal open={open} style={{ display: 'flex', flexDirection: 'column' }} onClose={onClose}>
+    //   <Modal.Header>
+    //     <Modal.Title style={{ textAlign: 'center', marginBottom: '20px', fontSize: '25px' }}>Appointment Details</Modal.Title>
+    //   </Modal.Header>
+    //   <FlexboxGrid style={{ justifyContent: 'center' }}>
+    //     <FlexboxGrid.Item colspan={12}>
+    //       <List bordered style={{ borderWidth: '7px' }}>
+    //         <List.Item>
+    //           <span>
+    //             <b><strong>Patient ID:</strong></b> {appointment.patientId}
+    //           </span>
+    //         </List.Item>
+    //         <List.Item>
+    //           <span>
+    //             <b><strong>Start:</strong></b> {appointment.start.toISOString()}
+    //           </span>
+    //         </List.Item>
+    //         <List.Item>
+    //           <span>
+    //             <b><strong>Start:</strong></b> {appointment.end.toISOString()}
+    //           </span>
+    //         </List.Item>
+    //       </List>
+    //     </FlexboxGrid.Item>
+    //   </FlexboxGrid>
+    //   <FlexboxGrid style={{margin: '20px', justifyContent: 'center'}}>
+    //     <FlexboxGrid.Item colspan={12}>
+    //       <Button appearance="primary" onClick={handleEdit} style={{ margin: '20px' }}>Edit</Button>
+    //       <Button appearance="ghost" onClick={handleDelete}>Delete</Button>
+    //     </FlexboxGrid.Item>
+    //   </FlexboxGrid>
+    // </Modal>
+
+    <Modal open={open} onClose={onClose} backdrop="static" {...rest}>
+      <Modal.Header>
+        <Modal.Title>Appointment Details</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form fluid>
+          {/* <Form.Group controlId='title'>
+            <Form.ControlLabel>Appointment Type</Form.ControlLabel>
+            <SelectPicker
+                value={formData.title}
+                onChange={(value) => setFormData({ ...formData, title: value })}
+                data={[
+                  { label: 'Consultation', value: 'Consultation' },
+                  { label: 'Operation', value: 'Operation' },
+                ]}
+            />
+          </Form.Group> */}
+          <Form.Group controlId="patientId">
+            <Form.ControlLabel>Patient ID</Form.ControlLabel>
+            <Form.Control 
+              name="patientId" 
+              value={appointment.patientId}
+              readOnly
+              style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
+            />
+          </Form.Group>
+          <Form.Group controlId="Notes">
+            <Form.ControlLabel>Notes</Form.ControlLabel>
+            <Form.Control 
+              name="patientId" 
+              value={appointment.notes}
+              readOnly
+              style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
+            />
+          </Form.Group>
+          <Stack spacing={25}>
+            <Form.Group controlId="start">
+              <Form.ControlLabel>Start Time</Form.ControlLabel>
+              <Form.Control 
+                name="start" 
+                value={formatDateWithAMPM(appointment.start)}
+                readOnly
+                style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
+              />
+            </Form.Group>
+            <Form.Group controlId="end">
+              <Form.ControlLabel>End Time</Form.ControlLabel>
+              <Form.Control 
+                name="end" 
+                value={formatDateWithAMPM(appointment.end)}
+                readOnly
+                style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
+              />
+            </Form.Group>
+          </Stack>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={onEdit} appearance="primary">
+          Edit
+        </Button>
+        <Button onClick={onDelete} style={{ color: 'white', backgroundColor: 'red', border: '1px solid red' }}>
+          Delete
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 };

@@ -34,12 +34,12 @@ const EventModal = (props: EventModalProps) => {
               onChange={(value) => setFormData({ ...formData, patientId: value })}
             />
           </Form.Group>
-          <Form.Group controlId="description">
+          <Form.Group controlId="notes">
             <Form.ControlLabel>Notes</Form.ControlLabel>
             <Form.Control 
-              name="description" 
-              value={formData.description}
-              onChange={(value) => setFormData({ ...formData, description: value })}
+              name="notes" 
+              value={formData.notes}
+              onChange={(value) => setFormData({ ...formData, notes: value })}
             />
           </Form.Group>
           <Form.Group controlId="start">

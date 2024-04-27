@@ -23,6 +23,7 @@ const Calendar = () => {
     allDay: false,
     start: null,
     end: null,
+    notes: '',
   }
   const [formData, setFormData] = useState(defaultForm);
   const [selectedEvent, setSelectedEvent] = useState();
@@ -61,6 +62,7 @@ const Calendar = () => {
               title: "Appointment",
               start: new Date(...startDate),
               end: new Date(...endDate),
+              notes: event.notes,
             }
           });
           console.log(events);
@@ -90,16 +92,26 @@ const Calendar = () => {
   };
 
   const handleEventClick = (clickInfo: EventClickArg) => {
-    const { patientId } = clickInfo.event.extendedProps;
+    const { patientId, notes } = clickInfo.event.extendedProps;
     console.log(patientId, clickInfo.event.title, clickInfo.event.start, clickInfo.event.end, clickInfo.event.allDay);
     setSelectedEvent({
+      id: clickInfo.event.id,
       title: clickInfo.event.title,
       patientId: patientId,
       start: clickInfo.event.start,
       end: clickInfo.event.end,
       allDay: clickInfo.event.allDay,
+      notes: notes,
     })
-  console.log(selectedEvent);
+    console.log({
+      id: clickInfo.event.id,
+      title: clickInfo.event.title,
+      patientId: patientId,
+      start: clickInfo.event.start,
+      end: clickInfo.event.end,
+      allDay: clickInfo.event.allDay,
+      notes: notes,
+    });
     // setSelectedEvent(clickInfo.event);
     // setEvents([...events, clickInfo]);
     // setNewAppointment(true);
@@ -128,6 +140,7 @@ const Calendar = () => {
       console.log('Patient Internal Id Get Failed', error.message);
     }
     if(patientId != -1) {
+      let updatedForm;
       try {
         console.log(formData.start.toISOString(), formData.end.toISOString());
         const offset = 330; // Indian Standard Time (IST) offset from UTC is +5:30 hours
@@ -139,21 +152,24 @@ const Calendar = () => {
             patientId: patientId,
             startDateTime: newStart,
             endDateTime: newEnd,
+            notes: formData.notes,
           }, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
           }
         );
-        setFormData(formData => ({
+        console.log(response.data.id);
+        updatedForm = {
           ...formData,
           id: response.data.id,
-        }));
+        }
       } catch(error) {
         console.log('Adding New Appointment Problem', error.message);
       }
+      console.log(updatedForm);
       calendarApi.unselect();
-      calendarApi.addEvent(formData);
+      calendarApi.addEvent(updatedForm);
     }
     else {
       console.log('Patient Id not assigned for some reason');
@@ -166,7 +182,19 @@ const Calendar = () => {
     setEditAppointment(false);
   };
 
-  const handleDeleteEvent = () => {
+  const handleDeleteEvent = async (eventData) => {
+    console.log(selectedEvent);
+    try {
+      const response = axios.delete(`http://localhost:8080/appointments/delete/${selectedEvent.id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const calendarApi = calendarRef.current.getApi();
+      calendarApi.getEventById(selectedEvent.id).remove();
+    } catch(error) {
+      console.error('Deleting Appointments Failed: ', error.message);
+    }
     setEditAppointment(false);
   };
 
@@ -183,7 +211,7 @@ const Calendar = () => {
         }}
         initialView="dayGridMonth"
         weekends
-        editable
+        editable={false}
         selectable
         selectMirror
         dayMaxEvents
@@ -200,12 +228,15 @@ const Calendar = () => {
         formData={formData}
         setFormData={setFormData}
       />
-      {/* <EventEdit
-        open={editAppointment}
-        appointment={selectedEvent}
-        onEdit={handleEditEvent}
-        onDelete={handleDeleteEvent}
-      /> */}
+      { editAppointment && (
+        <EventEdit
+          open={editAppointment}
+          appointment={selectedEvent}
+          onEdit={handleEditEvent}
+          onDelete={handleDeleteEvent}
+          onClose={() => setEditAppointment(false)}
+        />
+      )}
     </PageContent>
   );
 };

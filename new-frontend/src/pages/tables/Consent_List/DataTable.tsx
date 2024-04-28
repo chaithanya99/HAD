@@ -16,7 +16,7 @@ import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
 import { NameCell, ImageCell, CheckCell, ActionCell } from './Cells';
 
-const data = mockUsers(20);
+const data = mockUsers(5);
 const style = {
   width: 1,
   display: 'auto'
@@ -132,56 +132,34 @@ const DataTable = () => {
         sortType={sortType}
         onSortColumn={handleSortColumn}
       >
-        <Column width={50} align="center" fixed>
+        <Column width={100} align="center" fixed>
           <HeaderCell>Id</HeaderCell>
           <Cell dataKey="id" />
         </Column>
 
-        {/* <Column width={50} fixed>
-          <HeaderCell style={{ padding: 0 }}>
-            <div style={{ lineHeight: '40px' }}>
-              <Checkbox
-                inline
-                checked={checked}
-                indeterminate={indeterminate}
-                onChange={handleCheckAll}
-              />
-            </div>
-          </HeaderCell>
-          <CheckCell dataKey="id" checkedKeys={checkedKeys} onChange={handleCheck} />
-        </Column> */}
-        {/* <Column width={80} align="center">
-          <HeaderCell>Avatar</HeaderCell>
-          <ImageCell dataKey="avatar" />
-        </Column> */}
-
-        <Column minWidth={160} flexGrow={1} sortable>
+        <Column minWidth={100} flexGrow={1} sortable>
           <HeaderCell>Name</HeaderCell>
           <NameCell dataKey="name" />
         </Column>
 
-        <Column minWidth={160} flexGrow={1} sortable>
+        <Column minWidth={50} flexGrow={1} sortable>
           <HeaderCell>ABHA Address</HeaderCell>
-          <NameCell dataKey="city" />
+          <NameCell dataKey="abha_id" />
         </Column>
 
-        <Column width={300}>
-          <HeaderCell>Phone Number</HeaderCell>
-          <Cell dataKey="phone" />
+        <Column width={200} flexGrow={1} >
+          <HeaderCell>Consent created on</HeaderCell>
+          <Cell dataKey="date" />
         </Column>
-
-        <Column width={200}>
-          <HeaderCell>Consent Id</HeaderCell>
-          <Cell dataKey="postcode" />
+        <Column width={200} flexGrow={1} >
+          <HeaderCell>Consent granted on</HeaderCell>
+          <Cell dataKey="date" />
         </Column>
-
-        {/* <Column width={230} sortable>
-          <HeaderCell>Skill Proficiency</HeaderCell>
-          <Cell style={{ padding: '10px 0' }} dataKey="progress">
-            {rowData => <Progress percent={rowData.progress} showInfo={false} />}
-          </Cell>
-        </Column> */}
-        <Column width={200}>
+        <Column width={200} flexGrow={1} >
+          <HeaderCell>Consent expiry on</HeaderCell>
+          <Cell dataKey="date" />
+        </Column>
+        <Column width={200} flexGrow={1} >
           <HeaderCell>Status</HeaderCell>
           <Cell dataKey="status" style={{marginRight: '30px',textAlign: 'left'}}>
             {rowData => {

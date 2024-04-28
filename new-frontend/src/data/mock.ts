@@ -21,6 +21,10 @@ export function mockUsers(length: number) {
     const followers = Math.floor(Math.random() * 10000);
     const rating = 2 + Math.floor(Math.random() * 3);
     const progress = Math.floor(Math.random() * 100);
+    
+     // Generate a random date in the past
+     const date = faker.date.past().toLocaleString('en-US', { timeZone: 'UTC' });
+
 
     return {
       id: rowIndex + 1,
@@ -42,7 +46,8 @@ export function mockUsers(length: number) {
       rating,
       progress,
       amount,
-      abha_id:"rand@sbx"
+      abha_id: "rand@sbx",
+      date
     };
   };
 

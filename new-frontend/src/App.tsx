@@ -19,6 +19,7 @@ import VirtualizedTable3Page from './pages/tables/Patient_List';
 import VirtualizedTable4Page from './pages/tables/Consent_List';
 import VirtualizedTable5Page from './pages/tables/Medical_Record_List';
 import FormBasicPage from './pages/forms/Add_Doctor';
+import FormBasic3Page from './pages/forms/Add_Patient';
 import ABHARegistrationPage from './pages/forms/ABHA_Registration';
 import FormBasic2Page from './pages/forms/Add_Nurse';
 import CalendarPage from './pages/calendar';
@@ -81,6 +82,9 @@ const App = () => {
             </Route>
             <Route path="form-basic2" element={<Frame navs={appNavs} />}>
               <Route index element={<FormBasic2Page />} />
+            </Route>
+            <Route path="form-basic3" element={<Frame navs={appNavs} />}>
+              <Route index element={<FormBasic3Page />} />
             </Route>
             <Route path="HealthRecord" element={<Frame navs={appNavs} />}>
               <Route index element={<Healthrecordpage />} />

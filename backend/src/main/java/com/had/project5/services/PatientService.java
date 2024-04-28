@@ -22,8 +22,10 @@ public class PatientService {
 
     public String addPatient(Patient p){
         Patient pp=patientRepo.findByAbhaNumber(p.getAbhaNumber());
-        if(pp!=null){
-            return "patient exists";
+        if(pp!=null)
+        {
+            patientRepo.save(p);
+            return "patient updated";
         }
         else{
             patientRepo.save(p);

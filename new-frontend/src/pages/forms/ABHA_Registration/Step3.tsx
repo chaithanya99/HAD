@@ -44,7 +44,7 @@ const Step3 = ({ mobileNumber, setMobileNumber, txnId, token, setAbhaId, step, s
       }
     } catch (error) {
       // Handle errors from the backend
-      console.error('Error:', error.message);
+      console.error('Error:', error);
     }
   }
 

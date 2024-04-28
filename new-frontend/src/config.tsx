@@ -148,7 +148,12 @@ export function getAppNavs() {
             eventKey: 'ABHA-Registration',
             title: 'ABHA Registration',
             to: '/ABHA-Registration'
-          }
+          },
+          {
+            eventKey: 'form-basic3',
+            title: 'Add Patient',
+            to: '/form-basic3'
+          },
         ]
       },
       

@@ -39,7 +39,7 @@ const Step2 = ({ otpSize, txnId, step, setStep, aadharNumber, token, retryTime }
       // Proceed to the next step or handle response
     } catch (error) {
       // Handle errors from the backend
-      console.error('Error:', error.message);
+      console.error('Error:', error );
     }
   }
 

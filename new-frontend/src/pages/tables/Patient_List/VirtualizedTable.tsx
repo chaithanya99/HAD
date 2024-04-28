@@ -9,8 +9,6 @@ const { getHeight } = DOMHelper;
 // const data = mockUsers(1000);
 const calculateAge = (yearOfBirth) => {
   const currentYear = new Date().getFullYear(); // Get current year
-  console.log(currentYear);
-  console.log(yearOfBirth);
   return currentYear - yearOfBirth;
 };
 
@@ -51,14 +49,14 @@ const VirtualizedTable3 = () => {
         <Cell dataKey="id" />
       </Column>
 
-      <Column width={130}>
+      <Column width={180}>
         <HeaderCell>Name</HeaderCell>
         <Cell dataKey="name" />
       </Column>
 
-      <Column width={130}>
-        <HeaderCell>Specialization</HeaderCell>
-        <Cell dataKey="specialization" />
+      <Column width={180}>
+        <HeaderCell>ABHA Number</HeaderCell>
+        <Cell dataKey="abhaNumber" />
       </Column>
 
       <Column width={100}>
@@ -74,13 +72,18 @@ const VirtualizedTable3 = () => {
       </Column>
 
       <Column width={200}>
-        <HeaderCell>City</HeaderCell>
-        <Cell dataKey="address" />
+        <HeaderCell>State</HeaderCell>
+        <Cell dataKey="state" />
       </Column>
 
       <Column minWidth={200} flexGrow={1}>
-        <HeaderCell>Email</HeaderCell>
-        <Cell dataKey="email_Id" />
+        <HeaderCell>Mobile Number</HeaderCell>
+        <Cell dataKey="mobile" />
+      </Column>
+
+      <Column minWidth={200} flexGrow={1}>
+        <HeaderCell>ABHA Address</HeaderCell>
+        <Cell dataKey="abha_address" />
       </Column>
     </Table>
     

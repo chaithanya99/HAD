@@ -20,6 +20,7 @@ import com.had.project5.services.ApiService;
 import com.had.project5.services.Encryption;
 import com.had.project5.services.JwtService;
 import com.had.project5.services.PatientService;
+import com.had.project5.repositories.PatientRepo;
 
 
 
@@ -35,6 +36,8 @@ public class AbhaCreationController {
     private JwtService jwtService;
     @Autowired
     private PatientService patientService;
+    @Autowired
+    private PatientRepo patientRepo;
 
     @GetMapping("/getABHAtoken")
     public String getToken(){
@@ -159,6 +162,17 @@ public class AbhaCreationController {
         }
     }
 
+    @PostMapping("/addAddress")
+    public ResponseEntity<String> addAddress(@RequestBody Map<String,String> req) 
+    {
+        String abhaNumber = req.get("abhaNum");
+        String abhaAddress = req.get("abhaAddr");
+        Patient p= patientRepo.findByAbhaNumber(abhaNumber);
+        p.setAbha_address(abhaAddress);
+        String s = patientService.addPatient(p);
+        return ResponseEntity.ok(s);
+    }
+    
     @PostMapping("/verifyToken")
     public void verifyToken(@RequestBody Map<String,String> req){
         String token = req.get("token");        

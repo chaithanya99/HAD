@@ -10,6 +10,7 @@ import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
+import Step6 from './Step6';
 
 const ABHA_Registration = () => {
   const otpSize = 6;
@@ -66,10 +67,17 @@ const ABHA_Registration = () => {
 
   const step5Props = {
     abhaId: abhaId,
+    step: step,
+    setStep: setStep,
   };
 
-  const forms = [Step1, Step2, Step3, Step4, Step5]
-  const formProps = [step1Props, step2Props, step3Props, step4Props, step5Props];
+  const step6Props = {
+    abhaId: abhaId,
+    token: token,
+  };
+
+  const forms = [Step1, Step2, Step3, Step4, Step5, Step6]
+  const formProps = [step1Props, step2Props, step3Props, step4Props, step5Props, step6Props];
   const Form = forms[step];
 
   return (
@@ -80,6 +88,7 @@ const ABHA_Registration = () => {
         <Steps.Item title="Link Mobile" />
         <Steps.Item title="Verify Mobile" />
         <Steps.Item title="ABHA Number" />
+        <Steps.Item title="ABHA Address" />
       </Steps>
 
       <Divider />

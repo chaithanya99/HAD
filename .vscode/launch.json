@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-Project5Application<project5>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.had.project5.Project5Application",
+      "projectName": "project5",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

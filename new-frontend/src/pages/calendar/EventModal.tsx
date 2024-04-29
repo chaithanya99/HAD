@@ -46,18 +46,20 @@ const EventModal = (props: EventModalProps) => {
             <Form.ControlLabel>Event Date</Form.ControlLabel>
             <Stack spacing={6}>
               <DatePicker
-                format="yyyy-MM-dd HH:mm:ss"
+                format="yyyy-MM-dd hh:mm:ss aa"
                 block
                 style={{ width: 200 }}
                 placeholder="Start Date"
+                showMeridian={true}
                 value={formData.start}
                 onChange={(value) => setFormData({ ...formData, start: value })}
               />
               <DatePicker
-                format="yyyy-MM-dd HH:mm:ss"
+                format="yyyy-MM-dd hh:mm:ss aa"
                 block
                 style={{ width: 200 }}
                 placeholder="End Date"
+                showMeridian={true}
                 value={formData.end}
                 onChange={(value) => setFormData({ ...formData, end: value })}
               />

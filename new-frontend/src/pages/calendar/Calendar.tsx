@@ -178,8 +178,50 @@ const Calendar = () => {
     setNewAppointment(false);
   };
 
-  const handleEditEvent = () => {
-    setEditAppointment(false);
+  const checkEventOverlap = (current) => {
+    const calendarApi = calendarRef.current.getApi();
+    const events = calendarApi.getEvents();
+    return events.some(event => {
+      return (event.id != current.id && event.end > current.start && event.start < current.end);
+    });
+  }
+
+  const handleEditEvent = async (newAppointment) => {
+    console.log(newAppointment);
+    if(!checkEventOverlap(newAppointment)) {
+      try {
+        const offset = 330;
+        const newStart = new Date(newAppointment.start.getTime() + (offset*60000));
+        const newEnd = new Date(newAppointment.end.getTime() + (offset*60000));
+        const response = axios.put('http://localhost:8080/appointments/reschedule', {
+          appointmentId: newAppointment.id,
+          doctorId: doctorId,
+          startDateTime: newStart,
+          endDateTime: newEnd,
+        }, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if((await response).status === 200) {
+          const calendarApi = calendarRef.current.getApi();
+          const event = calendarApi.getEventById(newAppointment.id);
+          event.setDates(newAppointment.start, newAppointment.end);
+          event.update();
+        }
+      } catch(error) {
+        if(error.response && error.response.status === 400) {
+          console.error('HTTP Error:400 - Editing Appointment Failed in Backend');
+        }
+        else {
+          console.error('Edit Appointment Not Working: ', error.message);
+        }
+      }
+      setEditAppointment(false);
+    }
+    else {
+      alert('Overlapping Appointments');
+    }
   };
 
   const handleDeleteEvent = async (eventData) => {

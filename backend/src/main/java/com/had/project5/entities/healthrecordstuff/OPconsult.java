@@ -27,4 +27,5 @@ public class OPconsult {
     private String family_history;
     private String medicalprocedure;
     private String medication;
+    private String consentId;
 }

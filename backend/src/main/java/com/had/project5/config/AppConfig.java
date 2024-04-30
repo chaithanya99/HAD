@@ -41,7 +41,7 @@ public class AppConfig {
         return http.cors().and()
                 .csrf().disable() 
 				.authorizeHttpRequests() 
-				.requestMatchers("/auth/generateToken","/generateOtp","/verifyToken","/v3/api-docs/**", "/swagger-ui/**","/v0.5/users/auth/on-fetch-modes","/v0.5/health-information/hip/request").permitAll() //need to add endpoints which doesnot require authentication
+				.requestMatchers("/v0.5/consents/hiu/notify","/auth/generateToken","/generateOtp","/verifyToken","/v3/api-docs/**", "/swagger-ui/**","/v0.5/users/auth/on-fetch-modes","/v0.5/health-information/hip/request","/v0.5/consent-requests/on-init").permitAll() //need to add endpoints which doesnot require authentication
 				.and() 
 				.authorizeHttpRequests().requestMatchers("/**").authenticated() 
 				.and()  

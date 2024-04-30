@@ -12,7 +12,9 @@ public class ConsentRequest {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String abhaId;
-	
+	public int getId(){
+		return id;
+	}
 	private String doctorId;
 	public String getDoctorId() {
 		return doctorId;

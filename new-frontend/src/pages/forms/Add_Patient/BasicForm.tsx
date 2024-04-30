@@ -59,7 +59,7 @@ const BasicForm3 = () => {
   })
   const [patientDetails, setPatientDetails] = useState({
     abhaNumber: "",
-    abha_address: "",
+    abhaAddress: "",
     name: "",
     gender: "",
     yearOfBirth: "",
@@ -117,7 +117,7 @@ const BasicForm3 = () => {
         setPatientDetails({
           ...patientDetails,
           abhaNumber: "",
-          abha_address: "",
+          abhaAddress: "",
           name: "",
           gender: "",
           mobile: "",
@@ -159,9 +159,9 @@ This form is used to create a patient.
           <Form.Control name="abhaNumber"/>
         </Form.Group>
 
-        <Form.Group controlId="abha_address">
+        <Form.Group controlId="abhaAddress">
           <Form.ControlLabel>ABHA Id</Form.ControlLabel>
-          <Form.Control name="abha_address" placeholder="your id@sbx"/>
+          <Form.Control name="abhaAddress" placeholder="your id@sbx"/>
         </Form.Group>
 
         <Form.Group controlId="mobile">

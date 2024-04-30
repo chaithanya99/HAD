@@ -13,6 +13,11 @@ public class PatientService {
     @Autowired
     private PatientRepo patientRepo;
 
+    public Patient getPatientByAbhaAddress(String abhaAddress){
+        Patient p=patientRepo.findByAbhaAddress(abhaAddress);
+        return p;
+    }
+
     public Optional<Patient> getPatientById(long Id){
         Optional<Patient> p=patientRepo.findById(Id);
         
@@ -50,4 +55,5 @@ public class PatientService {
         return p.getId();
     }
 
+    
 }

@@ -152,7 +152,7 @@ public class AbhaCreationController {
             p.setDayOfBirth(jsonResponse.getString("dayOfBirth"));
             p.setDistrict(jsonResponse.getString("districtName"));
             p.setState(jsonResponse.getString("stateName"));
-            p.setAbha_address(jsonResponse.getString("healthIdNumber").replace("-", "")+"@sbx");
+            p.setAbhaAddress(jsonResponse.getString("healthIdNumber").replace("-", "")+"@sbx");
             patientService.addPatient(p);
             System.out.println(jsonResponse);
             return ResponseEntity.ok(responseMap);
@@ -168,7 +168,7 @@ public class AbhaCreationController {
         String abhaNumber = req.get("abhaNum");
         String abhaAddress = req.get("abhaAddr");
         Patient p= patientRepo.findByAbhaNumber(abhaNumber);
-        p.setAbha_address(abhaAddress);
+        p.setAbhaAddress(abhaAddress);
         String s = patientService.addPatient(p);
         return ResponseEntity.ok(s);
     }
@@ -204,7 +204,7 @@ public class AbhaCreationController {
             p.setDayOfBirth("dayOfBirth");
             p.setDistrict("districtName");
             p.setState("stateName");
-            p.setAbha_address("adfds");
+            p.setAbhaAddress("adfds");
             patientService.addPatient(p);
             return "added patient";
     }

@@ -96,11 +96,12 @@ public class ConsentControllerTest{
 		 DateFormat dateFormat1 = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss.SSSSSS");
 		 dateFormat1.setTimeZone(timeZone);
 		 ConsentRequest consentRequest=new ConsentRequest();
-		 consentRequest.setAbhaId("TEST@SBX");
+		 Patient p = patientService.getPatientByAbhaAddress(req.getPatient().getId());
+		 consentRequest.setAbhaId(p.getAbhaAddress());
 		 consentRequest.setCreatedOn(asISO.substring(10));
 		 consentRequest.setDoctorId(request.getConsent().getRequester().getIdentifier().getValue());
-         Optional<Patient> pp=patientService.getPatientById(patientService.getId(request.getConsent().getPatient().getId()));
-         String patientName=pp.get().getName();
+        //  Optional<Patient> pp=patientService.getPatientById(patientService.getId(request.getConsent().getPatient().getId()));
+         String patientName=p.getName();
 		 consentRequest.setPatientName(patientName);
 		 consentRequest.setRequestStatus("Request Initialted");
 		 consentRequest.setRequestId(randomUUIDString);

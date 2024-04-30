@@ -18,7 +18,7 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
     private String abhaNumber;
-    private String abha_address;
+    private String abhaAddress;
     private String name;
     private String gender;
     private String yearOfBirth;

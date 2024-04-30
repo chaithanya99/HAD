@@ -89,6 +89,7 @@ public class AppointmentController {
     public ResponseEntity<?> rescheduleAppointment(@RequestBody RescheduleRequest rescheduleRequest) {
         Long appointmentId = rescheduleRequest.getAppointmentId();
         Long doctorId = rescheduleRequest.getDoctorId();
+        String notes = rescheduleRequest.getNotes();
         // Appointment updatedAppointment = rescheduleRequest.getUpdatedAppointment();
 
         Appointment existingAppointment = appointmentRepository.findById(appointmentId)
@@ -102,6 +103,7 @@ public class AppointmentController {
         // Update appointment details
         existingAppointment.setStartDateTime(rescheduleRequest.getStartDateTime());
         existingAppointment.setEndDateTime(rescheduleRequest.getEndDateTime());
+        existingAppointment.setNotes(rescheduleRequest.getNotes());
         // You may add more fields to update
 
         Appointment savedAppointment = appointmentRepository.save(existingAppointment);

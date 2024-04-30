@@ -17,4 +17,5 @@ public class RescheduleRequest {
     // private Appointment updatedAppointment;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private String notes;
 }

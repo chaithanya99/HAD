@@ -93,7 +93,7 @@ const Calendar = () => {
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     const { patientId, notes } = clickInfo.event.extendedProps;
-    console.log(patientId, clickInfo.event.title, clickInfo.event.start, clickInfo.event.end, clickInfo.event.allDay);
+    console.log(clickInfo.event);
     setSelectedEvent({
       id: clickInfo.event.id,
       title: clickInfo.event.title,
@@ -182,7 +182,7 @@ const Calendar = () => {
     const calendarApi = calendarRef.current.getApi();
     const events = calendarApi.getEvents();
     return events.some(event => {
-      return (event.id != current.id && event.end > current.start && event.start < current.end);
+      return (event.id != current.id && event.end >= current.start && event.start <= current.end);
     });
   }
 
@@ -198,6 +198,7 @@ const Calendar = () => {
           doctorId: doctorId,
           startDateTime: newStart,
           endDateTime: newEnd,
+          notes: newAppointment.notes,
         }, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -207,6 +208,7 @@ const Calendar = () => {
           const calendarApi = calendarRef.current.getApi();
           const event = calendarApi.getEventById(newAppointment.id);
           event.setDates(newAppointment.start, newAppointment.end);
+          event.setExtendedProp('notes', newAppointment.notes);
           event.update();
         }
       } catch(error) {

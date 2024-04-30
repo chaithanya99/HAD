@@ -12,6 +12,7 @@ const EventEdit = (props: EventModalProps) => {
     start: appointment.start,
     end: appointment.end,
     id: appointment.id,
+    notes: appointment.notes,
   });
 
   const toggleEdit = () => {
@@ -159,13 +160,18 @@ const EventEdit = (props: EventModalProps) => {
                 <Form.Control 
                   name="patientId" 
                   value={appointment.patientId}
+                  readOnly
+                  style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
                 />
               </Form.Group>
               <Form.Group controlId="Notes">
                 <Form.ControlLabel>Notes</Form.ControlLabel>
                 <Form.Control 
                   name="patientId" 
-                  value={appointment.notes}
+                  value={newAppointment.notes}
+                  onChange={(value) => setNewAppointment({
+                    ...newAppointment, notes: value,
+                  })}
                 />
               </Form.Group>
                 <Form.Group controlId="start">

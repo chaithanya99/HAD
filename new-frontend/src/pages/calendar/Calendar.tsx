@@ -5,11 +5,10 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import PageContent from '@/components/PageContent';
 // import { INITIAL_EVENTS, otherfileevents, LoadEvents } from './event-utils';
-import EventModal from './EventModal';
+import EventAdd from './EventAdd';
 import EventEdit from './EventEdit';
-import { uniqueId } from 'lodash';
 import axios from 'axios';
-import { setInterval } from 'timers';
+import { error } from 'console';
 // import EventEdit from './EventEdit';
 
 const Calendar = () => {
@@ -28,6 +27,7 @@ const Calendar = () => {
   const [formData, setFormData] = useState(defaultForm);
   const [selectedEvent, setSelectedEvent] = useState();
   const [doctorId, setDoctorId] = useState(-1);
+  const [patientList, setPatientList] = useState([]);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -63,6 +63,8 @@ const Calendar = () => {
               start: new Date(...startDate),
               end: new Date(...endDate),
               notes: event.notes,
+              patientName: event.patient.name,
+              patientMobile: event.patient.mobile,
             }
           });
           console.log(events);
@@ -77,8 +79,27 @@ const Calendar = () => {
       }
     };
 
+    const fetchPatients = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/admin/patients', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        console.log(response.data);
+        setPatientList(response.data);
+      } catch(error) {
+        console.error('Fetching Patients Failed: ', error.message);
+      }
+    };
+
     fetchEvents();
+    fetchPatients();
   }, []);
+
+  const resetValues = () => {
+    setFormData(defaultForm);
+  }
   
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     // console.log(formData)
@@ -92,7 +113,7 @@ const Calendar = () => {
   };
 
   const handleEventClick = (clickInfo: EventClickArg) => {
-    const { patientId, notes } = clickInfo.event.extendedProps;
+    const { patientId, notes, patientName, patientMobile } = clickInfo.event.extendedProps;
     console.log(clickInfo.event);
     setSelectedEvent({
       id: clickInfo.event.id,
@@ -102,6 +123,8 @@ const Calendar = () => {
       end: clickInfo.event.end,
       allDay: clickInfo.event.allDay,
       notes: notes,
+      patientName: patientName,
+      patientMobile: patientMobile,
     })
     console.log({
       id: clickInfo.event.id,
@@ -111,6 +134,8 @@ const Calendar = () => {
       end: clickInfo.event.end,
       allDay: clickInfo.event.allDay,
       notes: notes,
+      patientName: patientName,
+      patientMobile: patientMobile,
     });
     // setSelectedEvent(clickInfo.event);
     // setEvents([...events, clickInfo]);
@@ -141,41 +166,53 @@ const Calendar = () => {
     }
     if(patientId != -1) {
       let updatedForm;
-      try {
-        console.log(formData.start.toISOString(), formData.end.toISOString());
-        const offset = 330; // Indian Standard Time (IST) offset from UTC is +5:30 hours
-// const utcDate = new Date(istDate.getTime() + (utcOffsetInMinutes * 60000));
-        const newStart = new Date(formData.start.getTime() + (offset*60000));
-        const newEnd = new Date(formData.end.getTime() + (offset*60000));
-        const response = await axios.post('http://localhost:8080/appointments/create', {
-            doctorId: doctorId,
-            patientId: patientId,
-            startDateTime: newStart,
-            endDateTime: newEnd,
-            notes: formData.notes,
-          }, {
-            headers: {
-              'Authorization': `Bearer ${token}`
+      if(!checkEventOverlap(formData)) {
+        try {
+          console.log(formData.start.toISOString(), formData.end.toISOString());
+          const offset = 330; // Indian Standard Time (IST) offset from UTC is +5:30 hours
+  // const utcDate = new Date(istDate.getTime() + (utcOffsetInMinutes * 60000));
+          const newStart = new Date(formData.start.getTime() + (offset*60000));
+          const newEnd = new Date(formData.end.getTime() + (offset*60000));
+          const response = await axios.post('http://localhost:8080/appointments/create', {
+              doctorId: doctorId,
+              patientId: patientId,
+              startDateTime: newStart,
+              endDateTime: newEnd,
+              notes: formData.notes,
+            }, {
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
             }
+          );
+          console.log(response.data.id);
+          updatedForm = {
+            ...formData,
+            id: response.data.id,
+            patientName: response.data.patient.name,
+            patientMobile: response.data.patient.mobile,
           }
-        );
-        console.log(response.data.id);
-        updatedForm = {
-          ...formData,
-          id: response.data.id,
+        } catch(error) {
+          if(error.response && error.response.status === 400) {
+            alert("New Appointment Overlapping with Existing Appointment");
+          }
+          else {
+            console.log('Adding New Appointment Problem', error.message);
+          }
         }
-      } catch(error) {
-        console.log('Adding New Appointment Problem', error.message);
+        console.log(updatedForm);
+        calendarApi.unselect();
+        calendarApi.addEvent(updatedForm);
+        setFormData(defaultForm);
+        setNewAppointment(false);
       }
-      console.log(updatedForm);
-      calendarApi.unselect();
-      calendarApi.addEvent(updatedForm);
+      else {
+        alert('New Appointment Overlapping with Existing Appointment');
+      }
     }
     else {
       console.log('Patient Id not assigned for some reason');
     }
-    setFormData(defaultForm);
-    setNewAppointment(false);
   };
 
   const checkEventOverlap = (current) => {
@@ -193,7 +230,7 @@ const Calendar = () => {
         const offset = 330;
         const newStart = new Date(newAppointment.start.getTime() + (offset*60000));
         const newEnd = new Date(newAppointment.end.getTime() + (offset*60000));
-        const response = axios.put('http://localhost:8080/appointments/reschedule', {
+        const response = await axios.put('http://localhost:8080/appointments/reschedule', {
           appointmentId: newAppointment.id,
           doctorId: doctorId,
           startDateTime: newStart,
@@ -204,12 +241,13 @@ const Calendar = () => {
             'Authorization': `Bearer ${token}`
           }
         });
-        if((await response).status === 200) {
+        if(response.status === 200) {
           const calendarApi = calendarRef.current.getApi();
           const event = calendarApi.getEventById(newAppointment.id);
           event.setDates(newAppointment.start, newAppointment.end);
           event.setExtendedProp('notes', newAppointment.notes);
           event.update();
+          setEditAppointment(false);
         }
       } catch(error) {
         if(error.response && error.response.status === 400) {
@@ -219,7 +257,6 @@ const Calendar = () => {
           console.error('Edit Appointment Not Working: ', error.message);
         }
       }
-      setEditAppointment(false);
     }
     else {
       alert('Overlapping Appointments');
@@ -229,7 +266,7 @@ const Calendar = () => {
   const handleDeleteEvent = async (eventData) => {
     console.log(selectedEvent);
     try {
-      const response = axios.delete(`http://localhost:8080/appointments/delete/${selectedEvent.id}`, {
+      const response = await axios.delete(`http://localhost:8080/appointments/delete/${selectedEvent.id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -265,12 +302,14 @@ const Calendar = () => {
         eventContent={renderEventContent} // custom render function
         eventClick={handleEventClick}
       />
-      <EventModal
+      <EventAdd
         open={newAppointment}
         onClose={() => setNewAppointment(false)}
         onAddEvent={(eventData) => handleAddEvent(eventData, calendarRef.current.getApi())}
         formData={formData}
         setFormData={setFormData}
+        patientList={patientList}
+        formDataReset={resetValues}
       />
       { editAppointment && (
         <EventEdit

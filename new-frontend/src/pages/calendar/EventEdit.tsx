@@ -83,6 +83,7 @@ const EventEdit = (props: EventModalProps) => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            
             <Form fluid>
               {/* <Form.Group controlId='title'>
                 <Form.ControlLabel>Appointment Type</Form.ControlLabel>
@@ -95,16 +96,43 @@ const EventEdit = (props: EventModalProps) => {
                     ]}
                 />
               </Form.Group> */}
-              <Form.Group controlId="patientId">
-                <Form.ControlLabel>Patient ID</Form.ControlLabel>
-                <Form.Control 
-                  name="patientId" 
-                  value={appointment.patientId}
-                  readOnly
-                  style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
-                />
-              </Form.Group>
-              <Form.Group controlId="Notes">
+              {/* <Panel style={{fontSize: '17px'}}>
+                <ul>
+                  <li><b>Patient ID:</b> {appointment.patientId}</li>
+                  <li><b>Patient Name:</b> {appointment.patientName}</li>
+                  <li><b>Patient Mobile:</b> {appointment.patientMobile}</li>
+                </ul>
+              </Panel> */}
+              <Stack spacing={15}>
+                <Form.Group controlId="patientId">
+                  <Form.ControlLabel>Patient ID</Form.ControlLabel>
+                  <Form.Control 
+                    name="patientId" 
+                    value={appointment.patientId}
+                    readOnly
+                    style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
+                  />
+                </Form.Group>
+                <Form.Group controlId="patientName">
+                  <Form.ControlLabel>Patient Name</Form.ControlLabel>
+                  <Form.Control 
+                    name="patientName" 
+                    value={appointment.patientName}
+                    readOnly
+                    style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
+                  />
+                </Form.Group>
+                <Form.Group controlId="patientMobile">
+                  <Form.ControlLabel>Patient Mobile</Form.ControlLabel>
+                  <Form.Control 
+                    name="patientMobile" 
+                    value={appointment.patientMobile}
+                    readOnly
+                    style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
+                  />
+                </Form.Group>
+              </Stack>
+              <Form.Group controlId="Notes" style={{marginTop: '20px'}}>
                 <Form.ControlLabel>Notes</Form.ControlLabel>
                 <Form.Control 
                   name="patientId" 
@@ -155,16 +183,36 @@ const EventEdit = (props: EventModalProps) => {
           </Modal.Header>
           <Modal.Body>
             <Form fluid>
-              <Form.Group controlId="patientId">
-                <Form.ControlLabel>Patient ID</Form.ControlLabel>
-                <Form.Control 
-                  name="patientId" 
-                  value={appointment.patientId}
-                  readOnly
-                  style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
-                />
-              </Form.Group>
-              <Form.Group controlId="Notes">
+              <Stack spacing={15}>
+                <Form.Group controlId="patientId">
+                  <Form.ControlLabel>Patient ID</Form.ControlLabel>
+                  <Form.Control 
+                    name="patientId" 
+                    value={appointment.patientId}
+                    readOnly
+                    style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
+                  />
+                </Form.Group>
+                <Form.Group controlId="patientName">
+                  <Form.ControlLabel>Patient Name</Form.ControlLabel>
+                  <Form.Control 
+                    name="patientName" 
+                    value={appointment.patientName}
+                    readOnly
+                    style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
+                  />
+                </Form.Group>
+                <Form.Group controlId="patientMobile">
+                  <Form.ControlLabel>Patient Mobile</Form.ControlLabel>
+                  <Form.Control 
+                    name="patientMobile" 
+                    value={appointment.patientMobile}
+                    readOnly
+                    style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
+                  />
+                </Form.Group>
+              </Stack>
+              <Form.Group controlId="Notes" style={{marginTop: '20px'}}>
                 <Form.ControlLabel>Notes</Form.ControlLabel>
                 <Form.Control 
                   name="patientId" 
@@ -175,7 +223,7 @@ const EventEdit = (props: EventModalProps) => {
                 />
               </Form.Group>
                 <Form.Group controlId="start">
-                <Form.ControlLabel>Event Date</Form.ControlLabel>
+                <Form.ControlLabel>Appointment Time</Form.ControlLabel>
                 <Stack spacing={6}>
                   <DatePicker
                     format="yyyy-MM-dd hh:mm:ss aa"

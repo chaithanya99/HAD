@@ -94,7 +94,7 @@ const Step1 = ({ setAadharNumber, aadharNumber, token, setTxnId, step, setStep }
             name="MaskedInput"
             value={aadharNumber}
             accepter={MaskedInput}
-            placeholder="XXXX - XXXX - XXXX"
+            placeholder="XXXX-XXXX-XXXX"
             placeholderChar = {'\u2000'}
             mask={[
               /\d/,

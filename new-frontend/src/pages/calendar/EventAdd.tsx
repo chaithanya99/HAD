@@ -1,11 +1,11 @@
 import React from 'react';
-import { Modal, Button, Form, DatePicker, ModalProps, Stack, SelectPicker } from 'rsuite';
+import { Modal, Button, Form, DatePicker, ModalProps, Stack, MaskedInput } from 'rsuite';
 
 interface EventModalProps extends ModalProps {
   onAddEvent: (event: React.MouseEvent) => void;
 }
 
-const EventModal = (props: EventModalProps) => {
+const EventAdd = (props: EventModalProps) => {
   const { onClose, open, onAddEvent, formData, setFormData, ...rest } = props;
 
   return (
@@ -32,6 +32,27 @@ const EventModal = (props: EventModalProps) => {
               name="patientId" 
               value={formData.patientId}
               onChange={(value) => setFormData({ ...formData, patientId: value })}
+              placeholder='XX-XXXX-XXXX-XXXX'
+              accepter={MaskedInput}
+              mask={[
+                /\d/,
+                /\d/,
+                '-',
+                /\d/,
+                /\d/,
+                /\d/,
+                /\d/,
+                '-',
+                /\d/,
+                /\d/,
+                /\d/,
+                /\d/,
+                '-',
+                /\d/,
+                /\d/,
+                /\d/,
+                /\d/
+              ]}
             />
           </Form.Group>
           <Form.Group controlId="notes">
@@ -43,7 +64,7 @@ const EventModal = (props: EventModalProps) => {
             />
           </Form.Group>
           <Form.Group controlId="start">
-            <Form.ControlLabel>Event Date</Form.ControlLabel>
+            <Form.ControlLabel>Appointment Date</Form.ControlLabel>
             <Stack spacing={6}>
               <DatePicker
                 format="yyyy-MM-dd hh:mm:ss aa"
@@ -79,4 +100,4 @@ const EventModal = (props: EventModalProps) => {
   );
 };
 
-export default EventModal;
+export default EventAdd;

@@ -1,4 +1,5 @@
 package com.had.project5.controllers;
+import com.had.project5.repositories.RequestTransactionRepo;
 import com.had.project5.repositories.healthrecordrepos.DiagnosticReportRepo;
 import com.had.project5.repositories.healthrecordrepos.DischargeSummaryRepo;
 import com.had.project5.repositories.healthrecordrepos.GeneralReportRepo;
@@ -7,17 +8,25 @@ import com.had.project5.repositories.healthrecordrepos.ImmunizationRecordRepo;
 import com.had.project5.repositories.healthrecordrepos.OPconsultRepo;
 import com.had.project5.repositories.healthrecordrepos.PrescriptionRepo;
 import com.had.project5.repositories.healthrecordrepos.WellnessRecordRepo;
+import com.had.project5.services.ApiService;
 import com.had.project5.services.DoctorService;
 import com.had.project5.services.FileUploadService;
 import com.had.project5.services.PatientService;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
+import java.util.UUID;
 
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,9 +35,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.had.project5.entities.healthrecordstuff.Pdf;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.had.project5.entities.FetchAuthInit;
+import com.had.project5.entities.Patient;
+import com.had.project5.entities.Query;
+import com.had.project5.entities.RequestTransactionMap;
+import com.had.project5.entities.fetchAuthModes;
+import com.had.project5.entities.fetchQuery;
+import com.had.project5.entities.fetchRequester;
 import com.had.project5.entities.healthrecordstuff.DiagnosticReport;
 import com.had.project5.entities.healthrecordstuff.DischargeSummary;
 import com.had.project5.entities.healthrecordstuff.GeneralReport;
@@ -36,13 +55,23 @@ import com.had.project5.entities.healthrecordstuff.HealthRecord;
 import com.had.project5.entities.healthrecordstuff.Healthrec;
 import com.had.project5.entities.healthrecordstuff.ImmunizationRecord;
 import com.had.project5.entities.healthrecordstuff.OPconsult;
+import com.had.project5.entities.healthrecordstuff.LinkOPconsult;
 import com.had.project5.entities.healthrecordstuff.Prescription;
 import com.had.project5.entities.healthrecordstuff.WellnessRecord;
-
+import org.springframework.http.*;
 @RestController
 @CrossOrigin(origins = "*") // Specify the allowed origin(s)
 @RequestMapping("/HealthRecord")
 public class HealthRecordController {
+
+    @Autowired
+    private RequestTransactionRepo requestTransactionRepo;
+
+    @Autowired
+	private RestTemplate restTemplate;
+
+    @Autowired
+    private ApiService apiService;
 
     @Autowired
     private PatientService patientService;
@@ -76,6 +105,8 @@ public class HealthRecordController {
 
     @Autowired
     private WellnessRecordRepo wellnessrecordrepo;
+
+    private String HipId="IN0610089593";
 
     @PostMapping("/createhealthrecord")
     public HealthRecord createHealthRecord(@RequestBody Healthrec healthrec)
@@ -198,6 +229,100 @@ public class HealthRecordController {
 
         return newHealthRecord;
     }
+
+    @PostMapping("/linkOPConsultRecord")
+    public ResponseEntity<Map<String, String>> addOPConsult(@RequestBody LinkOPconsult req){
+        UUID uuid1 = UUID.randomUUID();
+        HealthRecord healthRecord=healthrecordrepo.getById(req.getHealthRecordId());
+        RequestTransactionMap re=new RequestTransactionMap();
+        re.setHealthRecordId(req.getHealthRecordId());
+        String rid=uuid1.toString();
+        re.setRequestId(rid);
+        requestTransactionRepo.save(re);
+        UUID uuid = UUID.randomUUID();
+       String randomUUIDString = uuid.toString();
+       TimeZone timeZone=TimeZone.getTimeZone("UTC");
+       DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss.SSSSSS");
+       dateFormat.setTimeZone(timeZone);
+       String asISO= dateFormat.format(new Date());
+       fetchAuthModes fa=new fetchAuthModes();
+       fa.setTimestamp(asISO);
+       fa.setRequestId(randomUUIDString);
+       fetchQuery fq=new fetchQuery();
+       fq.setId(randomUUIDString);
+       Optional<Patient> p=patientService.getPatientById(healthRecord.getPatientId());
+       if(!p.isPresent()){
+            return (ResponseEntity<Map<String, String>>) ResponseEntity.status(404);
+       }
+       Patient pp=p.get();
+       fq.setId(pp.getAbhaAddress());
+       fq.setPurpose("KYC_AND_LINK");
+       fetchRequester fr= new fetchRequester();
+       fr.setId(HipId);
+       fr.setType("HIP");
+       fq.setRequester(fr);
+       fa.setQuery(fq);
+
+       String reqbody="";
+		try {
+			reqbody = new ObjectMapper().writeValueAsString(fa);
+		} catch (JsonProcessingException e) {
+
+			e.printStackTrace();
+		}
+
+       HttpHeaders header = new HttpHeaders();
+       header.setContentType(MediaType.APPLICATION_JSON);
+       header.setAccept(Collections.singletonList(MediaType.ALL));
+       header.add("X-CM-ID","sbx");
+       header.add("Authorization", "Bearer " + apiService.getToken());
+       HttpEntity<String> httpentity = new HttpEntity<>(reqbody, header);
+	    ResponseEntity<Object> objectResponseEntity=restTemplate.exchange("https://dev.abdm.gov.in/gateway/v0.5/users/auth/fetch-modes", HttpMethod.POST, httpentity,Object.class);
+        
+        
+        
+        TimeZone timeZone1=TimeZone.getTimeZone("UTC");
+       DateFormat dateFormat1 = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss.SSSSSS");
+       dateFormat1.setTimeZone(timeZone1);
+       String asISO1= dateFormat1.format(new Date());
+        
+        FetchAuthInit fi=new FetchAuthInit();
+        fi.setRequestId(uuid1.toString());
+        fi.setTimestamp(asISO1);
+        
+        Query q=new Query();
+        q.setId(pp.getAbhaAddress());
+        q.setPurpose("KYC_AND_LINK");
+        q.setAuthMode("MOBILE_OTP");
+        // q.setAuthMode("DEMOGRAPHICS");
+        q.setRequester(fr);
+        fi.setQuery(q);
+
+        String reqbody1="";
+		try {
+			reqbody1 = new ObjectMapper().writeValueAsString(fi);
+		} catch (JsonProcessingException e) {
+
+			e.printStackTrace();
+		}
+        
+       HttpHeaders header1 = new HttpHeaders();
+       header1.setContentType(MediaType.APPLICATION_JSON);
+       header1.setAccept(Collections.singletonList(MediaType.ALL));
+       header1.add("X-CM-ID","sbx");
+       header1.add("Authorization", "Bearer " + apiService.getToken());
+       HttpEntity<String> httpentity1 = new HttpEntity<>(reqbody1, header1);
+	    ResponseEntity<Object> objectResponseEntity1=restTemplate.exchange("https://dev.abdm.gov.in/gateway/v0.5/users/auth/init", HttpMethod.POST, httpentity1,Object.class);
+        
+        
+        Map<String, String> responseMap = new HashMap<>();
+        responseMap.put("requestId", fi.getRequestId());
+        
+        
+        
+        return ResponseEntity.ok(responseMap);
+    }
+
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadPdf(@RequestParam("pdf")MultipartFile file,@RequestParam("AbhaNumber") String AbhaNumber) throws IOException{

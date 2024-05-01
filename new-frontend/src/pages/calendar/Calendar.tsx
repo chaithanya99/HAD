@@ -27,6 +27,7 @@ const Calendar = () => {
   const [formData, setFormData] = useState(defaultForm);
   const [selectedEvent, setSelectedEvent] = useState();
   const [doctorId, setDoctorId] = useState(-1);
+  const [patientList, setPatientList] = useState([]);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -78,8 +79,27 @@ const Calendar = () => {
       }
     };
 
+    const fetchPatients = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/admin/patients', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        console.log(response.data);
+        setPatientList(response.data);
+      } catch(error) {
+        console.error('Fetching Patients Failed: ', error.message);
+      }
+    };
+
     fetchEvents();
+    fetchPatients();
   }, []);
+
+  const resetValues = () => {
+    setFormData(defaultForm);
+  }
   
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     // console.log(formData)
@@ -210,7 +230,7 @@ const Calendar = () => {
         const offset = 330;
         const newStart = new Date(newAppointment.start.getTime() + (offset*60000));
         const newEnd = new Date(newAppointment.end.getTime() + (offset*60000));
-        const response = axios.put('http://localhost:8080/appointments/reschedule', {
+        const response = await axios.put('http://localhost:8080/appointments/reschedule', {
           appointmentId: newAppointment.id,
           doctorId: doctorId,
           startDateTime: newStart,
@@ -221,7 +241,7 @@ const Calendar = () => {
             'Authorization': `Bearer ${token}`
           }
         });
-        if((await response).status === 200) {
+        if(response.status === 200) {
           const calendarApi = calendarRef.current.getApi();
           const event = calendarApi.getEventById(newAppointment.id);
           event.setDates(newAppointment.start, newAppointment.end);
@@ -246,7 +266,7 @@ const Calendar = () => {
   const handleDeleteEvent = async (eventData) => {
     console.log(selectedEvent);
     try {
-      const response = axios.delete(`http://localhost:8080/appointments/delete/${selectedEvent.id}`, {
+      const response = await axios.delete(`http://localhost:8080/appointments/delete/${selectedEvent.id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -288,6 +308,8 @@ const Calendar = () => {
         onAddEvent={(eventData) => handleAddEvent(eventData, calendarRef.current.getApi())}
         formData={formData}
         setFormData={setFormData}
+        patientList={patientList}
+        formDataReset={resetValues}
       />
       { editAppointment && (
         <EventEdit

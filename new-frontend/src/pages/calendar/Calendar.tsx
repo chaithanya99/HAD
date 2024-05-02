@@ -7,7 +7,7 @@ import PageContent from '@/components/PageContent';
 // import { INITIAL_EVENTS, otherfileevents, LoadEvents } from './event-utils';
 import EventAdd from './EventAdd';
 import EventEdit from './EventEdit';
-import axios, { formToJSON } from 'axios';
+import axios from 'axios';
 import { error } from 'console';
 // import EventEdit from './EventEdit';
 

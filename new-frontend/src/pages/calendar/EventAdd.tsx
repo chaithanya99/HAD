@@ -26,7 +26,6 @@ const EventAdd = (props: EventModalProps) => {
   }
 
   const handleAddEvent = () => {
-    resetValues();
     onAddEvent();
   }
 
@@ -71,7 +70,7 @@ const EventAdd = (props: EventModalProps) => {
             placeholder="Select Patient"
             style={{marginBottom: '20px'}}
           />
-          <Form.Group controlId="patientId">
+          {/* <Form.Group controlId="patientId">
             <Form.ControlLabel>Patient ID</Form.ControlLabel>
             <Form.Control 
               name="patientId" 
@@ -101,7 +100,7 @@ const EventAdd = (props: EventModalProps) => {
               readOnly
               style={{backgroundColor: '#f2f2f2', color: '#555', border: '1px solid #ccc'}}
             />
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group controlId="notes">
             <Form.ControlLabel>Notes</Form.ControlLabel>
             <Form.Control 

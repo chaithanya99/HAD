@@ -7,7 +7,7 @@ import PageContent from '@/components/PageContent';
 // import { INITIAL_EVENTS, otherfileevents, LoadEvents } from './event-utils';
 import EventAdd from './EventAdd';
 import EventEdit from './EventEdit';
-import axios from 'axios';
+import axios, { formToJSON } from 'axios';
 import { error } from 'console';
 // import EventEdit from './EventEdit';
 
@@ -143,6 +143,22 @@ const Calendar = () => {
     setEditAppointment(true);
   };
 
+  const addValidation = () => {
+    if(formData.patientId === null) {
+      console.error('Patient Not Selected');
+      return false;
+    }
+    else if(formData.start === null || formData.end === null) {
+      console.error('Appointment Dates are Not Filled');
+      return false;
+    }
+    else if(formData.start >= formData.end) {
+      console.error('Appointment End Time must be after Start Time');
+      return false;
+    }
+    return true;
+  };
+
   const handleAddEvent = async (eventData, calendarApi) => {
     // console.log(newEvent)
     console.log(eventData)
@@ -164,7 +180,8 @@ const Calendar = () => {
     } catch(error) {
       console.log('Patient Internal Id Get Failed', error.message);
     }
-    if(patientId != -1) {
+    console.log(formData);
+    if(patientId != -1 && addValidation()) {
       let updatedForm;
       if(!checkEventOverlap(formData)) {
         try {
@@ -211,7 +228,8 @@ const Calendar = () => {
       }
     }
     else {
-      console.log('Patient Id not assigned for some reason');
+      if(patientId === -1)
+        console.error('Patient Id not assigned for some reason');
     }
   };
 
@@ -223,9 +241,22 @@ const Calendar = () => {
     });
   }
 
+  const editValidation = (appointment) => {
+    if(appointment.start === null || appointment.end === null) {
+      console.error('Appointment Dates are Not Filled');
+      return false;
+    }
+    else if(appointment.start >= appointment.end) {
+      console.error('Appointment End Time must be after Start Time');
+      return false;
+    }
+    return true;
+  };
+
   const handleEditEvent = async (newAppointment) => {
     console.log(newAppointment);
-    if(!checkEventOverlap(newAppointment)) {
+    let overlap = checkEventOverlap(newAppointment);
+    if(!overlap && editValidation(newAppointment)) {
       try {
         const offset = 330;
         const newStart = new Date(newAppointment.start.getTime() + (offset*60000));

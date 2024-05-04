@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { mockUsers } from '@/data/mock';
 import { NameCell, ImageCell, CheckCell, ActionCell } from './Cells';
 import DrawerView from './DrawerView';
@@ -10,8 +10,9 @@ import { FaEdit,FaEye} from 'react-icons/fa';
 import SearchIcon from '@rsuite/icons/Search';
 import { IconButton, ButtonToolbar } from 'rsuite';
 import ConsentRequestModal from '/src/pages/tables/members/ConsentRequestModal';
-import EventModal from './EventModal';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { values } from 'lodash';
 const data = mockUsers(6);
 
 const { Column, HeaderCell, Cell } = Table;
@@ -26,16 +27,16 @@ const ratingList = Array.from({ length: 5 }).map((_, index) => {
   };
 });
 const FieldList = [{
-  value:1,
+  value:'name',
   label:"Name"
 },{
-  value:2,
+  value:'abhaNumber',
   label:"ABHA ID"
 },{
-  value:3,
-  label:"Email"
+  value:'mobile',
+  label:"Mobile"
 },{
-  value:4,
+  value:'gender',
   label:"Gender"
 }];
 
@@ -46,7 +47,30 @@ const DataTable = () => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [rating, setRating] = useState<number | null>(null);
+  const [patientList, setPatientList] = useState([]);
+  const [columnSearch, setColumnSearch] = useState('name');
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/admin/patients', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        console.log(response.data);
+        setPatientList(response.data.map(value => ({
+          ...value,
+          gender: (value.gender === 'M')?'Male':'Female'
+        })));
+      } catch(error) {
+        console.error('Fetching All Patients Failed: ', error.message);
+      }
+    };
+
+    fetchPatients();
+  }, []);
 
   let checked = false;
   let indeterminate = false;
@@ -75,39 +99,60 @@ const DataTable = () => {
   };
 
   const filteredData = () => {
-    const filtered = data.filter(item => {
-      if (!item.name.includes(searchKeyword)) {
-        return false;
+    // Apply filtering logic only if there's a searchKeyword
+    console.log(`Search Keyword: ${searchKeyword}`, '\n', `Column search: ${columnSearch}`);
+    if (searchKeyword && columnSearch) {
+      if(columnSearch === 'name') {
+        return patientList.filter(patient => patient.name.toLowerCase().includes(searchKeyword.toLowerCase()));
       }
-
-      if (rating && item.rating !== rating) {
-        return false;
+      else if(columnSearch === 'gender') {
+        return patientList.filter(patient => patient.gender.toLowerCase().includes(searchKeyword.toLowerCase()));
       }
-
-      return true;
-    });
-
-    if (sortColumn && sortType) {
-      return filtered.sort((a, b) => {
-        let x: any = a[sortColumn];
-        let y: any = b[sortColumn];
-
-        if (typeof x === 'string') {
-          x = x.charCodeAt(0);
-        }
-        if (typeof y === 'string') {
-          y = y.charCodeAt(0);
-        }
-
-        if (sortType === 'asc') {
-          return x - y;
-        } else {
-          return y - x;
-        }
-      });
+      else if(columnSearch === 'abhaNumber') {
+        return patientList.filter(patient => patient.abhaNumber.toLowerCase().includes(searchKeyword.toLowerCase()));
+      }
+      else if(columnSearch === 'mobile') {
+        return patientList.filter(patient => patient.mobile.toLowerCase().includes(searchKeyword.toLowerCase()));
+      }
+    } else {
+      return patientList;
     }
-    return filtered;
   };
+
+  // const filteredData = () => {
+  //   const filtered = data.filter(item => {
+  //     if (!item.name.includes(searchKeyword)) {
+  //       return false;
+  //     }
+
+  //     if (rating && item.rating !== rating) {
+  //       return false;
+  //     }
+
+  //     return true;
+  //   });
+
+  //   if (sortColumn && sortType) {
+  //     return filtered.sort((a, b) => {
+  //       let x: any = a[sortColumn];
+  //       let y: any = b[sortColumn];
+
+  //       if (typeof x === 'string') {
+  //         x = x.charCodeAt(0);
+  //       }
+  //       if (typeof y === 'string') {
+  //         y = y.charCodeAt(0);
+  //       }
+
+  //       if (sortType === 'asc') {
+  //         return x - y;
+  //       } else {
+  //         return y - x;
+  //       }
+  //     });
+  //   }
+  //   return filtered;
+  // };
 
   return (
     <>
@@ -123,8 +168,16 @@ const DataTable = () => {
             label="Field"
             data={FieldList}
             searchable={false}
-            value={rating}
-            onChange={setRating}
+            // value={rating}
+            // onChange={(value) => {
+              // console.log(value);
+              // setRating(value);
+            // }}
+            value={columnSearch}
+            onChange={(value) => {
+              console.log(value);
+              setColumnSearch(value);
+            }}
           />
           <InputGroup inside>
             <Input placeholder="Search" value={searchKeyword} onChange={setSearchKeyword} />
@@ -156,14 +209,14 @@ const DataTable = () => {
           <Cell dataKey="gender">{rowData => `${rowData.gender}`}</Cell>
         </Column>
 
-        <Column width={120} sortable>
+        <Column width={145} sortable>
           <HeaderCell>ABHA Id</HeaderCell>
-          <Cell dataKey="abha_id" />
+          <Cell dataKey="abhaNumber" />
         </Column>
 
-        <Column width={200} sortable>
-          <HeaderCell>Email</HeaderCell>
-          <Cell dataKey="email" />
+        <Column width={120} sortable>
+          <HeaderCell>Mobile</HeaderCell>
+          <Cell dataKey="mobile" />
         </Column>
 
         <Column width={200} fixed="right">

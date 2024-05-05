@@ -44,8 +44,7 @@ const DrawerView = (props: DrawerProps) => {
     firstname: null, // From Date
     lastname: null, // To Date
     expiry: null,
-    checkpicker: [], // Selected types
-    inputPicker: '', // Date Range
+    hitype: [], // Date Range
     street: '', // Notes
   });
   const handleInputChange = (e) => {
@@ -53,7 +52,7 @@ const DrawerView = (props: DrawerProps) => {
   };
 
   const handleSubmit = async () => {
-    const { abha_id, firstname, lastname, expiry, checkpicker, inputPicker } = formData;
+    const { abha_id, firstname, lastname, expiry, hitype } = formData;
 
     const consent = {
       purpose: {
@@ -74,7 +73,7 @@ const DrawerView = (props: DrawerProps) => {
           system: 'https://www.nvidia.org', // Hardcoded requester system (replace if needed)
         },
       },
-      hiTypes: checkpicker[0], // Selected types from "Purpose of request"
+      hiTypes: hitype, // Selected types from "Purpose of request"
       permission: {
         accessMode: 'VIEW', // Hardcoded access mode (replace if needed)
         dateRange: {
@@ -103,6 +102,7 @@ const DrawerView = (props: DrawerProps) => {
       console.log(doctorResponse.data);
       consent.requester.name = doctorResponse.data.name;
       consent.requester.identifier.value = doctorResponse.data.id;
+      console.log(consent);
       // 2. Send POST request with consent object in body
       const response = await axios.post(
         'http://localhost:8080/doctor/init-consent',
@@ -168,9 +168,9 @@ const DrawerView = (props: DrawerProps) => {
             <Form.ControlLabel>Expiry</Form.ControlLabel>
             <Form.Control name="expiry" style={{ width: 200}} accepter={DatePicker}/>
           </Form.Group>
-          <Form.Group controlId="inputpicker">
+          <Form.Group>
             <Form.ControlLabel>Purpose of request</Form.ControlLabel>
-            <Form.Control name="inputpicker" accepter={InputPicker} data={specData} style={{width:'100%'}}/>
+            <Form.Control name="hitype" accepter={CheckPicker} data={specData} style={{width:'100%'}}/>
           </Form.Group>
           {/* <Form.Group controlId="inputPicker">
             <Form.ControlLabel>Date Range</Form.ControlLabel>

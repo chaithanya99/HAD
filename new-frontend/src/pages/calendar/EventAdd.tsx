@@ -6,8 +6,8 @@ interface EventModalProps extends ModalProps {
 }
 
 const EventAdd = (props: EventModalProps) => {
-  const { onClose, open, onAddEvent, formData, setFormData, patientList, formDataReset, ...rest } = props;
-  const [selectedPatient, setSelectedPatient] = useState(null);
+  const { onClose, open, onAddEvent, formData, setFormData, patientList, formDataReset, initialPatient, ...rest } = props;
+  const [selectedPatient, setSelectedPatient] = useState(initialPatient);
 
   // useEffect(() => {
   //   return () => {

@@ -235,7 +235,28 @@ const DataTable = () => {
                       }
                       placement="auto">
                       <IconButton onClick = {() => {
-                          navigate('/calendar');
+                          const date = new Date();
+                          date.setHours(0);
+                          date.setMinutes(0);
+                          date.setSeconds(0);
+                          console.log(rowData.abhaNumber);
+                          const formData = {
+                            id: '',
+                            patientId: rowData.abhaNumber,
+                            title: 'Appointment',
+                            allDay: false,
+                            start: date,
+                            end: date,
+                            notes: '',
+                          }
+                          const initialPatient = {
+                            value: rowData.abhaNumber,
+                            label: rowData.name,
+                          }
+                          navigate('/calendar', {state: {
+                            formData: formData,
+                            initialPatient: initialPatient,
+                          }});
                       }}color="yellow" appearance="link" icon={<LuClock />} />
                     </Whisper>
 

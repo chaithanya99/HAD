@@ -8,13 +8,14 @@ import PageContent from '@/components/PageContent';
 import EventAdd from './EventAdd';
 import EventEdit from './EventEdit';
 import axios from 'axios';
-import { error } from 'console';
+import { useLocation } from 'react-router-dom';
 // import EventEdit from './EventEdit';
 
 const Calendar = () => {
-  const [newAppointment, setNewAppointment] = useState(false);
-  const [editAppointment, setEditAppointment] = useState(false);
-  const calendarRef = useRef(null);
+  // For getting Initial Data from other pages
+  const location = useLocation();
+
+  // Default Values for this page
   const defaultForm = {
     id: '',
     patientId: '',
@@ -24,7 +25,16 @@ const Calendar = () => {
     end: null,
     notes: '',
   }
-  const [formData, setFormData] = useState(defaultForm);
+
+  // Extracting Initial Values from other pages
+  const initialFormData = location.state ? location.state.formData : defaultForm;
+  const initialNewAppointment = location.state ? true : false;
+  console.log(initialFormData, initialNewAppointment);
+
+  const [newAppointment, setNewAppointment] = useState(initialNewAppointment);
+  const [editAppointment, setEditAppointment] = useState(false);
+  const calendarRef = useRef(null);
+  const [formData, setFormData] = useState(initialFormData);
   const [selectedEvent, setSelectedEvent] = useState();
   const [doctorId, setDoctorId] = useState(-1);
   const [patientList, setPatientList] = useState([]);
@@ -164,7 +174,7 @@ const Calendar = () => {
     console.log(eventData)
     console.log(formData.patientId)
     // setEvents([...events, formData]);
-    let patientId = -1;
+    let internalPatientId = -1;
     try {
       const response = await axios.post(`http://localhost:8080/patient/Id`,
         {
@@ -176,12 +186,12 @@ const Calendar = () => {
         }
       );
       console.log(response.data);
-      patientId = response.data;
+      internalPatientId = response.data;
     } catch(error) {
       console.log('Patient Internal Id Get Failed', error.message);
     }
     console.log(formData);
-    if(patientId != -1 && addValidation()) {
+    if(internalPatientId != -1 && addValidation()) {
       let updatedForm;
       if(!checkEventOverlap(formData)) {
         try {
@@ -192,7 +202,7 @@ const Calendar = () => {
           const newEnd = new Date(formData.end.getTime() + (offset*60000));
           const response = await axios.post('http://localhost:8080/appointments/create', {
               doctorId: doctorId,
-              patientId: patientId,
+              patientId: internalPatientId,
               startDateTime: newStart,
               endDateTime: newEnd,
               notes: formData.notes,
@@ -340,6 +350,7 @@ const Calendar = () => {
         formData={formData}
         setFormData={setFormData}
         patientList={patientList}
+        initialPatient={location.state ? location.state.initialPatient : null}
         formDataReset={resetValues}
       />
       { editAppointment && (

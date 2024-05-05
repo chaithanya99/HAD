@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
 import {
@@ -18,7 +18,7 @@ import {
   CheckPicker
 } from 'rsuite';
 
-const specData = ['Diagnostic Report', 'Discharge Summary', 'Health Document Record', 'Immunizatioon Record', 'Wellness Record', 'OP Consultation','Prescription'].map(item => ({
+const specData = ['Diagnostic Report', 'Discharge Summary', 'Health Document Record', 'Immunizatioon Record', 'Wellness Record', 'OPConsultation','Prescription'].map(item => ({
   label: item,
   value: item
 }));
@@ -30,6 +30,15 @@ const genData = ['Lifetime', 'Month', 'Year'].map(item => ({
 
 const DrawerView = (props: DrawerProps) => {
   const { onClose, ...rest } = props;
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = window.localStorage.getItem('token');
+    setToken(storedToken);
+  }, []);
+
+  const [doctorName,setDoctorName] = useState(null);
+  const [doctorid,setDoctorId] = useState(null);
   const [formData, setFormData] = useState({
     abha_id: '',
     firstname: null, // From Date
@@ -42,6 +51,7 @@ const DrawerView = (props: DrawerProps) => {
   const handleInputChange = (e) => {
     setFormData(e);
   };
+
   const handleSubmit = async () => {
     const { abha_id, firstname, lastname, expiry, checkpicker, inputPicker } = formData;
 
@@ -64,7 +74,7 @@ const DrawerView = (props: DrawerProps) => {
           system: 'https://www.nvidia.org', // Hardcoded requester system (replace if needed)
         },
       },
-      hiTypes: checkpicker, // Selected types from "Purpose of request"
+      hiTypes: checkpicker[0], // Selected types from "Purpose of request"
       permission: {
         accessMode: 'VIEW', // Hardcoded access mode (replace if needed)
         dateRange: {
@@ -82,15 +92,17 @@ const DrawerView = (props: DrawerProps) => {
 
     try {
       console.log('function triggered');
-
-      // 1. Get authorization token (replace with your actual endpoint)
-      const tokenResponse = await axios.post('http://localhost:8080/auth/generateToken', {
-        username: 'admin',
-        password: 'admin',
-      });
-
-      const token = tokenResponse.data;
-
+      
+      const doctorResponse = await axios.get('http://localhost:8080/doctor/getMyDoctor',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+      );
+      console.log(doctorResponse.data);
+      consent.requester.name = doctorResponse.data.name;
+      consent.requester.identifier.value = doctorResponse.data.id;
       // 2. Send POST request with consent object in body
       const response = await axios.post(
         'http://localhost:8080/doctor/init-consent',
@@ -156,14 +168,14 @@ const DrawerView = (props: DrawerProps) => {
             <Form.ControlLabel>Expiry</Form.ControlLabel>
             <Form.Control name="expiry" style={{ width: 200}} accepter={DatePicker}/>
           </Form.Group>
-          <Form.Group controlId="checkpicker">
+          <Form.Group controlId="inputpicker">
             <Form.ControlLabel>Purpose of request</Form.ControlLabel>
-            <Form.Control name="checkpicker" accepter={CheckPicker} data={specData} style={{width:'100%'}}/>
+            <Form.Control name="inputpicker" accepter={InputPicker} data={specData} style={{width:'100%'}}/>
           </Form.Group>
-          <Form.Group controlId="inputPicker">
+          {/* <Form.Group controlId="inputPicker">
             <Form.ControlLabel>Date Range</Form.ControlLabel>
             <Form.Control name="inputPicker" accepter={InputPicker} data={genData} style={{width:'100%'}}/>
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group>
             <Form.ControlLabel>Notes</Form.ControlLabel>
             <Form.Control name="street" />

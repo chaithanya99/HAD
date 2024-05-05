@@ -18,136 +18,23 @@
 	</properties>
 	<dependencies>
 		
-		
-    	<!-- <dependency>
-    	    <groupId>ca.uhn.hapi.fhir</groupId>
-    	    <artifactId>hapi-fhir-validation-resources-dstu2</artifactId>
-    	    <version>7.0.2</version>
-    	</dependency> -->
-    	<!-- https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/hapi-fhir-validation-resources-r4 -->
-		<!-- <dependency>
-		    <groupId>ca.uhn.hapi.fhir</groupId>
-		    <artifactId>hapi-fhir-validation-resources-r4</artifactId>
-		    <version>7.0.0</version>
-		</dependency> -->
-
-		<!-- <dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-dstu2</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-validation-resources-dstu2</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-hl7org-dstu2</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-dstu2.1</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-validation-resources-dstu2.1</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-dstu3</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-validation-resources-dstu3</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
+    	<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-structures-r4</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
+			<version>6.4.4</version>
+		</dependency>
+		<dependency>
+			<groupId>ca.uhn.hapi.fhir</groupId>
+			<artifactId>hapi-fhir-validation</artifactId>
+			<version>6.4.4</version>
 		</dependency>
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-validation-resources-r4</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
+			<version>6.4.4</version>
 		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-r4b</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-validation-resources-r4b</artifactId>
-			<version>6.4.2</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>org.hl7.fhir.utilities</artifactId>
-			<version>6.3.6</version>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>org.hl7.fhir.validation</artifactId>
-			<version>6.4.2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>info.cqframework</groupId>
-					<artifactId>elm</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>info.cqframework</groupId>
-					<artifactId>cql-to-elm</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>info.cqframework</groupId>
-					<artifactId>quick</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>info.cqframework</groupId>
-					<artifactId>qdm</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>info.cqframework</groupId>
-					<artifactId>cql</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>info.cqframework</groupId>
-					<artifactId>model</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>io.javalin</groupId>
-					<artifactId>javalin</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>junit</groupId>
-					<artifactId>junit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.commons</groupId>
-					<artifactId>commons-collections4</artifactId>
-				</exclusion>
 
-			</exclusions>
-		</dependency> -->
-		
-		<dependency>
+		<!-- <dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-base</artifactId>
 			<version>7.0.1</version>
@@ -179,16 +66,8 @@
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-validation</artifactId>
 			<version>7.0.1</version>
-		</dependency>
-
-
-
-		<!-- https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/org.hl7.fhir.r4
-		<dependency>
-		    <groupId>ca.uhn.hapi.fhir</groupId>
-		    <artifactId>org.hl7.fhir.r4</artifactId>
-		    <version>6.3.6</version>
 		</dependency> -->
+
 
 		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
 		<dependency>

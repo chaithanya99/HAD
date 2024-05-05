@@ -2,14 +2,16 @@
 // import java.util.Date;
 // import java.util.List;
 
-// import org.hl7.fhir.dstu2.model.Timing.UnitsOfTime;
-// // import org.hl7.fhir.r4.hapi.model.*;
+// // import org.hl7.fhir.dstu2.model.Timing.UnitsOfTime;
 // import org.hl7.fhir.r4.model.*;
+// // import org.hl7.fhir.r4.model.*;
+// // import org.hl7.fhir.r4.model.Composition.CompositionStatus;
+// // import org.hl7.fhir.r4.model.Composition.SectionComponent;
+// // import org.hl7.fhir.r4.model.MedicationRequest.MedicationRequestIntent;
+// // import org.hl7.fhir.r4.model.MedicationRequest.MedicationRequestStatus;
+// // import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 // import org.hl7.fhir.r4.model.Composition.CompositionStatus;
 // import org.hl7.fhir.r4.model.Composition.SectionComponent;
-// import org.hl7.fhir.r4.model.MedicationRequest.MedicationRequestIntent;
-// import org.hl7.fhir.r4.model.MedicationRequest.MedicationRequestStatus;
-// import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 
 // public class PrescriptionComposition {
 //     public static Composition populatePrescriptionCompositionResource(){
@@ -31,6 +33,7 @@
 //         composition.setDate(new Date());
 //         //set Author: Who and/or what authored the composition/Presciption record
 //         composition.setAuthor((List<Reference>) new Reference("Practictioner/Practinioner-1"));
+//         // composition.setAuthor(new Reference("Practictioner/Practinioner-1"));
 //         //set title: Human Readable name/title
 //         composition.setTitle("Prescription Record");
 

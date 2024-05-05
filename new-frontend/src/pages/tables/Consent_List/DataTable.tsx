@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Input,
-  InputGroup,
-  Table,
-  Button,
-  DOMHelper,
-  Progress,
-  Checkbox,
-  Stack,
-  SelectPicker
-} from 'rsuite';
+import { Input, InputGroup, Table, Button, DOMHelper, Progress, Checkbox, Stack, SelectPicker } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import MoreIcon from '@rsuite/icons/legacy/More';
 import DrawerView from './DrawerView';

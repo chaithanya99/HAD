@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Steps, Divider, Stack, IconButton } from 'rsuite';
 import PageContent from '@/components/PageContent';
 
@@ -9,26 +9,31 @@ import Step1 from './Step1';
 import ProjectInfoForm from './ProjectInfoForm';
 import Completed from './Completed';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const HealthRecord = () => {
+  const location = useLocation();
+
+  // Initialising Data from other pages
+  const initialPatientId = location.state ? location.state.patientId : 0;
+
   const [step, setStep] = useState(0);
   const [txnId, setTxnId] = useState('');
-  const token = localStorage.getItem('token');
   const [type, settype] = useState('')
   const [formData, setFormData] = useState({});
-  const [pid, setPid] = useState(0);
-  const [did, setDid] = useState(0);
-
+  const [patientId, setPatientId] = useState(initialPatientId);
+  const [doctorId, setDoctorId] = useState(0);
+  const token = localStorage.getItem('token');
 
   const step1Props = {
     step: step,
     setStep: setStep,
     type: type,
     settype: settype,
-    did: did,
-    setDid: setDid,
-    pid: pid,
-    setPid: setPid,
+    doctorId: doctorId,
+    setDoctorId: setDoctorId,
+    pid: patientId,
+    setPid: setPatientId,
   };
 
   const projectInfoProps = {
@@ -39,8 +44,8 @@ const HealthRecord = () => {
     formtype: type,
     formData: formData,
     setFormData: setFormData,
-    pid: pid,
-    did: did,
+    patientId: patientId,
+    doctorId: doctorId,
   };
 
   const completedProps = {
@@ -53,6 +58,22 @@ const HealthRecord = () => {
   const formProps = [step1Props, projectInfoProps, completedProps];
   const Form = forms[step];
 
+  useEffect(() => {
+    const fetchDoctorId = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/doctor/Id', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        setDoctorId(response.data);
+      } catch(error) {
+        console.error('Fetch Doctor ID Failed: ', error.message);
+      }
+    };
+
+    fetchDoctorId();
+  }, []);
 
   return (
     <PageContent>

@@ -8,24 +8,24 @@ const Report = ['Diagnostic Report', 'OP consult', 'General health report', 'Wel
   value: item
 }));
 
-const Step1 = ({ step, setStep, type, settype, pid, setPid, did, setDid }) => {
+const Step1 = ({ step, setStep, type, settype, patientId, setPatientId, doctorId, setDoctorId }) => {
   const handleChange = (value) => {
     settype(value);
   }
 
-  const handlePidChange = (value) => {
-    setPid(value);
+  const handlePatientIdChange = (value) => {
+    setPatientId(value);
   }
 
-  const handleDidChange = (value) => {
-    setDid(value);
+  const handleDoctorIdChange = (value) => {
+    setDoctorId(value);
   }
 
   const handleSubmit = async () => {
     console.log(step);  
     console.log(type);  
-    console.log(pid);
-    console.log(did);
+    console.log(patientId);
+    console.log(doctorId);
     setStep(step + 1);
   }
 
@@ -38,12 +38,12 @@ const Step1 = ({ step, setStep, type, settype, pid, setPid, did, setDid }) => {
       </Form.Group>
       <Form.Group controlId="Pid">
         <Form.ControlLabel>Patient ID</Form.ControlLabel>
-        <Form.Control name="Pid" accepter={InputNumber} onChange={handlePidChange} />
+        <Form.Control name="Pid" accepter={InputNumber} onChange={handlePatientIdChange} />
       </Form.Group>
-      <Form.Group controlId="Did">
+      {/* <Form.Group controlId="Did">
         <Form.ControlLabel>Doctor ID</Form.ControlLabel>
-        <Form.Control name="Did" accepter={InputNumber} onChange={handleDidChange} />
-      </Form.Group>
+        <Form.Control name="Did" accepter={InputNumber} onChange={handleDoctorIdChange} />
+      </Form.Group> */}
       <Form.Group controlId="submitform">
         <Button appearance="primary" type="submit" style={{ marginLeft: '10px' }}>Submit</Button>
       </Form.Group>

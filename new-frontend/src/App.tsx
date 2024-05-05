@@ -27,6 +27,7 @@ import { getAppNavs } from './config';
 import Healthrecordpage from './pages/forms/Add_HealthRecord';
 import Login from './Login';
 import { Detailed_record } from './pages/detailed_record/Detailed_record';
+import UploadRecordPage from './pages/forms/Upload_Health_Records';
 
 
 const App = () => {
@@ -97,6 +98,9 @@ const App = () => {
             </Route>
             <Route path="Detailed_record" element={<Frame navs={appNavs} />}>
               <Route index element={<Detailed_record/>} />
+            </Route>
+            <Route path="UploadRecord" element={<Frame navs={appNavs} />}>
+              <Route index element={<UploadRecordPage/>} />
             </Route>
 
           </Route>

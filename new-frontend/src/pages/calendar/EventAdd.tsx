@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form, DatePicker, ModalProps, Stack, MaskedInput, SelectPicker } from 'rsuite';
+import React, { useState } from 'react';
+import { Modal, Button, Form, DatePicker, ModalProps, Stack, SelectPicker } from 'rsuite';
 
 interface EventModalProps extends ModalProps {
   onAddEvent: (event: React.MouseEvent) => void;

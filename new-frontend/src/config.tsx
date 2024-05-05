@@ -105,7 +105,12 @@ export function getAppNavs() {
             eventKey: 'ABHA-Registration',
             title: 'ABHA Registration',
             to: '/ABHA-Registration'
-          }
+          },
+          {
+            eventKey: 'UploadHealthRec',
+            title: 'Upload Medical Record',
+            to: '/UploadRecord'
+          },
         ]
       },
       
@@ -153,6 +158,11 @@ export function getAppNavs() {
             eventKey: 'form-basic3',
             title: 'Add Patient',
             to: '/form-basic3'
+          },
+          {
+            eventKey: 'UploadHealthRec',
+            title: 'Upload Medical Record',
+            to: '/UploadRecord'
           },
         ]
       },

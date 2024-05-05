@@ -219,92 +219,113 @@ const DataTable = () => {
           <Cell dataKey="mobile" />
         </Column>
 
-        <Column width={200} fixed="right">
+        <Column width={230} fixed="right">
           <HeaderCell>Actions</HeaderCell>
           <Cell style={{ padding: '2px' }}>
             {rowData => (
-                <ButtonToolbar>
-                    <Whisper
-                      controlId="control-id-container"
-                      preventOverflow
-                      trigger="hover"
-                      speaker={
-                        <Tooltip style={{ width: 120 }}>
-                           Set an Appointment.
-                        </Tooltip>
+              <ButtonToolbar>
+                <Whisper
+                  controlId="control-id-container"
+                  preventOverflow
+                  trigger="hover"
+                  speaker={
+                    <Tooltip style={{ width: 120 }}>
+                        Set an Appointment.
+                    </Tooltip>
+                  }
+                  placement="auto">
+                  <IconButton onClick = {() => {
+                      const date = new Date();
+                      date.setHours(0);
+                      date.setMinutes(0);
+                      date.setSeconds(0);
+                      const formData = {
+                        id: '',
+                        patientId: rowData.abhaNumber,
+                        title: 'Appointment',
+                        allDay: false,
+                        start: date,
+                        end: date,
+                        notes: '',
                       }
-                      placement="auto">
-                      <IconButton onClick = {() => {
-                          const date = new Date();
-                          date.setHours(0);
-                          date.setMinutes(0);
-                          date.setSeconds(0);
-                          console.log(rowData.abhaNumber);
-                          const formData = {
-                            id: '',
-                            patientId: rowData.abhaNumber,
-                            title: 'Appointment',
-                            allDay: false,
-                            start: date,
-                            end: date,
-                            notes: '',
-                          }
-                          const initialPatient = {
-                            value: rowData.abhaNumber,
-                            label: rowData.name,
-                          }
-                          navigate('/calendar', {state: {
-                            formData: formData,
-                            initialPatient: initialPatient,
-                          }});
-                      }}color="yellow" appearance="link" icon={<LuClock />} />
-                    </Whisper>
+                      const initialPatient = {
+                        value: rowData.abhaNumber,
+                        label: rowData.name,
+                      }
+                      navigate('/calendar', {state: {
+                        formData: formData,
+                        initialPatient: initialPatient,
+                      }});
+                  }}color="yellow" appearance="link" icon={<LuClock />} />
+                </Whisper>
 
-                    <Whisper
-                      controlId="control-id-container"
-                      preventOverflow
-                      trigger="hover"
-                      speaker={
-                        <Tooltip style={{ width: 120 }}>
-                          View Health Records.
-                        </Tooltip>
-                      }
-                      placement="auto">
-                      <IconButton onClick = {() => {
-                          navigate('/table-virtualized5');
-                      }}color="green" appearance="link" icon={<FaEye />} />
-                    </Whisper>
+                <Whisper
+                  controlId="control-id-container"
+                  preventOverflow
+                  trigger="hover"
+                  speaker={
+                    <Tooltip style={{ width: 120 }}>
+                      View Health Records.
+                    </Tooltip>
+                  }
+                  placement="auto">
+                  <IconButton onClick = {() => {
+                      navigate('/table-virtualized5');
+                  }}color="green" appearance="link" icon={<FaEye />} />
+                </Whisper>
                     
-                    <Whisper
-                      controlId="control-id-container"
-                      preventOverflow
-                      trigger="hover"
-                      speaker={
-                        <Tooltip style={{ width: 120 }}>
-                          Create a Health Record.
-                        </Tooltip>
-                      }
-                      placement="auto">
-                      <IconButton onClick = {() => {
-                          navigate('/table-virtualized5');
-                      }}color="red" appearance="link" icon={<GrDocumentUpload/>} />
-                    </Whisper>
+                <Whisper
+                  controlId="control-id-container"
+                  preventOverflow
+                  trigger="hover"
+                  speaker={
+                    <Tooltip style={{ width: 120 }}>
+                      Create a Health Record.
+                    </Tooltip>
+                  }
+                  placement="auto">
+                  <IconButton onClick = {() => {
+                      const patientId = rowData.id;
+                      navigate('/HealthRecord', {state: {
+                        patientId: patientId,
+                      }});
+                  }}color="red" appearance="link" icon={<GrDocumentUpload/>} />
+                </Whisper>
 
-                    <Whisper
-                      controlId="control-id-container"
-                      preventOverflow
-                      trigger="hover"
-                      speaker={
-                        <Tooltip style={{ width: 120 }}>
-                          Create a consent Request.
-                        </Tooltip>
+                <Whisper
+                  controlId="control-id-container"
+                  preventOverflow
+                  trigger="hover"
+                  speaker={
+                    <Tooltip style={{ width: 120 }}>
+                      Upload a Health Record.
+                    </Tooltip>
+                  }
+                  placement="auto">
+                  <IconButton onClick = {() => {
+                      const selectedPatient = {
+                        value: rowData.abhaNumber,
+                        label: rowData.name,
                       }
-                      placement="auto">
-                      <IconButton onClick = {() => {
-                          navigate('/table-virtualized4');
-                      }}color="blue" appearance="link" icon={<FaEdit />} />
-                    </Whisper>
-                </ButtonToolbar>
+                      navigate('/UploadRecord', {state: {selectedPatient: selectedPatient}});
+                  }}color="blue" appearance="link" icon={<FaEdit />} />
+                </Whisper>
+
+                <Whisper
+                  controlId="control-id-container"
+                  preventOverflow
+                  trigger="hover"
+                  speaker={
+                    <Tooltip style={{ width: 120 }}>
+                      Create a consent Request.
+                    </Tooltip>
+                  }
+                  placement="auto">
+                  <IconButton onClick = {() => {
+                      navigate('/table-virtualized4');
+                  }}color="blue" appearance="link" icon={<FaEdit />} />
+                </Whisper>
+              </ButtonToolbar>
             )}
           </Cell>
         </Column>

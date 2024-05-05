@@ -18,6 +18,7 @@ import com.had.project5.entities.consentstuff.Hiu;
 // import com.had.project5.repositories.ConsentRepository;
 import com.had.project5.repositories.ConsentRequestRepository;
 import com.had.project5.services.ApiService;
+import com.had.project5.services.DoctorService;
 import com.had.project5.services.PatientService;
 
 import org.json.JSONArray;
@@ -26,6 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +42,9 @@ public class ConsentControllerTest{
 
 	// @Autowired
 	// ConsentRepository consentRepository;
+
+	@Autowired
+	private DoctorService doctorService;
 
     @Autowired
     private PatientService patientService;
@@ -59,6 +65,19 @@ public class ConsentControllerTest{
 	private DecryptionHandle decryptionHandle;
 	private String HipId = "IN0610089593";
 	private String HipName = "had_hospital";
+
+
+	@GetMapping("/getConsents/{PatientId}")
+	public ResponseEntity<List<ConsentRequest>> getConsents(@PathVariable Long PatientId){
+		Long docterId=doctorService.getMyId();
+		Optional<Patient> p = patientService.getPatientById(PatientId);
+		if(!p.isPresent()){
+			return (ResponseEntity<List<ConsentRequest>>) ResponseEntity.notFound();
+		}
+		Patient pp = p.get();
+		List<ConsentRequest> lc= consentRequestRepository.findByDoctorIdAndAbhaId(String.valueOf(docterId),pp.getAbhaAddress());
+		return ResponseEntity.ok().body(lc);
+	}
     
 	@CrossOrigin(origins = "*")
 	@PostMapping("/doctor/init-consent")

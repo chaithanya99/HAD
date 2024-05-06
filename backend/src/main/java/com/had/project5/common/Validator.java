@@ -1,5 +1,6 @@
 // package com.had.project5.common;
-
+// import java.io.File;
+// import java.io.FileReader;
 // import java.util.Scanner;
 
 // import org.hl7.fhir.common.hapi.validation.support.CachingValidationSupport;
@@ -10,6 +11,7 @@
 // import org.hl7.fhir.common.hapi.validation.support.ValidationSupportChain;
 // import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
 // import org.hl7.fhir.instance.model.api.IBaseResource;
+// import org.hl7.fhir.r4.formats.IParser;
 
 // import ca.uhn.fhir.context.FhirContext;
 // import ca.uhn.fhir.context.support.DefaultProfileValidationSupport;
@@ -19,7 +21,7 @@
 
 // public class Validator {
 //     static FhirContext ctx= FhirContext.forR4();
-//     public static void main(String[] args) {
+//     public static void validation(IBaseResource resource) throws Exception {
 //         NpmPackageValidationSupport npmPackageValidationSupport= new NpmPackageValidationSupport(ctx);
 //         npmPackageValidationSupport.loadPackageFromClasspath("classpath:package.tgz");
 //         ValidationSupportChain validationSupportChain=new ValidationSupportChain(
@@ -29,11 +31,12 @@
 //             new InMemoryTerminologyServerValidationSupport(ctx),
 //             new SnapshotGeneratingValidationSupport(ctx)
 //         );
-//         CachingValidationSupport validation = new CachingValidationSupport(validationSupportChain);
+//         CachingValidationSupport validationSupport = new CachingValidationSupport(validationSupportChain);
 //         FhirValidator validator = ctx.newValidator();
-//         FhirInstanceValidator instanceValidator = new FhirInstanceValidator(validationSupportChain);
-//         validator.registerValidationModule(instanceValidator);
-//         ValidationResult outCome = validator.validateWithResult(PrescriptionBundleDocument.populatePrescriptionBundle());
+//         FhirInstanceValidator fhirInstanceValidator = new FhirInstanceValidator(validationSupport);
+//         validator.registerValidatorModule(fhirInstanceValidator);
+//         ValidationResult outCome = validator.validateWithResult(resource);
+//         System.out.println(outCome);
 //         for(SingleValidationMessage next:outCome.getMessages()){
 //             System.out.println(next.getSeverity()+"-"+next.getLocationString()+"-"+next.getMessage());
 //         }
@@ -43,8 +46,16 @@
 //         System.out.println("Enter the file path");
 //         Scanner sc = new Scanner(System.in);
 //         String path = sc.next();
-//         Iparser parser = ctx.newJsonParser();
+//         ca.uhn.fhir.parser.IParser parser = ctx.newJsonParser();
 //         IBaseResource resource = parser.parseResource(new FileReader(new File(path)));
 //         validation(resource);
+//     }
+//     public static void main(String[] args) throws Exception{
+//         validation(PrescriptionBundleDocument.populatePrescriptionBundle());
+//         ca.uhn.fhir.parser.IParser parser=ctx.newJsonParser();
+//         String str=parser.encodeResourceToString(PrescriptionBundleDocument.populatePrescriptionBundle());
+//         System.out.println(str);
+//         validateFromFile();
+    
 //     }
 // }

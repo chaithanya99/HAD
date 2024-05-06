@@ -1,9 +1,12 @@
 // package com.had.project5.common;
-// import org.hl7.fhir.dstu2.model.Narrative.NarrativeStatus;
+// // import org.hl7.fhir.dstu2.model.Narrative.NarrativeStatus;
 // import org.hl7.fhir.r4.model.*;
 // import org.hl7.fhir.r4.model.ContactPoint.ContactPointSystem;
 // import org.hl7.fhir.r4.model.ContactPoint.ContactPointUse;
 // import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
+// import org.hl7.fhir.r4.model.MedicationRequest.MedicationRequestIntent;
+// import org.hl7.fhir.r4.model.MedicationRequest.MedicationRequestStatus;
+// import org.hl7.fhir.r4.model.Narrative.NarrativeStatus;
 
 // public class ResourcePopulator 
 // {
@@ -39,7 +42,7 @@
 //         patient.getText().setStatus(NarrativeStatus.GENERATED).setDivAsString("<div xmlns=\"http://www.w3.org/1999/xhtml\">ABC,41 year,Male</div>");
 //         patient.addIdentifier().setType(new CodeableConcept(new Coding("http://terminology.hl7.org/CodeSystem/v2-0203","MR","Medical record number"))).setSystem("https://ndhm.in/SwasthID").setValue("1234");
 //         patient.addName().setText("ABC");
-//         patient.addTelecom().setSystem(ContactPointSystem.PHONE).setValue("+91981851260").setUse(ContactPointUse);
+//         patient.addTelecom().setSystem(ContactPointSystem.PHONE).setValue("+91981851260").setUse(ContactPointUse.MOBILE);
 //         patient.setGender(AdministrativeGender.MALE).setBirthDateElement(new DateType("1981-01-12"));
 
 

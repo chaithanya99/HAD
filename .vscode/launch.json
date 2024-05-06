@@ -2,6 +2,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Validator",
+      "request": "launch",
+      "mainClass": "com.had.project5.common.Validator",
+      "projectName": "project5"
+    },
+    {
+      "type": "java",
       "name": "Spring Boot-Project5Application<project5>",
       "request": "launch",
       "cwd": "${workspaceFolder}",

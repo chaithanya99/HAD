@@ -9,12 +9,14 @@ import com.had.project5.repositories.healthrecordrepos.OPconsultRepo;
 import com.had.project5.repositories.healthrecordrepos.PrescriptionRepo;
 import com.had.project5.repositories.healthrecordrepos.WellnessRecordRepo;
 import com.had.project5.services.ApiService;
+import com.had.project5.services.BundlingService;
 import com.had.project5.services.DoctorService;
 import com.had.project5.services.FileUploadService;
 import com.had.project5.services.PatientService;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -26,6 +28,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 import org.apache.http.protocol.HTTP;
+import org.hl7.fhir.r4.model.Bundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +44,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.had.project5.entities.healthrecordstuff.Pdf;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.had.project5.entities.Doctor;
 import com.had.project5.entities.FetchAuthInit;
 import com.had.project5.entities.Patient;
 import com.had.project5.entities.Query;
@@ -63,6 +67,9 @@ import org.springframework.http.*;
 @CrossOrigin(origins = "*") // Specify the allowed origin(s)
 @RequestMapping("/HealthRecord")
 public class HealthRecordController {
+
+    @Autowired
+    private BundlingService bundlingService;
 
     @Autowired
     private RequestTransactionRepo requestTransactionRepo;
@@ -383,6 +390,24 @@ public class HealthRecordController {
         return wellnessrecordrepo.findById(id);
     }
     
+
+    @PostMapping("/testingBundle")
+    public ResponseEntity<String> testingBundle(@RequestBody Map<String,String> req) throws ParseException, IOException{
+        String toTime=req.get("toTime");
+        String fromTime=req.get("fromTime");
+        Long patientId=Long.parseLong(req.get("patientId"));
+        Long doctorId=Long.parseLong(req.get("doctorId"));
+        Optional<Patient> p=patientService.getPatientById(patientId);
+        Optional<Doctor> d=doctorService.getDoctorById(doctorId);
+        if(!p.isPresent() || !d.isPresent()){
+            return ResponseEntity.badRequest().body("error");
+        }
+        Patient pp=p.get();
+        Doctor dd= d.get();
+        List<Bundle> li=bundlingService.createBundles(pp, dd, fromTime, toTime);
+        return ResponseEntity.ok().body("working");
+    }
+
 
 
 }

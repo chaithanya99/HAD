@@ -22,18 +22,18 @@ public class PrescriptionComposition {
         //set metadata data of the resource versiuonid,, lastupdated date, profile
         Meta meta= new Meta();
         meta.setVersionId("1");
-        meta.addProfile("https://www.nrces.in/ndhm/fhir/r4/StructureDefinition-PrescriptionRecord.html");
+        meta.addProfile("https://nrces.in/ndhm/fhir/r4/StructureDefinition/PrescriptionRecord");
         composition.setMeta(meta);
         //set status :preliminary | final | amended | entered-in-error
         composition.setStatus(CompositionStatus.FINAL);
         //set type: kind of composition
         composition.setType(new CodeableConcept(new Coding("http://snomed.info/sct", "440545006", "Prescription record")));
         //set subject :Who and/or what the composition/Prescription record is about
-        composition.setSubject(new Reference("patient/patient-01"));
+        composition.setSubject(new Reference("patient/patient-01")); //patient id
         //set date Composition editing time
         composition.setDate(new Date());
         //set Author: Who and/or what authored the composition/Presciption record
-        Reference authorReference= new Reference("Practictioner/Practinioner-1");
+        Reference authorReference= new Reference("Practitioner/Practitioner-01"); //doctor id
         List<Reference> authorList=new ArrayList<>();
         authorList.add(authorReference);
         composition.setAuthor(authorList);
@@ -44,15 +44,16 @@ public class PrescriptionComposition {
 
         SectionComponent section= new SectionComponent();
         section.setCode(new CodeableConcept(new Coding("http://snomed.info/sct", "440545006", "Prescription record")));
-        Reference reference1 = new Reference();
-        reference1.setReference("Medication/Medication-1"); //resource/resource-id
-        reference1.setType("MedicationRequest");
+        // Reference reference1 = new Reference();
+        // reference1.setReference("MedicationRequest/MedicationRequest-01"); //resource/resource-id
+        // reference1.setType("MedicationRequest");
 
         Reference reference2=new Reference();
-        reference2.setReference("Binary/Binary-1");
+        reference2.setReference("Binary/Binary-01");
         reference2.setType("Binary");
 
-        section.addEntry(reference1).addEntry(reference2);
+        // section.addEntry(reference1).addEntry(reference2);
+        section.addEntry(reference2);
 
         composition.addSection(section);
         return composition;

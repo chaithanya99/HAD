@@ -29,4 +29,5 @@ public class Pdf {
     // private Blob pdf;
     private Long patientId;
     private Long doctorId;
+    private String time;
 }

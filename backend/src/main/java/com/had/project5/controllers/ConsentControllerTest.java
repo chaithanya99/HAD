@@ -245,52 +245,52 @@ public class ConsentControllerTest{
 		}
 		bean.setConsentId(object.getNotification().getConsentArtefacts().get(0).getId());
 		consentRequestRepository.save(bean);
-		List<ConsentArtefacts> consentArt=object.getNotification().getConsentArtefacts();
-		String consentArtString="";
-		String accessToken=apiService.getToken();
-		 HttpHeaders header = new HttpHeaders();
-	        header.setContentType(MediaType.APPLICATION_JSON);
-	        header.setAccept(Collections.singletonList(MediaType.ALL));
-	        header.add("X-CM-ID","sbx");
-	        header.add("Authorization", "Bearer " + accessToken);
+		// List<ConsentArtefacts> consentArt=object.getNotification().getConsentArtefacts();
+		// String consentArtString="";
+		// String accessToken=apiService.getToken();
+		//  HttpHeaders header = new HttpHeaders();
+	    //     header.setContentType(MediaType.APPLICATION_JSON);
+	    //     header.setAccept(Collections.singletonList(MediaType.ALL));
+	    //     header.add("X-CM-ID","sbx");
+	    //     header.add("Authorization", "Bearer " + accessToken);
 
-	        HipOnNotify hipOnNotify =new HipOnNotify();
-			Acknowledgement ack=new Acknowledgement();
-			Resp resp=new Resp();
-			UUID uuid = UUID.randomUUID();
-	        String randomUUIDString = uuid.toString();
-	        TimeZone timeZone=TimeZone.getTimeZone("UTC");
-	        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss.SSSSSS");
-	        dateFormat.setTimeZone(timeZone);
-	        String asISO= dateFormat.format(new Date());
-	        ack.setStatus("OK");
-	        ack.setConsentId(object.getNotification().getConsentArtefacts().get(0).getId());
-	        resp.setRequestId(object.getRequestId());
-	        hipOnNotify.setRequestId(randomUUIDString);
-	        hipOnNotify.setTimestamp(asISO);
-			List<Acknowledgement> Lack=new ArrayList<>();;
-			Lack.add(ack);
-	        hipOnNotify.setAcknowledgement(Lack);
-	        hipOnNotify.setResp(resp);
-	      String reqbody="";
-			try {
-				reqbody = new ObjectMapper().writeValueAsString(hipOnNotify);
-			} catch (JsonProcessingException e) {
-				System.out.println("error here in the catch block");
-				e.printStackTrace();
-			}
+	    //     HipOnNotify hipOnNotify =new HipOnNotify();
+		// 	Acknowledgement ack=new Acknowledgement();
+		// 	Resp resp=new Resp();
+		// 	UUID uuid = UUID.randomUUID();
+	    //     String randomUUIDString = uuid.toString();
+	    //     TimeZone timeZone=TimeZone.getTimeZone("UTC");
+	    //     DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss.SSSSSS");
+	    //     dateFormat.setTimeZone(timeZone);
+	    //     String asISO= dateFormat.format(new Date());
+	    //     ack.setStatus("OK");
+	    //     ack.setConsentId(object.getNotification().getConsentArtefacts().get(0).getId());
+	    //     resp.setRequestId(object.getRequestId());
+	    //     hipOnNotify.setRequestId(randomUUIDString);
+	    //     hipOnNotify.setTimestamp(asISO);
+		// 	List<Acknowledgement> Lack=new ArrayList<>();;
+		// 	Lack.add(ack);
+	    //     hipOnNotify.setAcknowledgement(Lack);
+	    //     hipOnNotify.setResp(resp);
+	    //   String reqbody="";
+		// 	try {
+		// 		reqbody = new ObjectMapper().writeValueAsString(hipOnNotify);
+		// 	} catch (JsonProcessingException e) {
+		// 		System.out.println("error here in the catch block");
+		// 		e.printStackTrace();
+		// 	}
 
-	        HttpEntity<String> httpentity = new HttpEntity<>(reqbody, header);
-			System.out.println(httpentity.getHeaders());
-			System.out.println(httpentity.getBody());
-			try {
+	    //     HttpEntity<String> httpentity = new HttpEntity<>(reqbody, header);
+		// 	System.out.println(httpentity.getHeaders());
+		// 	System.out.println(httpentity.getBody());
+		// 	try {
 				
-				restTemplate.exchange("https://dev.abdm.gov.in/gateway/v0.5/consents/hiu/on-notify", HttpMethod.POST, httpentity,Object.class);
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.out.println(e);
-				System.out.println("error in the catcch block");
-			}
+		// 		restTemplate.exchange("https://dev.abdm.gov.in/gateway/v0.5/consents/hiu/on-notify", HttpMethod.POST, httpentity,Object.class);
+		// 	} catch (Exception e) {
+		// 		// TODO: handle exception
+		// 		System.out.println(e);
+		// 		System.out.println("error in the catcch block");
+		// 	}
 
 
 		// for(int i=0;i<consentArt.size();i++)

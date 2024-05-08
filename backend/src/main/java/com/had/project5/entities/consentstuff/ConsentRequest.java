@@ -40,6 +40,22 @@ public class ConsentRequest {
 	
 	private String transactionId;
 
+	private String fromTime;
+	private String toTime;
+
+	public String getFromTime(){
+		return fromTime;
+	}
+	public String getToTime(){
+		return toTime;
+	}
+	public void setFromTime(String time){
+		this.fromTime=time;
+	}
+	public void setToTime(String time){
+		this.toTime=time;
+	}
+
 	public String getTransactionId() {
 		return transactionId;
 	}

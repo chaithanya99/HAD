@@ -132,14 +132,19 @@ public class ConsentControllerTest{
 		 dateFormat1.setTimeZone(timeZone);
 		 ConsentRequest consentRequest=new ConsentRequest();
 		 Patient p = patientService.getPatientByAbhaAddress(req.getPatient().getId());
+		//  DateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        //  iso8601Format.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+		 consentRequest.setFromTime(req.getPermission().getDateRange().getFrom());
+		 consentRequest.setToTime(req.getPermission().getDateRange().getTo());
 		 consentRequest.setAbhaId(p.getAbhaAddress());
-		 consentRequest.setCreatedOn(asISO.substring(10));
+		 consentRequest.setCreatedOn(asISO);
 		 consentRequest.setDoctorId(request.getConsent().getRequester().getIdentifier().getValue());
         //  Optional<Patient> pp=patientService.getPatientById(patientService.getId(request.getConsent().getPatient().getId()));
          String patientName=p.getName();
 		 consentRequest.setPatientName(patientName);
-		 consentRequest.setRequestStatus("Request Initialted");
+		 consentRequest.setRequestStatus("Initialised");
 		 consentRequest.setRequestId(randomUUIDString);
+		 consentRequest.setExpiryOn(req.getPermission().getDataEraseAt());
 		 consentRequestRepository.save(consentRequest);
 
 		return objectResponseEntity.getBody();
@@ -173,13 +178,16 @@ public class ConsentControllerTest{
 			String asISO=dateFormat1.format(new Date());
 
 			bean.setGrantedOn(asISO.substring(10));
-			bean.setRequestStatus("Consent Granted");
+			bean.setRequestStatus("Granted");
+
+			//need to call the other hospital will get the records the from the other hospital
+
 
 		}
 		else
 		{
 			bean.setGrantedOn("-");
-			bean.setRequestStatus("Consent Denied");
+			bean.setRequestStatus("Denied");
 
 		}
 		bean.setConsentId(object.getNotification().getConsentArtefacts().get(0).getId());

@@ -126,8 +126,6 @@ const VirtualizedTable5 = () => {
   const handleClose = () => {
     setOpenRowData(null); // Clear the data of the currently opened row
     setModalOpen(false); // Close the modal
-    setPageNo(0);
-    setTotalPages(0);
   };
 
   const handleEntered = () => {

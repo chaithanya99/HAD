@@ -168,6 +168,7 @@ const VirtualizedTable5 = () => {
           <Page
           pageNumber={pageNo}
           renderTextLayer={false}
+          renderAnnotationLayer={true}
           />
         </Document>
       </>
@@ -177,10 +178,11 @@ const VirtualizedTable5 = () => {
 
   const renderModal = (rowData) => {
     if (!openRowData) return null; // Render nothing if no row is currently opened
+    console.log(openRowData.type)
 
     return (
       <>
-        {rowData.type != 'PDF' && (
+        {openRowData.type != 'PDF' && (
           <Modal
             open={modalOpen}
             onClose={handleClose}
@@ -209,7 +211,7 @@ const VirtualizedTable5 = () => {
           </Modal>
         )}
 
-        {rowData.type === 'PDF' && (
+        {openRowData.type === 'PDF' && (
           <Modal
             open={modalOpen}
             onClose={handleClose}
@@ -232,41 +234,76 @@ const VirtualizedTable5 = () => {
   };
 
   useEffect(() => {
-    const fetchFormData = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/HealthRecord/getallRecords", {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+    let forms, pdfs;
+    // const fetchFormData = async () => {
+    //   try {
+    //     const response = await axios.get("http://localhost:8080/HealthRecord/getallRecords", {
+    //       headers: {
+    //         'Authorization': `Bearer ${token}`
+    //       }
+    //     });
+    //     forms = response.data;
+    //     console.log(forms);
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   }
+    // };
 
-    const fetchPdfData = async () => {
+    // const fetchPdfData = async () => {
+    //   try {
+    //     const response = await axios.get(`http://localhost:8080/HealthRecord/getRecords/${patient.abhaNumber}`, {
+    //       headers: {
+    //         'Authorization': `Bearer ${token}`
+    //       }
+    //     });
+    //     pdfs = response.data.map(record => {
+    //       return {
+    //         ...record,
+    //         type: (record.type == "application/pdf") ? "PDF" : record.type
+    //       }
+    //     });
+    //     console.log(pdfs);
+    //   } catch(error) {
+    //     console.error("Error Fetching PDFs records: ", error.message);
+    //   }
+    // };
+
+    // fetchFormData();
+    // fetchPdfData();
+    // console.log(forms);
+    // console.log(pdfs);
+    // setData([...forms, ...pdfs]);
+
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/HealthRecord/getRecords/${patient.abhaNumber}`, {
+        const formDataPromise = await axios.get("http://localhost:8080/HealthRecord/getallRecords", {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });
-        const add = response.data.map(record => {
+
+        const pdfDataPromise = await axios.get(`http://localhost:8080/HealthRecord/getRecords/${patient.abhaNumber}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        const [formDataResponse, pdfDataResponse] = await Promise.all([formDataPromise, pdfDataPromise]);
+        forms = formDataResponse.data;
+        pdfs = pdfDataResponse.data.map(record => {
           return {
             ...record,
-            type: (record.type == "application/pdf") ? "PDF" : record.type
-          }
-        });
-        console.log(add);
-        setData(add);
+            type: (record.type === "application/pdf") ? "PDF" : record.type
+          };
+        })
+
+        setData([...forms, ...pdfs]);
       } catch(error) {
-        console.error("Error Fetching PDFs records: ", error.message);
+        
       }
     };
 
-    fetchFormData();
-    fetchPdfData();
+    fetchData();
   }, []);
 
   return (

@@ -18,6 +18,7 @@ import com.had.project5.entities.consentstuff.Hiu;
 // import com.had.project5.repositories.ConsentRepository;
 import com.had.project5.repositories.ConsentRequestRepository;
 import com.had.project5.services.ApiService;
+import com.had.project5.services.BundlingService;
 import com.had.project5.services.DoctorService;
 import com.had.project5.services.PatientService;
 
@@ -42,6 +43,9 @@ public class ConsentControllerTest{
 
 	// @Autowired
 	// ConsentRepository consentRepository;
+
+	@Autowired
+	private BundlingService bundlingService;
 
 	@Autowired
 	private DoctorService doctorService;
@@ -76,6 +80,12 @@ public class ConsentControllerTest{
 		}
 		Patient pp = p.get();
 		List<ConsentRequest> lc= consentRequestRepository.findByDoctorIdAndAbhaId(String.valueOf(docterId),pp.getAbhaAddress());
+		return ResponseEntity.ok().body(lc);
+	}
+	@GetMapping("/getAllConsents")
+	public ResponseEntity<List<ConsentRequest>> getAllConsents(){
+		Long doctorId=doctorService.getMyId();
+		List<ConsentRequest> lc=consentRequestRepository.findAllByDoctorId(String.valueOf(doctorId));
 		return ResponseEntity.ok().body(lc);
 	}
     

@@ -13,6 +13,7 @@ import com.had.project5.services.BundlingService;
 import com.had.project5.services.DoctorService;
 import com.had.project5.services.FileUploadService;
 import com.had.project5.services.PatientService;
+import com.had.project5.services.Pdf1Service;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -42,6 +43,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.had.project5.entities.healthrecordstuff.Pdf;
+import com.had.project5.entities.healthrecordstuff.Pdf1;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.had.project5.entities.Doctor;
@@ -67,6 +69,9 @@ import org.springframework.http.*;
 @CrossOrigin(origins = "*") // Specify the allowed origin(s)
 @RequestMapping("/HealthRecord")
 public class HealthRecordController {
+
+    @Autowired
+    private Pdf1Service pdf1Service;
 
     @Autowired
     private BundlingService bundlingService;
@@ -404,10 +409,15 @@ public class HealthRecordController {
         }
         Patient pp=p.get();
         Doctor dd= d.get();
-        List<Bundle> li=bundlingService.createBundles(pp, dd, fromTime, toTime);
+        List<String> li=bundlingService.createBundles(pp, dd, fromTime, toTime);
         return ResponseEntity.ok().body("working");
     }
 
+    @GetMapping("/getRecordsFromOtherHospital/{id}")
+    public ResponseEntity<List<Pdf1>> getRecords(@PathVariable String id){
+        List<Pdf1> li=pdf1Service.getAllPdfs(id);
+        return ResponseEntity.ok().body(li);
+    }
 
 
 }

@@ -66,11 +66,12 @@ public class PrescriptionBundleDocument {
 
     static FhirContext ctx = FhirContext.forR4();
 
-    public static void helper(Patient p, Doctor d,Pdf pdf){
+    public static String helper(Patient p, Doctor d,Pdf pdf){
         ca.uhn.fhir.parser.IParser parser= ctx.newJsonParser().setPrettyPrint(true);
         String str=parser.encodeResourceToString(PrescriptionBundleDocument.populatePrescriptionBundle(p,d,pdf));
         System.out.println("came here");
         System.out.println(str);
+        return str;
     }
 
 

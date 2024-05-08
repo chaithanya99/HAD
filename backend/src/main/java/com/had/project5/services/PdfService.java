@@ -29,16 +29,19 @@ public class PdfService {
         iso8601Format.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date fromDate;
-       
         fromDate = iso8601Format.parse(fromTime);
-        
+        System.out.println("from time new"+fromDate);
+
         Date toDate = iso8601Format.parse(toTime);
+        System.out.println("to time new"+toDate);
 
        
         List<Pdf> pdfs = pdfUploadRepo.findByPatientIdAndDoctorId(patientId, doctorId);
+        System.out.println("in the getpdfsusing time   "+pdfs.size());
         List<Pdf> pdfsInRange = new ArrayList<>();
         for (Pdf pdf : pdfs) {
-            Date pdfTime = dateFormat.parse(pdf.getTime()); 
+            Date pdfTime = iso8601Format.parse(pdf.getTime()); 
+            System.out.println("another time here"+pdfTime);
             if (pdfTime.after(fromDate) && pdfTime.before(toDate)) {
                 pdfsInRange.add(pdf);
             }

@@ -21,15 +21,17 @@ public class BundlingService {
     @Autowired
     private PdfService pdfService;
 
-    public List<Bundle> createBundles(Patient p, Doctor d,String fromTime,String toTime) throws ParseException, IOException{
+    public List<String> createBundles(Patient p, Doctor d,String fromTime,String toTime) throws ParseException, IOException{
         List<Pdf> pdfs=pdfService.getPdfsUsingTime(d.getId(),p.getId(), fromTime, toTime);
         System.out.println(pdfs.size());
-        List<Bundle> bundles=new ArrayList<>();
+        // List<Bundle> bundles=new ArrayList<>();
+        List<String> bundles = new ArrayList<>();
         for(Pdf pdf:pdfs){
-            Bundle bundle=PrescriptionBundleDocument.populatePrescriptionBundle(p, d, pdf);
-            PrescriptionBundleDocument.helper(p, d, pdf);
+            // Bundle bundle=PrescriptionBundleDocument.populatePrescriptionBundle(p, d, pdf);
+            String str=PrescriptionBundleDocument.helper(p, d, pdf);
             Validator.helper(p,d,pdf);
-            bundles.add(bundle);
+            // bundles.add(bundle);
+            bundles.add(str);
         }
         
         return bundles;

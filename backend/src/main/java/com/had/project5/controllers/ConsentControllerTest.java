@@ -164,11 +164,14 @@ public class ConsentControllerTest{
 	@PostMapping("/v0.5/consent-requests/on-init")
 	public void getreq(@RequestBody ConsentResponse object) {
 
+		System.out.println("on-init-1");
 		System.out.print(object.getRequestId());
 
 		ConsentRequest consentRequest=	consentRequestRepository.findByRequestId(object.getResp().getRequestId());
 
 		consentRequest.setConsentId(object.getConsentRequest().getId());
+		System.out.println("on-init-2");
+		System.out.println(consentRequest.getConsentId());
 		consentRequestRepository.save(consentRequest);
 	}
 
@@ -176,10 +179,10 @@ public class ConsentControllerTest{
 	@CrossOrigin(origins = "*")
 	@PostMapping("/v0.5/consents/hiu/notify")
 	public void getHIUNotify(@RequestBody ConsentNotifyResponse object) {
-
+		System.out.println("hiu notify 1");
 		System.out.print(object.getRequestId());
 		ConsentRequest bean = consentRequestRepository.findByConsentId(object.getNotification().getConsentRequestId());
-		if(object.getNotification().getStatus().equalsIgnoreCase("Granted"))
+		if(object.getNotification().getStatus().equalsIgnoreCase("GRANTED"))
 		{
 			DateFormat dateFormat1 = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss.SSSSSS");
 		   TimeZone timeZone=TimeZone.getTimeZone("UTC");
@@ -192,7 +195,7 @@ public class ConsentControllerTest{
 			//need to call the other hospital will get the records the from the other hospital call the 
 
 
-			String webhookUrl = "https://webhook.site/32de52fb-994a-4eef-83f5-e6226391d5e6";
+			String webhookUrl = "https://webhook.site/32de52fb-994a-4eef-83f5-e6226391d5e6/getFiles";
 
         // Create an instance of Permission object
 

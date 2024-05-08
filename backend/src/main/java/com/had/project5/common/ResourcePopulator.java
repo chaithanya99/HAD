@@ -43,7 +43,8 @@ public class ResourcePopulator
 
     public static Patient populatePatientResource(com.had.project5.entities.Patient p){
         Patient patient = new Patient();
-        patient.setId(String.valueOf(p.getId()));
+        patient.setId(p.getAbhaAddress());
+        // patient.setId(String.valueOf(p.getId()));
         // patient.setId("patient-01"); //patient id
         patient.getMeta().setVersionId("1").setLastUpdatedElement(new InstantType("2020-07-09T14:58:58.181+05:30")).addProfile("https://nrces.in/ndhm/fhir/r4/StructureDefinition/Patient");
         patient.getText().setStatus(NarrativeStatus.GENERATED).setDivAsString("<div xmlns=\"http://www.w3.org/1999/xhtml\">ABC,41 year,Male</div>");

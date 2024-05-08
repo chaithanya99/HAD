@@ -135,8 +135,6 @@ const VirtualizedTable5 = () => {
   const PdfViewer = ({ base64Pdf }) => {
     const [pageNo, setPageNo] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const pdfData = atob(base64Pdf);
-    // console.log(pdfData);
 
     const goToPrevPage = () => {
       setPageNo((pageNo-1 <= 1) ? 1 : pageNo-1);
@@ -162,7 +160,7 @@ const VirtualizedTable5 = () => {
         </nav>
         <Document
           // file={`data:application/pdf;base64,${base64Pdf}`}
-          file={{data: pdfData}}
+          file={`data:application/pdf;base64,${base64Pdf}`}
           onLoadSuccess={(value) => {console.log(value);
             setTotalPages(value.numPages);
           }}
@@ -225,7 +223,7 @@ const VirtualizedTable5 = () => {
             </Modal.Header>
             <Divider/>
             <Modal.Body>
-              <PdfViewer base64Pdf={rowData.pdf}/>
+              <PdfViewer base64Pdf={openRowData.pdf}/>
             </Modal.Body>
           </Modal>
         )}
@@ -254,13 +252,14 @@ const VirtualizedTable5 = () => {
             'Authorization': `Bearer ${token}`
           }
         });
-        console.log(response.data);
-        setData(response.data.map(record => {
+        const add = response.data.map(record => {
           return {
             ...record,
             type: (record.type == "application/pdf") ? "PDF" : record.type
           }
-        }));
+        });
+        console.log(add);
+        setData(add);
       } catch(error) {
         console.error("Error Fetching PDFs records: ", error.message);
       }

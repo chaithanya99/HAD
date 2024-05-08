@@ -1,7 +1,8 @@
 package com.had.project5.controllers;
-
+import org.apache.http.HttpResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.had.project5.common.AbdmEncryption;
 import com.had.project5.common.DecryptionHandle;
 import com.had.project5.entities.Patient;
@@ -13,6 +14,8 @@ import com.had.project5.entities.consentstuff.ConsentInitRequest;
 import com.had.project5.entities.consentstuff.ConsentNotifyResponse;
 import com.had.project5.entities.consentstuff.ConsentRequest;
 import com.had.project5.entities.consentstuff.ConsentResponse;
+import com.had.project5.entities.consentstuff.DateRange;
+import com.had.project5.entities.consentstuff.Frequency;
 import com.had.project5.entities.consentstuff.HipOnNotify;
 import com.had.project5.entities.consentstuff.Hiu;
 // import com.had.project5.repositories.ConsentRepository;
@@ -22,6 +25,11 @@ import com.had.project5.services.BundlingService;
 import com.had.project5.services.DoctorService;
 import com.had.project5.services.PatientService;
 
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +43,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -177,10 +186,51 @@ public class ConsentControllerTest{
            dateFormat1.setTimeZone(timeZone);
 			String asISO=dateFormat1.format(new Date());
 
-			bean.setGrantedOn(asISO.substring(10));
+			bean.setGrantedOn(asISO);
 			bean.setRequestStatus("Granted");
 
-			//need to call the other hospital will get the records the from the other hospital
+			//need to call the other hospital will get the records the from the other hospital call the 
+
+
+			String webhookUrl = "https://webhook.site/32de52fb-994a-4eef-83f5-e6226391d5e6";
+
+        // Create an instance of Permission object
+
+        // Serialize the object to JSON
+        Gson gson = new Gson();
+        String jsonPayload = gson.toJson(bean);
+
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            // Create HTTP POST request
+            HttpPost httpPost = new HttpPost(webhookUrl);
+
+            // Set headers
+            httpPost.setHeader("Content-Type", "application/json");
+
+            // Set JSON payload
+            StringEntity entity = new StringEntity(jsonPayload);
+            httpPost.setEntity(entity);
+
+            // Execute the request
+            HttpResponse response = httpClient.execute(httpPost);
+
+            // Print the response status code
+            System.out.println("Response Status Code: " + response.getStatusLine().getStatusCode());
+
+            // Handle the response entity if needed
+            org.apache.http.HttpEntity responseEntity = response.getEntity();
+            if (responseEntity != null) {
+                String responseBody = EntityUtils.toString(responseEntity);
+                System.out.println("Response Body: " + responseBody);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
 
 
 		}

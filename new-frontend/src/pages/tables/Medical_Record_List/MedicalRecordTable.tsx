@@ -138,7 +138,7 @@ const VirtualizedTable5 = () => {
     const [pageNo, setPageNo] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const pdfData = atob(base64Pdf);
-    console.log(pdfData);
+    // console.log(pdfData);
 
     const goToPrevPage = () => {
       setPageNo((pageNo-1 <= 1) ? 1 : pageNo-1);
@@ -188,7 +188,7 @@ const VirtualizedTable5 = () => {
           <Modal
             open={modalOpen}
             onClose={handleClose}
-            onEntered={(value) => {setPageNo(1);}}
+            onEntered={handleEntered}
             onExited={() => {
               setRows(0);
             }}

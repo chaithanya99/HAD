@@ -82,7 +82,7 @@ const DrawerView = (props: DrawerProps) => {
         },
         dataEraseAt: expiry, // Hardcoded data erase at (replace if needed)
         frequency: {
-          unit: 'HOUR',
+          unit: 'HOUR',       
           value: 1,
           repeats: 0,
         },
@@ -113,7 +113,6 @@ const DrawerView = (props: DrawerProps) => {
           },
         }
       );
-
       // Handle success response
       if (response.status >= 200 && response.status < 300) {
         console.log('values are being set now');

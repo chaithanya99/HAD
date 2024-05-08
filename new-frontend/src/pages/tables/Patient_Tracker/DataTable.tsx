@@ -7,11 +7,16 @@ import Tooltip from 'rsuite/Tooltip';
 import { LuClock } from "react-icons/lu";
 import { GrDocumentUpload } from "react-icons/gr";
 import { FaEdit,FaEye} from 'react-icons/fa';
+import FileUploadIcon from '@rsuite/icons/FileUpload';
 import SearchIcon from '@rsuite/icons/Search';
 import { IconButton, ButtonToolbar } from 'rsuite';
+import ConsentRequestModal from '/src/pages/tables/Patient_Tracker/ConsentRequestModal';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import ConsentRequestModal from './ConsentRequestModal';
+import { values } from 'lodash';
+import PlusIcon from '@rsuite/icons/Plus';
+import { IoMdCreate } from "react-icons/io";
+
 const data = mockUsers(6);
 
 const { Column, HeaderCell, Cell } = Table;
@@ -190,8 +195,8 @@ const DataTable = () => {
       <Table
         height={Math.max(getHeight(window) - 200, 400)}
         data={filteredData()}
-        sortType={sortType}
         sortColumn={sortColumn}
+        sortType={sortType}
         onSortColumn={handleSortColumn}>
         <Column width={80} align="center" fixed sortable>
           <HeaderCell>Id</HeaderCell>
@@ -269,8 +274,7 @@ const DataTable = () => {
                   }
                   placement="auto">
                   <IconButton onClick = {() => {
-                      const patient = rowData
-                      navigate('/table-virtualized5', {state: {patient: patient}});
+                      navigate('/table-virtualized5');
                   }}color="green" appearance="link" icon={<FaEye />} />
                 </Whisper>
                     
@@ -289,7 +293,7 @@ const DataTable = () => {
                       navigate('/HealthRecord', {state: {
                         patientId: patientId,
                       }});
-                  }}color="green" appearance="link" icon={<FaEdit />} />
+                  }}color="red" appearance="link" icon={<IoMdCreate/>} />
                 </Whisper>
 
                 <Whisper
@@ -308,7 +312,7 @@ const DataTable = () => {
                         label: rowData.name,
                       }
                       navigate('/UploadRecord', {state: {selectedPatient: selectedPatient}});
-                  }}color="red" appearance="link" icon={<GrDocumentUpload/>} />
+                  }}color="blue" appearance="link" icon={<FileUploadIcon />} />
                 </Whisper>
 
                 <Whisper

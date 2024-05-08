@@ -20,6 +20,7 @@ const UploadRecord = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(initialSelectedPatient);
   const [formType, setFormType] = useState(null);
+  const [key, setKey] = useState(0);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -39,6 +40,12 @@ const UploadRecord = () => {
     fetchPatients();
   }, []);
 
+  const resetValues = () => {
+    setSelectedPatient(null);
+    setFormType(null);
+    setKey(key+1);
+  };
+
   const handleSubmit = async () => {
     if(!pdfFile || !selectedPatient || !formType) {
       alert('Incomplete Form Contents');
@@ -56,6 +63,7 @@ const UploadRecord = () => {
             }
           }
         );
+        resetValues();
       } catch(error) {
         console.error('Upload File to Backend Failed: ', error.message);
       }
@@ -77,33 +85,6 @@ const UploadRecord = () => {
 
   return (
     <PageContent>
-      {/* <Modal open={true}>
-        <Modal.Header>
-          <Modal.Title>Upload Health Records</Modal.Title>
-        </Modal.Header>
-          <Modal.Body>
-            <SelectPicker
-              searchable={true}
-              cleanable={false}
-              value={selectedPatient ? selectedPatient.value : null}
-              onChange={handlePatientChange}
-              data={patientList.map(patient => ({
-                value: patient.abhaNumber,
-                label: patient.name,
-              }))}
-              placeholder="Select Patient"
-              style={{marginBottom: '20px'}}
-            />
-          </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleUpload} appearance="primary">
-            Upload
-          </Button>
-          <Button onClick={handleClear} appearance="subtle">
-            Clear
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
       <Message>
         Form for Uploading Medical Records
       </Message>
@@ -145,6 +126,7 @@ const UploadRecord = () => {
             <Uploader
               action={''}
               accept={'application/pdf'}
+              key={key}
               autoUpload={false}
               draggable={true}
               multiple={false}

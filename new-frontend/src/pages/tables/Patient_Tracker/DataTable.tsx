@@ -9,10 +9,9 @@ import { GrDocumentUpload } from "react-icons/gr";
 import { FaEdit,FaEye} from 'react-icons/fa';
 import SearchIcon from '@rsuite/icons/Search';
 import { IconButton, ButtonToolbar } from 'rsuite';
-import ConsentRequestModal from '/src/pages/tables/members/ConsentRequestModal';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { values } from 'lodash';
+import ConsentRequestModal from './ConsentRequestModal';
 const data = mockUsers(6);
 
 const { Column, HeaderCell, Cell } = Table;
@@ -191,8 +190,8 @@ const DataTable = () => {
       <Table
         height={Math.max(getHeight(window) - 200, 400)}
         data={filteredData()}
-        sortColumn={sortColumn}
         sortType={sortType}
+        sortColumn={sortColumn}
         onSortColumn={handleSortColumn}>
         <Column width={80} align="center" fixed sortable>
           <HeaderCell>Id</HeaderCell>
@@ -270,7 +269,8 @@ const DataTable = () => {
                   }
                   placement="auto">
                   <IconButton onClick = {() => {
-                      navigate('/table-virtualized5');
+                      const patient = rowData
+                      navigate('/table-virtualized5', {state: {patient: patient}});
                   }}color="green" appearance="link" icon={<FaEye />} />
                 </Whisper>
                     
@@ -289,7 +289,7 @@ const DataTable = () => {
                       navigate('/HealthRecord', {state: {
                         patientId: patientId,
                       }});
-                  }}color="red" appearance="link" icon={<GrDocumentUpload/>} />
+                  }}color="green" appearance="link" icon={<FaEdit />} />
                 </Whisper>
 
                 <Whisper
@@ -308,7 +308,7 @@ const DataTable = () => {
                         label: rowData.name,
                       }
                       navigate('/UploadRecord', {state: {selectedPatient: selectedPatient}});
-                  }}color="blue" appearance="link" icon={<FaEdit />} />
+                  }}color="red" appearance="link" icon={<GrDocumentUpload/>} />
                 </Whisper>
 
                 <Whisper

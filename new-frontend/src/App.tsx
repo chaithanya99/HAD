@@ -12,7 +12,7 @@ import Error500Page from './pages/authentication/500';
 import Error503Page from './pages/authentication/503';
 import SignInPage from './pages/authentication/sign-in';
 import SignUpPage from './pages/authentication/sign-up';
-import MembersPage from './pages/tables/members';
+import MembersPage from './pages/tables/Patient_Tracker';
 import VirtualizedTablePage from './pages/tables/Doctor_List';
 import VirtualizedTable2Page from './pages/tables/Nurse_List';
 import VirtualizedTable3Page from './pages/tables/Patient_List';
@@ -27,7 +27,7 @@ import { getAppNavs } from './config';
 import Healthrecordpage from './pages/forms/Add_HealthRecord';
 import Login from './Login';
 import { Detailed_record } from './pages/detailed_record/Detailed_record';
-import UploadRecordPage from './pages/forms/Upload_Health_Records';
+import UploadRecordPage from './pages/forms/Upload_Medical_Records';
 
 
 const App = () => {

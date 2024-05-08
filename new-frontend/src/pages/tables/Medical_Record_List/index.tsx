@@ -1,5 +1,5 @@
 import React from 'react';
-import VirtualizedTable5 from './VirtualizedTable';
+import VirtualizedTable5 from './MedicalRecordTable';
 
 import { Breadcrumb, Panel } from 'rsuite';
 

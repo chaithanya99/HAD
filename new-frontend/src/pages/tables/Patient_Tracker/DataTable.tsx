@@ -290,9 +290,9 @@ const DataTable = () => {
                   }
                   placement="auto">
                   <IconButton onClick = {() => {
-                      const patientId = rowData.id;
+                      const patient = rowData;
                       navigate('/HealthRecord', {state: {
-                        patientId: patientId,
+                        patient: patient,
                       }});
                   }}color="red" appearance="link" icon={<IoMdCreate/>} />
                 </Whisper>

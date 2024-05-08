@@ -15,14 +15,15 @@ const HealthRecord = () => {
   const location = useLocation();
 
   // Initialising Data from other pages
-  const initialPatientId = location.state ? location.state.patientId : 0;
+  const initialPatient = location.state ? location.state.patient : null;
 
   const [step, setStep] = useState(0);
   const [txnId, setTxnId] = useState('');
   const [type, settype] = useState('')
   const [formData, setFormData] = useState({});
-  const [patientId, setPatientId] = useState(initialPatientId);
+  const [patientId, setPatientId] = useState(initialPatient ? initialPatient.id : 0);
   const [doctorId, setDoctorId] = useState(0);
+  const [patientList, setPatientList] = useState([]);
   const token = localStorage.getItem('token');
 
   const step1Props = {
@@ -33,7 +34,9 @@ const HealthRecord = () => {
     doctorId: doctorId,
     setDoctorId: setDoctorId,
     pid: patientId,
-    setPid: setPatientId,
+    setPatientId: setPatientId,
+    patientList: patientList,
+    initialPatient: initialPatient,
   };
 
   const projectInfoProps = {
@@ -71,7 +74,21 @@ const HealthRecord = () => {
         console.error('Fetch Doctor ID Failed: ', error.message);
       }
     };
+    
+    const fetchPatients = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/admin/patients', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        setPatientList(response.data);
+      } catch(error) {
+        console.error('Fetch Patients Failed: ', error.message);
+      }
+    }
 
+    fetchPatients();
     fetchDoctorId();
   }, []);
 

@@ -1,25 +1,31 @@
 import React, { useState } from 'react';
-import { Form, ButtonToolbar, InputPicker, Button, Input, InputGroup, InputNumber } from 'rsuite';
+import { Form, ButtonToolbar, InputPicker, Button, Input, InputGroup, InputNumber, SelectPicker } from 'rsuite';
 import FormHeader from './FormHeader';
-import { values } from 'lodash';
 
 const Report = ['Diagnostic Report', 'OP consult', 'General health report', 'Wellness Record', 'Prescription', 'Immunization Record', 'Discharge Summary'].map(item => ({
   label: item,
   value: item
 }));
 
-const Step1 = ({ step, setStep, type, settype, patientId, setPatientId, doctorId, setDoctorId }) => {
+const Step1 = ({ step, setStep, type, settype, patientId, setPatientId, doctorId, setDoctorId, patientList, initialPatient }) => {
+  const [selectedPatient, setSelectedPatient] = useState(initialPatient? {
+    value: initialPatient.abhaNumber,
+    label: initialPatient.name,
+  }: null);
   const handleChange = (value) => {
     settype(value);
   }
 
-  const handlePatientIdChange = (value) => {
-    setPatientId(value);
-  }
-
-  const handleDoctorIdChange = (value) => {
-    setDoctorId(value);
-  }
+  const handlePatientChange = (value) => {
+    console.log(patientList);
+    const patient = patientList.find(temp => temp.abhaNumber === value);
+    console.log(patient);
+    setPatientId(patient.id);
+    setSelectedPatient({
+      value: patient.abhaNumber,
+      label: patient.name,
+    });
+  };
 
   const handleSubmit = async () => {
     console.log(step);  
@@ -37,8 +43,19 @@ const Step1 = ({ step, setStep, type, settype, patientId, setPatientId, doctorId
         <Form.Control name="Type" accepter={InputPicker} data={Report} onChange={handleChange} />
       </Form.Group>
       <Form.Group controlId="Pid">
-        <Form.ControlLabel>Patient ID</Form.ControlLabel>
-        <Form.Control name="Pid" accepter={InputNumber} onChange={handlePatientIdChange} />
+        <Form.ControlLabel>Patient</Form.ControlLabel>
+        <SelectPicker
+            searchable={true}
+            cleanable={false}
+            value={selectedPatient ? selectedPatient.value : null}
+            onChange={handlePatientChange}
+            data={patientList.map(patient => ({
+              value: patient.abhaNumber,
+              label: patient.name,
+            }))}
+            placeholder="Select Patient"
+            style={{marginBottom: '20px'}}
+          />
       </Form.Group>
       {/* <Form.Group controlId="Did">
         <Form.ControlLabel>Doctor ID</Form.ControlLabel>

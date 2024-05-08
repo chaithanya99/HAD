@@ -47,6 +47,21 @@ public class AdminController {
     {
         System.out.println("hemmooo");
     }
+
+    @GetMapping("/doctorCount")
+    public long getDoctorCount() {
+        return doctorRepo.count();
+    }
+
+    @GetMapping("/patientCount")
+    public long getPatientCount() {
+        return patientrepo.count(); // Change PatientRepo.count() to patientrepo.count()
+    }
+
+    @GetMapping("/workerCount")
+    public long getWorkerCount() {
+        return workerRepo.count();
+    }
     
     @PostMapping("/createdoc")
     public ResponseEntity<String> createDoctor(@RequestBody Doctor doctor) 

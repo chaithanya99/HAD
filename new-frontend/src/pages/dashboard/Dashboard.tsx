@@ -1,35 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Panel, ButtonGroup, Button } from 'rsuite';
 import * as images from '../../images/charts';
 import BarChart from './BarChart';
 import PieChart from './PieChart';
 import DataTable from './DataTable';
+const token = localStorage.getItem('token');
 
-const barChartData = [
-  {
-    name: 'Web',
-    data: [
-      11, 8, 9, 10, 3, 11, 11, 11, 12, 13, 2, 12, 5, 8, 22, 6, 8, 6, 4, 1, 8, 24, 29, 51, 40, 47,
-      23, 26, 50, 26, 22, 27, 46, 47, 81, 46, 40
-    ]
-  },
-  {
-    name: 'Social',
-    data: [
-      7, 5, 4, 3, 3, 11, 4, 7, 5, 12, 12, 15, 13, 12, 6, 7, 7, 1, 5, 5, 2, 12, 4, 6, 18, 3, 5, 2,
-      13, 15, 20, 47, 18, 15, 11, 10, 9
-    ]
-  },
-  {
-    name: 'Other',
-    data: [
-      4, 9, 11, 7, 8, 3, 6, 5, 5, 4, 6, 4, 11, 10, 3, 6, 7, 5, 2, 8, 4, 9, 9, 2, 6, 7, 5, 1, 8, 3,
-      12, 3, 4, 9, 7, 11, 10
-    ]
-  }
-];
+
 
 const Dashboard = () => {
+  const [doctorCount, setDoctorCount] = useState(null);
+  const [workerCount, setWorkerCount] = useState(null); 
+  const [patientCount, setPatientCount] = useState(null); 
+
+  useEffect(() => {
+    // Fetch doctor count when component mounts
+    fetchDoctorCount();
+    fetchWorkerCount();
+    fetchPatientCount();
+  }, []);
+
+  const fetchDoctorCount = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/admin/doctorCount', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      // Assuming the response structure is like { count: 81 }
+      setDoctorCount(data);
+    } catch (error) {
+      console.error('Error fetching doctor count:', error);
+    }
+  };
+
+  const fetchPatientCount = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/admin/patientCount', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      // Assuming the response structure is like { count: 81 }
+      setPatientCount(data);
+    } catch (error) {
+      console.error('Error fetching doctor count:', error);
+    }
+  };
+
+  const fetchWorkerCount = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/admin/workerCount', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      console.log(data);
+      // Assuming the response structure is like { count: 81 }
+      setWorkerCount(data);
+    } catch (error) {
+      console.error('Error fetching doctor count:', error);
+    }
+  };
   return (
     <>
       <Row gutter={30} className="dashboard-header">
@@ -37,21 +72,21 @@ const Dashboard = () => {
           <Panel className="trend-box bg-gradient-red">
             <img className="chart-img" src={images.PVIcon} />
             <div className="title">Doctors </div>
-            <div className="value">81</div>
+            <div className="value">{doctorCount !== null ? doctorCount : 'Loading...'}</div>
           </Panel>
         </Col>
         <Col xs={8}>
           <Panel className="trend-box bg-gradient-green">
             <img className="chart-img" src={images.PVIcon} />
-            <div className="title">Health Workers</div>
-            <div className="value">200</div>
+            <div className="title">Workers</div>
+            <div className="value">{workerCount !== null ? workerCount : 'Loading...'}</div>
           </Panel>
         </Col>
         <Col xs={8}>
           <Panel className="trend-box bg-gradient-blue">
             <img className="chart-img" src={images.PVIcon} />
             <div className="title">Patients</div>
-            <div className="value">920</div>
+            <div className="value">{patientCount !== null ? patientCount : 'Loading...'}</div>
           </Panel>
         </Col>
       </Row>
@@ -126,9 +161,9 @@ const Dashboard = () => {
         <Col xs={8}>
           <PieChart
             title="Hospital Data"
-            data={[10000, 3000, 2000, 1000, 900]}
+            data={[doctorCount, workerCount, patientCount]}
             type="pie"
-            labels={['Chrome', 'Edge', 'Firefox', 'Safari', 'Other']}
+            labels={['Doctors', 'Health Workers', 'Patients']}
           />
         </Col>
       </Row>

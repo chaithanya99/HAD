@@ -84,18 +84,18 @@ export function getAppNavs() {
         title: 'Consent Tracker',
         to: '/table-virtualized4'
       },
-      {
-        eventKey: 'virtualized5',
-        icon: <Icon as={VscTable} />,
-        title: 'Medical Records',
-        to: '/table-virtualized5'
-      },
-      {
-        eventKey: 'FetchedMedicalRecords',
-        icon: <Icon as={VscTable} />,
-        title: 'Fetched Records',
-        to: '/FetchedMedicalRecords'
-      },
+      // {
+      //   eventKey: 'virtualized5',
+      //   icon: <Icon as={VscTable} />,
+      //   title: 'Medical Records',
+      //   to: '/table-virtualized5'
+      // },
+      // {
+      //   eventKey: 'FetchedMedicalRecords',
+      //   icon: <Icon as={VscTable} />,
+      //   title: 'Fetched Records',
+      //   to: '/FetchedMedicalRecords'
+      // },
       {
         eventKey: 'forms',
         icon: <Icon as={MdModeEditOutline} />,

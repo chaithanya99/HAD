@@ -29,8 +29,9 @@ const genData = ['Lifetime', 'Month', 'Year'].map(item => ({
 }));
 
 const DrawerView = (props: DrawerProps) => {
-  const { onClose, ...rest } = props;
+  const { onClose, patientList, initialPatient, ...rest } = props;
   const [token, setToken] = useState(null);
+  console.log(patientList);
 
   useEffect(() => {
     const storedToken = window.localStorage.getItem('token');
@@ -39,8 +40,9 @@ const DrawerView = (props: DrawerProps) => {
 
   const [doctorName,setDoctorName] = useState(null);
   const [doctorid,setDoctorId] = useState(null);
+  const [selectedPatient, setSelectedPatient] = useState(initialPatient ? {label: initialPatient.name, value: initialPatient.value}: null);
   const [formData, setFormData] = useState({
-    abha_id: '',
+    abha_id: initialPatient ? initialPatient.abhaAddress : '',
     firstname: null, // From Date
     lastname: null, // To Date
     expiry: null,
@@ -132,6 +134,16 @@ const DrawerView = (props: DrawerProps) => {
 
     }
   };
+
+  const handlePatientChange = (value) => {
+    const patient = patientList.find(temp => temp.abhaNumber === value);
+    setFormData({...formData, abha_id: patient.abhaAddress});
+    setSelectedPatient({
+      value: patient.abhaNumber,
+      label: patient.name,
+    });
+  }
+
   return (
     <Drawer backdrop="static" size="sm" placement="right" onClose={onClose} {...rest}>
       <Drawer.Header>
@@ -152,9 +164,24 @@ const DrawerView = (props: DrawerProps) => {
         onChange={handleInputChange}
         onSubmit={handleSubmit}
         formValue={formData}>
-          <Form.Group>
+          {/* <Form.Group>
             <Form.ControlLabel>ABHA Address</Form.ControlLabel>
             <Form.Control name="abha_id" type="abha_id" />
+          </Form.Group> */}
+          <Form.Group>
+            <Form.ControlLabel>Patient</Form.ControlLabel>
+            <SelectPicker
+              searchable={true}
+              cleanable={false}
+              value={selectedPatient ? selectedPatient.value : null}
+              onChange={handlePatientChange}
+              data={patientList.map(patient => ({
+                value: patient.abhaNumber,
+                label: patient.name,
+              }))}
+              placeholder="Select Patient"
+              style={{marginBottom: '20px'}}
+            />
           </Form.Group>
           <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
             <Form.Group>

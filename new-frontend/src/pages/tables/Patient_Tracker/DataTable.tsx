@@ -285,7 +285,11 @@ const DataTable = () => {
                   }
                   placement="auto">
                   <IconButton onClick = {() => {
-                      navigate('/table-virtualized4');
+                    const patient = rowData;
+                    navigate('/table-virtualized4', {state: {
+                      patient: patient,
+                      flag: true,
+                    }});
                   }}color="blue" appearance="link" icon={<FaEdit />} />
                 </Whisper>
               </ButtonToolbar>

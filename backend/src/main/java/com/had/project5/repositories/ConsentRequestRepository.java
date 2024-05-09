@@ -1,6 +1,7 @@
 package com.had.project5.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.had.project5.entities.consentstuff.ConsentRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,7 +29,7 @@ public interface ConsentRequestRepository extends JpaRepository<ConsentRequest, 
 	
 	List<ConsentRequest> findByDoctorIdAndAbhaId(String doctorId,String abhaId);
 	
-	
+	Optional<ConsentRequest> findById(Integer id);
 	
 }
 

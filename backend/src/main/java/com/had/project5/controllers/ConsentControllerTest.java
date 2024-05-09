@@ -97,6 +97,55 @@ public class ConsentControllerTest{
 		List<ConsentRequest> lc=consentRequestRepository.findAllByDoctorId(String.valueOf(doctorId));
 		return ResponseEntity.ok().body(lc);
 	}
+
+	@PostMapping("/doctor/grant")
+	public ResponseEntity<String> addGrant(@RequestBody Map<String,Integer> req){
+		Optional<ConsentRequest> consentRequest=	consentRequestRepository.findById(req.get("id"));
+		if(!consentRequest.isPresent()){
+			return ResponseEntity.badRequest().body("not found request id");
+		}
+		ConsentRequest c=consentRequest.get();
+		c.setRequestStatus("Granted");
+		consentRequestRepository.save(c);
+		String webhookUrl = "https://webhook.site/32de52fb-994a-4eef-83f5-e6226391d5e6/getFiles";
+
+		// Create an instance of Permission object
+
+		// Serialize the object to JSON
+		Gson gson = new Gson();
+		String jsonPayload = gson.toJson(c);
+
+		try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+			// Create HTTP POST request
+			HttpPost httpPost = new HttpPost(webhookUrl);
+
+			// Set headers
+			httpPost.setHeader("Content-Type", "application/json");
+
+			// Set JSON payload
+			StringEntity entity = new StringEntity(jsonPayload);
+			httpPost.setEntity(entity);
+
+			// Execute the request
+			HttpResponse response = httpClient.execute(httpPost);
+
+			// Print the response status code
+			System.out.println("Response Status Code: " + response.getStatusLine().getStatusCode());
+
+			// Handle the response entity if needed
+			org.apache.http.HttpEntity responseEntity = response.getEntity();
+			if (responseEntity != null) {
+				String responseBody = EntityUtils.toString(responseEntity);
+				System.out.println("Response Body: " + responseBody);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return ResponseEntity.ok("working grantng consent");
+	}
+
+
     
 	@CrossOrigin(origins = "*")
 	@PostMapping("/doctor/init-consent")

@@ -29,6 +29,7 @@ import Login from './Login';
 import { Detailed_record } from './pages/detailed_record/Detailed_record';
 import UploadRecordPage from './pages/forms/Upload_Medical_Records';
 import RecordLinkingPage from './pages/forms/Consent_Linking/';
+import FetchedMedicalRecordsPage from './pages/tables/Fetched_Medical_Records/';
 
 
 const App = () => {
@@ -105,6 +106,9 @@ const App = () => {
             </Route>
             <Route path="RecordLinking" element={<Frame navs={appNavs} />}>
               <Route index element={<RecordLinkingPage/>} />
+            </Route>
+            <Route path="FetchedMedicalRecords" element={<Frame navs={appNavs} />}>
+              <Route index element={<FetchedMedicalRecordsPage/>} />
             </Route>
 
           </Route>

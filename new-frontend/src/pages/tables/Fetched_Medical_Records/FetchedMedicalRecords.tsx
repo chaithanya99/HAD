@@ -8,7 +8,7 @@ import { record } from 'schema-types';
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
 
-const VirtualizedTable5 = () => {
+const FetchedMedicalRecords = () => {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const location = useLocation();
 
@@ -237,41 +237,60 @@ const VirtualizedTable5 = () => {
 
     const fetchData = async () => {
       try {
-        const formDataPromise = await axios.get("http://localhost:8080/HealthRecord/getallRecords", {
+        // const formDataPromise = await axios.get("http://localhost:8080/HealthRecord/getallRecords", {
+        //   headers: {
+        //     'Authorization': `Bearer ${token}`
+        //   }
+        // });
+
+        // const pdfDataPromise = await axios.get(`http://localhost:8080/HealthRecord/getRecords/${patient.abhaNumber}`, {
+        //   headers: {
+        //     'Authorization': `Bearer ${token}`
+        //   }
+        // });
+
+        // const doctorPromise = await axios.get('http://localhost:8080/doctor/getMyDoctor', {
+        //   headers: {
+        //     'Authorization': `Bearer ${token}`
+        //   }
+        // });
+
+        // const [formDataResponse, pdfDataResponse, doctor] = await Promise.all([formDataPromise, pdfDataPromise, doctorPromise]);
+        // forms = formDataResponse.data.filter(row => row.patientId === patient.id);
+        // const pt = patientList.find(temp => (temp.id === patient.id));
+        // forms = forms.map(record => ({
+        //   ...record,
+        //   patientName: pt.name,
+        //   doctorName: doctor.data.name,
+        // }));
+        // pdfs = pdfDataResponse.data.map(record => {
+        //   return {
+        //     ...record,
+        //     type: (record.type === "application/pdf") ? "PDF" : record.type,
+        //     patientName: pt.name,
+        //     doctorName: doctor.data.name,
+        //   };
+        // })
+
+        // setData([...forms, ...pdfs]);
+        const doctor = await axios.get('http://localhost:8080/doctor/getMyDoctor', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
-        });
-
-        const pdfDataPromise = await axios.get(`http://localhost:8080/HealthRecord/getRecords/${patient.abhaNumber}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        const doctorPromise = await axios.get('http://localhost:8080/doctor/getMyDoctor', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        const [formDataResponse, pdfDataResponse, doctor] = await Promise.all([formDataPromise, pdfDataPromise, doctorPromise]);
-        forms = formDataResponse.data.filter(row => row.patientId === patient.id);
-        forms = forms.map(record => ({
-          ...record,
-          patientName: patient.name,
-          doctorName: doctor.data.name,
-        }));
-        pdfs = pdfDataResponse.data.map(record => {
-          return {
-            ...record,
-            type: (record.type === "application/pdf") ? "PDF" : record.type,
-            patientName: patient.name,
-            doctorName: doctor.data.name,
-          };
         })
 
-        setData([...forms, ...pdfs]);
+        const response = await axios.get(`http://localhost:8080/HealthRecord/getRecordsFromOtherHospital/${patient.abhaAddress}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const temp = response.data.map(record => ({
+            ...record,
+            patientName: patient.name,
+            type: 'PDF',
+            doctorName: doctor.data.name,
+        }))
+        setData(temp);
       } catch(error) {
         console.error('Fetching Medical Records Failed ', error.message);
       }
@@ -325,8 +344,9 @@ const VirtualizedTable5 = () => {
           )}
         </Cell>
       </Column>
+
     </Table>
   );
 };
 
-export default VirtualizedTable5;
+export default FetchedMedicalRecords;

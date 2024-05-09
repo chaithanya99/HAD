@@ -91,6 +91,12 @@ export function getAppNavs() {
         to: '/table-virtualized5'
       },
       {
+        eventKey: 'FetchedMedicalRecords',
+        icon: <Icon as={VscTable} />,
+        title: 'Fetched Records',
+        to: '/FetchedMedicalRecords'
+      },
+      {
         eventKey: 'forms',
         icon: <Icon as={MdModeEditOutline} />,
         title: 'Add Data',

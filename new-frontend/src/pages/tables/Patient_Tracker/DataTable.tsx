@@ -94,41 +94,6 @@ const DataTable = () => {
     }
   };
 
-  // const filteredData = () => {
-  //   const filtered = data.filter(item => {
-  //     if (!item.name.includes(searchKeyword)) {
-  //       return false;
-  //     }
-
-  //     if (rating && item.rating !== rating) {
-  //       return false;
-  //     }
-
-  //     return true;
-  //   });
-
-  //   if (sortColumn && sortType) {
-  //     return filtered.sort((a, b) => {
-  //       let x: any = a[sortColumn];
-  //       let y: any = b[sortColumn];
-
-  //       if (typeof x === 'string') {
-  //         x = x.charCodeAt(0);
-  //       }
-  //       if (typeof y === 'string') {
-  //         y = y.charCodeAt(0);
-  //       }
-
-  //       if (sortType === 'asc') {
-  //         return x - y;
-  //       } else {
-  //         return y - x;
-  //       }
-  //     });
-  //   }
-  //   return filtered;
-  // };
-
   return (
     <>
       <ConsentRequestModal
@@ -194,7 +159,7 @@ const DataTable = () => {
           <Cell dataKey="mobile" />
         </Column>
 
-        <Column width={230} fixed="right">
+        <Column width={260} fixed="right">
           <HeaderCell>Actions</HeaderCell>
           <Cell style={{ padding: '2px' }}>
             {rowData => (
@@ -288,6 +253,25 @@ const DataTable = () => {
                       }
                       navigate('/UploadRecord', {state: {selectedPatient: selectedPatient}});
                   }}color="blue" appearance="link" icon={<FileUploadIcon />} />
+                </Whisper>
+
+                <Whisper
+                  controlId="control-id-container"
+                  preventOverflow
+                  trigger="hover"
+                  speaker={
+                    <Tooltip style={{ width: 120 }}>
+                      View Fetched Records.
+                    </Tooltip>
+                  }
+                  placement="auto">
+                  <IconButton onClick = {() => {
+                      const patient = rowData;
+                      navigate('/FetchedMedicalRecords', {state:{
+                        patient: patient,
+                        patientList: patientList,
+                      }});
+                  }}color="red" appearance="link" icon={<FaEye />} />
                 </Whisper>
 
                 <Whisper

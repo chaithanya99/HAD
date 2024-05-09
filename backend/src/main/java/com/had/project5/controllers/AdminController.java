@@ -96,7 +96,7 @@ public class AdminController {
     }
     private String generateRandomPassword() {
         // Implement your logic to generate a random password (e.g., using random alphanumeric characters)
-        return "randompassword123"; // Placeholder, replace with actual implementation
+        return "test"; // Placeholder, replace with actual implementation
     }
     @PatchMapping("/deletedoc")
     public ResponseEntity<?> markDoctorAsInactive(@RequestBody  Map<String,String> req) {

@@ -71,7 +71,7 @@ const UploadRecord = () => {
   };
 
   const handleClear = () => {
-
+    resetValues();
   };
 
   const handlePatientChange = (value) => {

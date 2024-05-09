@@ -24,6 +24,7 @@ const HealthRecord = () => {
   const [patientId, setPatientId] = useState(initialPatient ? initialPatient.id : 0);
   const [doctorId, setDoctorId] = useState(0);
   const [patientList, setPatientList] = useState([]);
+  const [recordId, setRecordId] = useState(0);
   const token = localStorage.getItem('token');
 
   const step1Props = {
@@ -49,12 +50,14 @@ const HealthRecord = () => {
     setFormData: setFormData,
     patientId: patientId,
     doctorId: doctorId,
+    setRecordId: setRecordId,
   };
 
   const completedProps = {
     // Define variables and functions specific to Completed
     formData: formData,
-    step: step, 
+    step: step,
+    recordId: recordId,
   };
 
   const forms = [Step1, ProjectInfoForm, Completed]

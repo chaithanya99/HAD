@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Steps, Divider, Stack, IconButton } from 'rsuite';
 import PageContent from '@/components/PageContent';
 
-import PageNextIcon from '@rsuite/icons/PageNext';
-import PagePreviousIcon from '@rsuite/icons/PagePrevious';
-
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';

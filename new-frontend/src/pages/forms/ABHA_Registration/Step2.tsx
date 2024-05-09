@@ -5,11 +5,11 @@ import { VscLock, VscWorkspaceTrusted } from 'react-icons/vsc';
 import RadioTile from '@/components/RadioTile';
 import Textarea from '@/components/Textarea';
 import FormHeader from './FormHeader';
-import { useState, useEffect,useRef} from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const Step2 = ({ otpSize, txnId, step, setStep, aadharNumber, token, retryTime }) => {
-  const formRef = React.useRef(null);
+  const formRef = useRef(null);
   const otpBoxReference = useRef([]);
   const [otp, setOtp] = useState(new Array(otpSize).fill(''))
   const [timeRemaining, setTimeRemaining] = useState(retryTime);

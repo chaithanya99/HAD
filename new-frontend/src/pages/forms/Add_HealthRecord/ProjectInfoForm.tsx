@@ -3,7 +3,7 @@ import { Form, Button, DatePicker } from 'rsuite';
 import axios from 'axios';
 import FormHeader from './FormHeader';
 
-const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, setFormData, patientId, doctorId }) => {
+const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, setFormData, patientId, doctorId, setRecordId }) => {
   useEffect(() => {
     setFormData(getInitialFormData(formtype));
   }, [formtype]);
@@ -111,6 +111,7 @@ const ProjectInfoForm = ({ token, setTxnId, step, setStep, formtype, formData, s
         }
       });
       console.log(response.data); // Handle response accordingly
+      setRecordId(response.data.id);
     } catch (error) {
       console.error('Error submitting form:', error);
     }

@@ -38,7 +38,7 @@ const data = [
 
 const DataTable = () => {
   return (
-    <Panel className="card" header="More Hospital Data">
+    <Panel className="card" header="Important ABDM Links">
       <Table height={300} data={data} rowKey="id">
         <Column flexGrow={1} minWidth={100}>
           <HeaderCell>PAGE NAME </HeaderCell>

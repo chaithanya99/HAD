@@ -121,12 +121,15 @@ const DrawerView = (props: DrawerProps) => {
           ...formData,
           // Reset form data as needed
         });
+        if (onClose) {
+          onClose();
+        }
       }
     } catch (error) {
       // Handle error
       toast('Error: Unable to create consent request. Please try again later.');
     } finally {
-      // Perform any cleanup actions
+
     }
   };
   return (

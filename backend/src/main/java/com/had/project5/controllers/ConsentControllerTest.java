@@ -106,6 +106,12 @@ public class ConsentControllerTest{
 		}
 		ConsentRequest c=consentRequest.get();
 		c.setRequestStatus("Granted");
+		DateFormat dateFormat1 = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss.SSSSSS");
+		TimeZone timeZone=TimeZone.getTimeZone("UTC");
+		dateFormat1.setTimeZone(timeZone);
+		String asISO=dateFormat1.format(new Date());
+
+		c.setGrantedOn(asISO);
 		consentRequestRepository.save(c);
 		String webhookUrl = "https://webhook.site/32de52fb-994a-4eef-83f5-e6226391d5e6/getFiles";
 

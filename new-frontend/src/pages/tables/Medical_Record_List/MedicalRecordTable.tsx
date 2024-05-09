@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { DOMHelper, Table, Button, ButtonToolbar, Tooltip, IconButton, Modal, Loader, Placeholder, Divider } from 'rsuite'; // Import Button from rsuite
-import { mockUsers } from '@/data/mock';
+import { DOMHelper, Table, Button, ButtonToolbar, Modal, Loader, Divider } from 'rsuite';
 import axios from 'axios';
-import { FaEdit, FaEye } from 'react-icons/fa';
-import { GrDocumentUpload } from 'react-icons/gr';
-import { LuClock } from 'react-icons/lu';
 import { useLocation } from 'react-router-dom';
 import { Document, Page, pdfjs } from 'react-pdf';
+import { record } from 'schema-types';
 
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
@@ -17,8 +14,10 @@ const VirtualizedTable5 = () => {
 
   const initialPatient = location.state ? location.state.patient : null;
   console.log(initialPatient);
+  const initialPatientList = location.state ? location.state.patientList : null;
 
   const [patient, setPatient] = useState(initialPatient);
+  const [patientList, setPatientList] = useState(initialPatientList);
   const [data, setData] = useState([]);
   const [openRowData, setOpenRowData] = useState(null); // Track the data of the currently opened row
   const [modalOpen, setModalOpen] = useState(false); // Define modalOpen state
@@ -235,44 +234,6 @@ const VirtualizedTable5 = () => {
 
   useEffect(() => {
     let forms, pdfs;
-    // const fetchFormData = async () => {
-    //   try {
-    //     const response = await axios.get("http://localhost:8080/HealthRecord/getallRecords", {
-    //       headers: {
-    //         'Authorization': `Bearer ${token}`
-    //       }
-    //     });
-    //     forms = response.data;
-    //     console.log(forms);
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   }
-    // };
-
-    // const fetchPdfData = async () => {
-    //   try {
-    //     const response = await axios.get(`http://localhost:8080/HealthRecord/getRecords/${patient.abhaNumber}`, {
-    //       headers: {
-    //         'Authorization': `Bearer ${token}`
-    //       }
-    //     });
-    //     pdfs = response.data.map(record => {
-    //       return {
-    //         ...record,
-    //         type: (record.type == "application/pdf") ? "PDF" : record.type
-    //       }
-    //     });
-    //     console.log(pdfs);
-    //   } catch(error) {
-    //     console.error("Error Fetching PDFs records: ", error.message);
-    //   }
-    // };
-
-    // fetchFormData();
-    // fetchPdfData();
-    // console.log(forms);
-    // console.log(pdfs);
-    // setData([...forms, ...pdfs]);
 
     const fetchData = async () => {
       try {
@@ -288,12 +249,26 @@ const VirtualizedTable5 = () => {
           }
         });
 
-        const [formDataResponse, pdfDataResponse] = await Promise.all([formDataPromise, pdfDataPromise]);
-        forms = formDataResponse.data;
+        const doctorPromise = await axios.get('http://localhost:8080/doctor/getMyDoctor', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        const [formDataResponse, pdfDataResponse, doctor] = await Promise.all([formDataPromise, pdfDataPromise, doctorPromise]);
+        forms = formDataResponse.data.filter(row => row.patientId === patient.id);
+        const pt = patientList.find(temp => (temp.id === patient.id));
+        forms = forms.map(record => ({
+          ...record,
+          patientName: pt.name,
+          doctorName: doctor.data.name,
+        }));
         pdfs = pdfDataResponse.data.map(record => {
           return {
             ...record,
-            type: (record.type === "application/pdf") ? "PDF" : record.type
+            type: (record.type === "application/pdf") ? "PDF" : record.type,
+            patientName: pt.name,
+            doctorName: doctor.data.name,
           };
         })
 
@@ -319,13 +294,13 @@ const VirtualizedTable5 = () => {
       </Column>
 
       <Column width={70}>
-        <HeaderCell>patientId</HeaderCell>
-        <Cell dataKey="patientId" />
+        <HeaderCell>patient</HeaderCell>
+        <Cell dataKey="patientName" />
       </Column>
 
       <Column width={70}>
-        <HeaderCell>doctorId</HeaderCell>
-        <Cell dataKey="doctorId" />
+        <HeaderCell>doctor</HeaderCell>
+        <Cell dataKey="doctorName" />
       </Column>
 
       <Column width={100}>

@@ -17,19 +17,9 @@ import { values } from 'lodash';
 import PlusIcon from '@rsuite/icons/Plus';
 import { IoMdCreate } from "react-icons/io";
 
-const data = mockUsers(6);
-
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
 
-const ratingList = Array.from({ length: 5 }).map((_, index) => {
-  return {
-    value: index + 1,
-    label: Array.from({ length: index + 1 })
-      .map(() => '⭐️')
-      .join('')
-  };
-});
 const FieldList = [{
   value:'name',
   label:"Name"
@@ -76,26 +66,7 @@ const DataTable = () => {
     fetchPatients();
   }, []);
 
-  let checked = false;
-  let indeterminate = false;
   const navigate = useNavigate();
-
-  if (checkedKeys.length === data.length) {
-    checked = true;
-  } else if (checkedKeys.length === 0) {
-    checked = false;
-  } else if (checkedKeys.length > 0 && checkedKeys.length < data.length) {
-    indeterminate = true;
-  }
-
-  const handleCheckAll = (_value, checked) => {
-    const keys = checked ? data.map(item => item.id) : [];
-    setCheckedKeys(keys);
-  };
-  const handleCheck = (value, checked) => {
-    const keys = checked ? [...checkedKeys, value] : checkedKeys.filter(item => item !== value);
-    setCheckedKeys(keys);
-  };
 
   const handleSortColumn = (sortColumn, sortType) => {
     setSortColumn(sortColumn);
@@ -275,7 +246,10 @@ const DataTable = () => {
                   placement="auto">
                   <IconButton onClick = {() => {
                       const patient = rowData;
-                      navigate('/table-virtualized5', {state:{patient: patient}});
+                      navigate('/table-virtualized5', {state:{
+                        patient: patient,
+                        patientList: patientList,
+                      }});
                   }}color="green" appearance="link" icon={<FaEye />} />
                 </Whisper>
                     

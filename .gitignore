@@ -1,3 +1,4 @@
 node_modules/
 rsuite-admin-template/package-lock.json
 frontend/
+.vscode
